@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Ceragon Network Planning Tool v8.7</title>
+<title>Ceragon Network Planning Tool v8.7b</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -374,8 +374,8 @@ input[type=number]:focus,select:focus{border-color:var(--blue)}
 .rr-tbl tr:hover td{filter:brightness(1.07)}
 .rr-td-d{text-align:center!important;background:var(--sl)!important;color:var(--text)!important;font-weight:700!important}
 .rr-td-r{background:var(--sll)!important;color:var(--text2)!important;text-align:center!important}
-.dist-row{display:flex;gap:6px;align-items:stretch}
-.dist-row input{flex:1}
+.dist-row{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap}
+.dist-row input{flex:1 1 84px;min-width:84px;font-variant-numeric:tabular-nums}   /* v8.7b: room for at least 4 figures, e.g. 24.80 */
 .max-btn{white-space:nowrap;padding:0 10px;background:var(--navy);color:#e2e8f0;border:none;border-radius:6px;cursor:pointer;font-size:11px;font-weight:600;transition:background .15s}
 .max-btn:hover{background:var(--navy2)}
 .max-panel{background:var(--sll);border:1px solid var(--border-l);border-radius:8px;margin-top:8px;overflow:hidden;display:none}
@@ -1049,9 +1049,9 @@ tr.net-row-found td{background:#fde68a !important}
         <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACUAPwDASIAAhEBAxEB/8QAHAABAQADAQADAAAAAAAAAAAAAAcFBggEAQID/8QAPhAAAQMEAAQEBAIGCAcAAAAAAQACAwQFBhEHEiExCBNBYSIyUXEUoRU3QmJygRYjdYKRk7GyJCU2UrPR4f/EABsBAQEAAwEBAQAAAAAAAAAAAAABAgMEBQYH/8QALhEBAAEDAgQDBgcAAAAAAAAAAAECAxEEMQUSIUFhgaEGExQiUXEyUnKxwdHw/9oADAMBAAIRAxEAPwDstERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBF57hXUdvpzUV1VDTRN7vleGj81Pbzxw4dW+Y08F4dc5wNhlBC6ff95o1+awruUUfinDq02h1OqnFi3NX2iZUpFEKrxH47Dt39Fck8sftyRRRj79Xr9rT4kcIq5OWqt95omesjomStH+W5x/JavirWccz0p9muKRTze5n0n+VpRa/iWaYvlcPmWG801Y4D4ow7lkZ7Fp6g/wAlsC3xMVRmHj3bNyzVNFymYmO09JEWj8OskzS73W4W3K8RFldRtaRUMlL4pySdch7O6DfQ9PUArTeNnF++YLm0dit1roKqB1viqjJO54dzOfK0jp01pg/xKuGrK1IoRg3E/ijmtPVT49i+PzR0rxHMZap8eiRsa336LYn3njoGOLcOxcu10BuDupVwZVVFoXG3NrhgmLQXa3UdNVSyVLYSyckNAIPXp9lN8G42ZpluT01horPYoZ6gOLXyvl5RyjZ3rqpgy6FRTq+XHi/bqCWsprLilwETS90MdTM2RwA38IcNE+xIWhYp4kIJ62KLJbEKSmkIDqmleX+UPqWEbI+uuvseyYMugkXxG9kjGyMcHMcAWuB2CD6r5RRFCeLXHSbH8nfZcYpaOuFKC2rnmJLfN/7G678vqfqdeiovCXOqHPMYZcYeSGuhPl1tMD1ik9v3T3B/9FMJluKIsBmuY47h1vbWX+4Mpg/YhiHxSzEdw1o6n069hvqQis+ihbOO11yG7forBcIqbnUnq3z5QPh38zgOjB7l2uy2+gHGWsjElW7ErUT18tolqCPv8o39iUTKiopzcJeMtvhM1NTYpeeUbMQfJTvd7N3sb+5H3WR4X5bkGTtuEd+xOpsE1DIIn+c46keRs8oI6gDXxAkHY0i5bqi8d5ulus1tmuV1rYaOjhbzSTTO5Wt/++3qo9d/EBRVF1jtOG45XXurmf5cBd/ViV37rOriPXZ1oAk60gtqKeWt3GC4wietGL2IuGxByyVTm+ziCBv7Ej3X0u0vGK1wGejp8Xv3Jsuhb5lNI72bskE/chBRkUPsXiEt7Lg625dj1dZqmJ/lzOaC/wApw7hzCA4a/mrNaLlQXe2wXK2VcNXRzt54ponczXD7oZepYy5svNU4wW+eG3xdnVL2ebIf4GfKP4nb/h9VF+JfG+/YpndwsNLZ7dU01I9gD5HPD3AtBPbp6rfuG/FfFs1DKaCo/R91cOtDUuAe768h7PH26+wSYZUV8s5e88OsZqqkVd8p5r/VbB825ymYAjei1h+Bp6/stC2GltFqpIxHTW2jhY0aAZC0a/Je1YLiDeqjHMHvN+pYo5p6CjkqI45N8ri0b0dddLGKKY2htuaq9cjFdczEePTyhln0VE9vK+kp3D6GMFazk/DfCMjjcLnjtE6Rw0JomeVK37PbohY3gdnNxz3G6u53KjpqWSCqMLWwFxBAaDs79eq39KqKaukwlnU3rNXParmmfCZhyhxT4P3zAZTk+LXCqqrdTu5/MYeWqovclvR7N+oAI6bBGytiwvxHR0VhipcqtFwuFxjJb+JomxhsrOmi4OcNP7g66HQProdFTxRTwPgmY2SKRpa9rh0cD3C4T4i2aPH87vVmgGoKWreyIfRh6t/IhedfpnTzzW5xEv0Lgmpte0VudNxCnmro6xVtMxt2/wBP36u71yd4tP1tQf2LT/8AmqF0VhWR3jIairlq8VrrHQRBogfXPaJp3HuQxuwGgepO+vZQnxQY7f7rxQhqrZZa+tpxaIIzJDCXN5hLOSNj10R/ivUh+bTs+PDVXZlQ2a9OxfHrfdYZKtgmfU15gLHhg0AAx2+hB2ug8PrMkrKCWTJrRR2upEmo4qaqM7XM13Li1ujvfTShfAS93LAbFc6G74fkk0lXWidhp6PmAb5bG9dkddtKo7+LMTWF39B8wOhvQt43/uSUhgvFx+ryj/tBn+hUb8OH64LR/BN/sKuHijtdyu2B0tPa6CorZm1zHFkLC5wGj10pNwBxjI7dxVtdXX2K4UtOxsvNLLAWtG2EDqkbE7q/xz4l3LBqZtJT47NM6tYWU1fI8fhw7XVp115x3DTrYB69Dqb8MOBdPkFNSX67ZJS1ltmIkMVDsmTrstc8/L9DobXReR2W15DZamz3mjjq6KpbyyRv/Ig9w4HRBHUEAhc7jHuIfBzM+fFYKu/WGqdzOpw0ubK0ejwPkkA7PHf1BHwpCy6WjYyONscbQ1jAGtaOwA7BSnxA8Rn4zbo8bsLzJkNyHIwR9XU7HdA7+Ino3+Z9Fstzzl8eBSZDQWC6S15byRW2WncJhKR2cB+yPVw6a7Kb8BcDvFyyas4iZzDObi+dzqaOpZpxk7GQj0AHwtHoB00AEH72vgTRv4US26tLBk9S4Vn4s9TFKAeWLfcs0SD9SSfQaieC5JeuG2d/i3QyRy08hprjROOvNYD8TT7ju0/X2J33Aob4leGct5iGW49SPluMQEdZTxN26dm9B4Hq5vr9R9kiSYWTH7vQX2zUt3tk4npKqMSRvH0PofoR2IXE/FW9XC/8Rb9W3GR7pIq6ekiY4nUMUUjmNYB6aA2f3i4+qqHh5uuY4lehZLxYLuLFXP8AmdTOIpZT0D/Zp6A/Tofqtv4wcEKbJ7nPkGOVUdBdKg81TBKD5M7ta5xr5HHXX0J69DslHRN2b8NNlt1s4V2+uo42GpufNUVcwHxPdzEBpP0aBy6+uz3JVMXOXDefijwsZLaLjh9ZebE6QyctK9r3U7j8xjPYg9y06G+oI2d0yl4tY69g/FWvJaSX1jks1Q4j+bWkfmkrEtqynJrFi9HHWX+4xUEEr/LY+QOILtb10BXgxnPsPyW4m32K+U9dVBhkMcbXAho7nqApHx7yCLPMao7XjVnv9XUxVYldz2uaJoboju9oXm8MuF5PY8zq7le7HWUFO6iLI3zNA5nFw6d99kwZYfxd3e4zZzb7DJI9tupqBlXHFs8r5XvkaXn6kBgA+m3fUrLeDu1UUtXf71Ixj62ARU0JPeNjtucR/EQ0f3VUeL/DS2cQbdCZJjRXWkDhS1bW7Gj3Y8ftNJAP1B6juQY3h+McUuE2USXCisBvVunb5dXFSSBzZ2AktcPVrm7Otj1cD32L2Tu6gRT2j4tWR8bf0hY8nt05G3RS2iZ/L7czGuaf8V5rtxaiMLo8axDJr1VkajabfJTx7/edIAdfYFY4XKTeLykoYM9tdTTtY2rqbeTVcvdwa/Ubj7kcw39GgeizPg4uFe6pyO0l0j7fGyCoY0/LFK4vB19OYNB1+7v1KxD+FnEriLlE+QZWILR+JIDjMdmKMfLGyME6AHbZ6nZJ2SVfuHeF2XBrA202eN3xO8yonkO5KiTQBe4/YAADoB0Cs7JG6B3m0W6/+K6Sz3ambU0NVJI2aIkjmApHuHUdRogH7hfpxJ4AXK281ww2WS5U7Tz/AISVwE8euo5HdA7X8is5DYr0PFhFeDaqz9HedITVeUfL1+Ee35vuQF0AmSIcq8PON+S4tUCy5ZDU3Slgd5bzOC2sp9eji7q7XT5vi9yq5neX49l3BLK6yxXGKpAtU3mRb1JEeQ9HN7j/AEWe4icOMXzin/5tR+VWsbqGupzyTR+2+zm/uuBH8+q5uzrg/mmJVb3W2Ke7UEwdEJ6IEOLD3bIwHYBHfuCnQ6qv4Qv+g7n/AGi7/Y1WpSLwsWq52jCbhBdKCoopX17ntZMwtJHI3r1VdSVh9ZpGQxPllcGsY0uc49gB3K4M4i36nvmc3m7iQCOrq3yRbP7G9N/ILoLjzntVdawcM8ID6271zvKrZID0iZ6x83oSPmP7I9yFvXC7hxZ8PxGC1T01NXVj3GerqJIg7nlcADy77NAAaB9BvuSVwXqZ1FXJTtHfxfb8G1FHALHxeopzXc6U05xPL+ad8RM7fVvKIi7nxIiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICL6T+aIyYQwvHYO7H2WvXK85RRtcY8OdcNdhSXGLZ/zeRSasNtuzVcnFMx5zEfvMNkRT6ry7iG74KHhVWhx7PqLvSBo+4a8lYyro+N2QDy31+OYpTPbpxp+eqnb7jYDfzWqb0domfL+3dRwure5copj9UT6U80+ig5JkFkxy3PuF8udLQUzB1fM8DfsB3J9h1UYvXEHNOJs8li4Y2qehtbiWVF6q/6rbeuy3vyD7befo1bNZ+CVgNwF1y25XHK7iOvPcJNxt+oawdAPZU6jpaaipmU1JTxU8LBpscbQ1rR7ALGablzfpHq6reo0Gg+a1Hvbn1qjFEfanerzxHg0zhTw0smA0DjTk112nH/ABVwlb8ch7kNHXlbv02Se5JPVbyiLdTRFEYpeTqdVe1V2bt6rmqnuIiLJoEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQf//Z" alt="Ceragon" style="height:26px;display:block">
       </div>
       <div style="width:1px;height:30px;background:rgba(255,255,255,.2)"></div>
-      <div class="hdr-title">&#128225; Ceragon Network Planning Tool <span style="font-size:11px;font-weight:400;color:#93c5fd;letter-spacing:.04em">v8.7</span></div>
+      <div class="hdr-title">&#128225; Ceragon Network Planning Tool <span style="font-size:11px;font-weight:400;color:#93c5fd;letter-spacing:.04em">v8.7b</span></div>
     </div>
-    <div class="hdr-sub" id="hdrMethodRef">ITU-R P.530-17 (multipath) &nbsp;&middot;&nbsp; P.530-18 (rain path reduction) &nbsp;&middot;&nbsp; P.838-3 &nbsp;&middot;&nbsp; P.676-12 &nbsp;|&nbsp; Ceragon Planning tool &copy;</div>
+    <div class="hdr-sub" id="hdrMethodRef">ITU-R P.530-17 (multipath) &nbsp;&middot;&nbsp; P.530-14/18 (rain) &nbsp;&middot;&nbsp; P.838-3 &nbsp;&middot;&nbsp; P.676-12 &nbsp;|&nbsp; Ceragon Planning tool &copy;</div>
   </div>
   <div class="hdr-right">
     <button id="collapseAllBtn" onclick="toggleAllCards()" title="Collapse or expand all result sections"
@@ -1632,8 +1632,9 @@ tr.net-row-found td{background:#fde68a !important}
           <span id="distLockBadge" style="display:none;align-items:center;gap:3px;font-size:9.5px;font-weight:700;
             color:var(--blue);background:var(--blue-l);border:1px solid var(--blue-m);border-radius:4px;
             padding:2px 5px;white-space:nowrap"
-            title="Distance is fixed by the Site A / Site B coordinates. Radio changes will not move it.">&#128274; from sites</span>
+            title="Distance is fixed by the Site A / Site B coordinates. Radio changes will not move it.">&#128274; sites</span>
         </div>
+        <div id="distAutoHint" style="font-size:10.5px;color:var(--text3);margin-top:3px"></div>
         <div class="max-panel" id="maxPanel">
           <div class="max-panel-hdr">
             <span>Max Range @ Target Availability</span>
@@ -1644,7 +1645,7 @@ tr.net-row-found td{background:#fde68a !important}
       </div>
       <div class="fld"><div class="lbl" title="ITU-R rain zone defining R₀.₀₁ — rain rate exceeded 0.01% of an average year (about 53 min/yr). Higher zone = more rain = more outage. 'From Map' fetches ITU-R P.837-8 data from the site coordinates.">Rain Zone</div>
         <select id="rainZone" onchange="onRainZone()" title="Select ITU-R rain zone or enter custom R₀.₀₁ rate. 'From Map' requires pinned site coordinates and uses ITU-R P.837-8 interpolated rain rate maps.">
-          <option value="42" selected>Manual</option>
+          <option value="custom">User specified value</option>
           <option value="8">A (8 mm/h)</option>
           <option value="12">B (12 mm/h)</option>
           <option value="15">C (15 mm/h)</option>
@@ -1662,6 +1663,12 @@ tr.net-row-found td{background:#fde68a !important}
           <option value="115">Q (115 mm/h)</option>
           <option value="map" id="rainMapOpt" disabled style="color:#0891b2;font-style:italic">&#128205; From Map</option>
         </select>
+        <div class="lbl" style="margin-top:6px" title="ITU-R P.530 rain attenuation algorithm. P.530-14/18: path factor r from the current regression and frequency-dependent conversion to other percentages. P.530-8/13 and P.530-7: d0 = 35·e^(−0.015R) path reduction and latitude-dependent conversion (coefficients change below 30°).">ITU rain algorithm</div>
+        <select id="rainAlgo" onchange="onRainAlgoChange()">
+          <option value="P530-14/18" selected>ITU-R P.530-14/18</option>
+          <option value="P530-8/13">ITU-R P.530-8/13</option>
+          <option value="P530-7">ITU-R P.530-7</option>
+        </select>
         <input type="number" id="rainCustom" min="1" max="300" step="1" value="42" style="margin-top:5px;display:none" placeholder="Custom R0.01 (mm/h)" title="Custom R₀.₀₁ rain rate in mm/h — rain rate exceeded 0.01% of a year. Enter site-specific measurement or ITU-R P.837-8 extracted value.">
       </div>
       <div class="fld"><div class="lbl" title="Terrain roughness C factor (retained for reference / legacy export). Not used in the active ITU-R P.530-18 path reduction calculation, which derives d₀_eff from frequency and rain rate.">C Factor (terrain)</div>
@@ -1674,7 +1681,7 @@ tr.net-row-found td{background:#fde68a !important}
       </div>
       <div class="fld">
         <div class="lbl" title="Minimum acceptable link availability. Higher target = stricter requirement. Modulations in green meet this target; amber = within 0.5%; red = below target.">Target Availability (%)</div>
-        <select id="targetAvail" onchange="state.targetAvail=+this.value;update()" title="Required link availability. 99.999% = ITU-R high-grade; 99.995% = typical backhaul; 99.9% = relaxed. Tighter target = fewer viable modulations at a given distance.">
+        <select id="targetAvail" onchange="state.targetAvail=+this.value;state.distAuto=true;update();reflAdvisorRefresh()" title="Required link availability. 99.999% = ITU-R high-grade; 99.995% = typical backhaul; 99.9% = relaxed. Tighter target = fewer viable modulations at a given distance.">
           <option value="99">99.000 %</option>
           <option value="99.5">99.500 %</option>
           <option value="99.9">99.900 %</option>
@@ -2247,12 +2254,17 @@ tr.net-row-found td{background:#fde68a !important}
         <!-- Terrain Profile (shown after two sites set) -->
         <div id="terrainProfileCard" style="display:none;min-height:0;background:var(--sl);border:1px solid var(--border-l);
           border-radius:8px;padding:10px 14px;margin-bottom:8px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span style="font-size:11.5px;font-weight:700;color:var(--text2)">
-              &#9968; Terrain Profile &amp; Line of Sight
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px">
+            <span style="font-size:11.5px;font-weight:700;color:var(--text2);white-space:nowrap;padding-top:4px" title="Terrain Profile &amp; Line of Sight">
+              &#9968; Terrain Profile
             </span>
-            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
               <span id="losStatus" style="font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px"></span>
+              <span id="clrCritStatus" style="font-weight:700;font-size:11px" title="Clearance criteria C1 / C2 / Div: share of the required Fresnel clearance achieved"></span>
+              <label title="Effective earth-radius factor k used to bulge the terrain profile. LOS, Fresnel clearance, Optimise Heights, the height arrows and obstacle clearances all use it. 4/3 = standard atmosphere; check 2/3 (or lower) for sub-refractive worst case." style="font-size:11px;color:var(--text2);display:inline-flex;align-items:center;gap:4px">k
+                <select id="profileKSel" onchange="onProfileKChange()" style="font-size:11px;padding:1px 4px;width:auto">
+                  <option value="1.3333333">4/3</option><option value="1">1</option><option value="0.6666667">2/3</option><option value="0.5">0.5</option><option value="Infinity">&infin; (flat)</option>
+                </select></label>
               <span id="divLosStatus" style="display:none;font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px"></span>
               <label style="display:flex;align-items:center;gap:4px;font-size:11px;cursor:pointer">
                 <input type="checkbox" id="showFresnel" checked onchange="if(terrainChart)redrawTerrainOverlays()">
@@ -2268,7 +2280,7 @@ tr.net-row-found td{background:#fde68a !important}
               </button>
               <select id="terrainSourceSel" onchange="onTerrainSourceChange()"
                 title="DEM source for terrain profile. Mapzen merge auto-uses the best free source for each region (10m USGS NED in USA, 8m LINZ in NZ, ~30m SRTM elsewhere). COP30 (Copernicus 30m) is the highest-quality global DEM but requires a free OpenTopography API key. Open-Meteo (Copernicus 90m) is hosted by Open-Meteo's CDN — often more reachable than opentopodata.org if the free service is overloaded or blocked."
-                style="padding:3px 6px;font-size:11px;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text2);max-width:230px">
+                style="padding:3px 6px;font-size:11px;border:1px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text2);max-width:150px">
                 <option value="mapzen">Mapzen (10m US / 30m global) ★</option>
                 <option value="open-meteo" selected>Open-Meteo (Copernicus 90m) ⚡</option>
                 <option value="aws-terrarium">AWS Terrarium tiles (Mapzen merged) ⚡</option>
@@ -2284,6 +2296,24 @@ tr.net-row-found td{background:#fde68a !important}
               <button onclick="fetchTerrainProfile()" id="terrainBtn"
                 style="padding:4px 12px;background:var(--navy);color:#e2e8f0;border:none;border-radius:5px;
                 cursor:pointer;font-size:11px;font-weight:600">&#8635; Refresh</button>
+              <!-- v8.7b: clearance criteria on their own (second) row, compact labels -->
+              <div id="clrCritRow" style="flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;justify-content:flex-end;font-size:11px;color:var(--text2);margin-top:2px"
+                   title="Antenna-height clearance criteria used by the LOS badge, Optimise Heights, the height arrows and the reflection height sweep.">
+                <span style="display:inline-flex;align-items:center;gap:3px;font-size:11px;margin-right:8px;color:var(--text2)" title="Antenna heights above ground. Type a value, or use the arrows (5 m / 15 ft steps; the other site follows to keep clearance).">AGL
+                <b style="color:#2563eb">A</b><input id="profAglA" type="number" min="0" step="1" class="ant-hgt-inp" style="width:46px;padding:1px 4px;font-size:11px" onchange="profAglSet('A',this.value)">
+                  <span style="display:inline-flex;flex-direction:column;gap:1px"><button type="button" class="ant-hgt-btn" onclick="antHeightStep('A',1)">&#9650;</button><button type="button" class="ant-hgt-btn" onclick="antHeightStep('A',-1)">&#9660;</button></span>
+                <b style="color:#d97706;margin-left:4px">B</b><input id="profAglB" type="number" min="0" step="1" class="ant-hgt-inp" style="width:46px;padding:1px 4px;font-size:11px" onchange="profAglSet('B',this.value)">
+                  <span style="display:inline-flex;flex-direction:column;gap:1px"><button type="button" class="ant-hgt-btn" onclick="antHeightStep('B',1)">&#9650;</button><button type="button" class="ant-hgt-btn" onclick="antHeightStep('B',-1)">&#9660;</button></span>
+                <span id="profAglUnit">m</span></span>
+                <b style="color:var(--navy2)">Clearance</b>
+                <span title="C1, normal atmosphere: % of the first Fresnel zone that must be clear at k = 4/3">C1 <input id="clrC1Pct" type="number" min="0" max="150" step="10" style="width:52px;padding:1px 4px;font-size:11px" onchange="onClrChange()">% @ 4/3</span>
+                <span title="C2, sub-standard atmosphere: % of F1 clear at k min (Temperate 30%, Tropical 60%)">C2
+                  <select id="clrClimate" onchange="onClrChange('climate')" style="width:auto;font-size:11px;padding:1px 2px">
+                    <option value="temperate">Temperate</option><option value="tropical">Tropical</option><option value="custom">Custom</option>
+                  </select>
+                  <input id="clrC2Pct" type="number" min="0" max="100" step="10" style="width:46px;padding:1px 4px;font-size:11px" onchange="onClrChange()">% @ k<sub>min</sub> <input id="clrKmin" type="number" min="0.3" max="1.33" step="0.05" style="width:54px;padding:1px 4px;font-size:11px" onchange="onClrChange()"></span>
+                <span title="Diversity antennas: % of F1 clear at k = 4/3">Div <input id="clrDivPct" type="number" min="0" max="100" step="10" style="width:46px;padding:1px 4px;font-size:11px" onchange="onClrChange()">% @ 4/3</span>
+              </div>
             </div>
           </div>
           <canvas id="terrainChart" style="width:100%;height:220px;display:block;min-height:220px"></canvas>
@@ -2912,7 +2942,7 @@ tr.net-row-found td{background:#fde68a !important}
           title="Hide the Network and Defaults tabs from the tab strip. Bring them back from File &gt; View &gt; Show Network &amp; Defaults tabs. Network actions still work and restore the tabs automatically.">
           &#128584; Hide Network &amp; Defaults tabs
         </button>
-        <span style="font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:none;font-weight:400">v8.7</span>
+        <span style="font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:none;font-weight:400">v8.7b</span>
       </span>
     </div>
 
@@ -3477,6 +3507,8 @@ tr.net-row-found td{background:#fde68a !important}
               <th>Target Capacity (Mbps)</th>
               <th title="v8.1.15: Auto-resolved configuration + reference modulation. The auto-planner uses this exact resolution for the chosen Target Capacity at the row's Channel BW and Product. Updates live as you edit Capacity, BW or Product.">&rarr; Auto (cfg / mod)</th>
               <th class="def-th-narrow">Target Availability<br>(%)</th>
+              <th class="def-th-narrow" title="Largest configuration allowed for links planned with this rule (number of carriers). Auto-Plan does not escalate beyond it; if the target capacity needs more, the link is flagged.">Max<br>config</th>
+              <th class="def-th-narrow" title="Largest antenna the tower allows for links planned with this rule. Auto-Plan stops at this size; if the target availability is not met with it, the link is flagged.">Max antenna<br>on tower</th>
               <th title="Microwave protected toggle. ☐ = use global default · ☑ = forced protected · ◧ = forced unprotected. mmW links ignore this column (no 4+0 / no protection variant).">Prot.</th>
               <th title="Space Diversity. Available for HP-class products only (IP-20C-HP, RFU-D-HP) on 4–11 GHz paths. When ON the planner sets sdEnabled with BBC (baseband combining, +3 dB) and a default 10 m antenna separation on each side (reflection-analysis-derived separation will be used here when the LBC engine exposes it).">SD</th>
               <th title="Remove this row"></th>
@@ -4138,6 +4170,39 @@ window.defaultsToggleSd = function(idx, checked){
   _defaultsAutosave();
 };
 
+// v8.7b: antenna sizes offered for a rule (same lists as the auto-planner)
+function _defAntSizes(band, freq, std){
+  if(band === 'Microwave Band'){
+    const key = String(freq) + '.0';
+    const t = (typeof MW_DATA !== 'undefined' && MW_DATA.asize && MW_DATA.asize[std]) || {};
+    return (t[key] || t[String(freq)] || []).slice().sort((a,b) => a - b);
+  }
+  return std === 'FCC' ? [0.2438, 0.3048, 0.6096, 0.9144] : [0.2, 0.3, 0.31, 0.6, 0.9];
+}
+// v8.7b: maximum configuration (by carrier count; 1+0 also allows 1+1, 2+0 allows 2+2)
+const DEF_MAXCFG_OPTS = [{v:'', l:'No limit'}, {v:'1+0', l:'1+0 / 1+1'}, {v:'2+0', l:'2+0 / 2+2'}, {v:'4+0', l:'4+0'}];
+const _DEF_CFG_MULT = {'1+0':1,'1+1':1,'2+0':2,'2+2':2,'4+0':4};
+function _defCfgAllowed(rule, cfg){
+  const m = rule && rule.maxCfg ? _DEF_CFG_MULT[rule.maxCfg] : null;
+  return !m || (_DEF_CFG_MULT[cfg] || 99) <= m;
+}
+function _defMaxCfgCellHtml(i, r){
+  const cur = r.maxCfg || '';
+  return '<select onchange="defaultsUpdateRule(' + i + ', \'maxCfg\', this.value)" title="Largest configuration allowed">' +
+    DEF_MAXCFG_OPTS.map(o => '<option value="' + o.v + '"' + (o.v === cur ? ' selected' : '') + '>' + o.l + '</option>').join('') + '</select>';
+}
+function _defMaxAntCellHtml(i, r){
+  const std = DEFAULTS_STATE.globals.standard || 'ETSI';
+  const sizes = r.band ? _defAntSizes(r.band, r.frequency, std) : [];
+  const ft = (std === 'FCC' && r.band === 'Microwave Band');
+  const lbl = v => ft ? (v + ' ft') : (std === 'FCC' ? (Math.round(v/0.3048) + ' ft') : (v + ' m'));
+  const cur = (r.maxAnt == null || r.maxAnt === '') ? '' : String(r.maxAnt);
+  return '<select onchange="defaultsUpdateRule(' + i + ', \'maxAnt\', this.value)" title="Largest antenna allowed on the tower">' +
+    '<option value=""' + (cur === '' ? ' selected' : '') + '>No limit</option>' +
+    sizes.map(v => '<option value="' + v + '"' + (String(v) === cur ? ' selected' : '') + '>' + lbl(v) + '</option>').join('') +
+    (cur !== '' && sizes.every(v => String(v) !== cur) ? '<option value="' + cur + '" selected>' + lbl(+cur) + ' (not in band list)</option>' : '') +
+    '</select>';
+}
 function _renderDefaultsRules(){
   // v8.0: keep the distance unit header in sync with the current Standard.
   try { _defaultsUpdateDistHeaders(); }catch(_){}
@@ -4206,6 +4271,8 @@ function _renderDefaultsRules(){
       // planning a real link against this rule. Displayed read-only.
       '<td class="def-auto-cell">' + _defAutoResolveCellHtml(r) + '</td>' +
       '<td><select onchange="defaultsUpdateRule(' + i + ', \'availability\', this.value)">' + _defOptHtml(DEF_AVAIL_OPTS, r.availability, '—') + '</select></td>' +
+      '<td>' + _defMaxCfgCellHtml(i, r) + '</td>' +
+      '<td>' + _defMaxAntCellHtml(i, r) + '</td>' +
       // v8.0: tri-state Protected override. r.protectedOverride is null (use global) / true (force protected) / false (force unprotected).
       '<td class="def-prot-cell">' + _defProtBtnHtml(i, r.protectedOverride) + '</td>' +
       // v8.0: Space Diversity toggle. Disabled (greyed) unless the product is HP-class.
@@ -4284,6 +4351,11 @@ window.defaultsUpdateRule = function(idx, key, val){
   } else if(key === 'availability' || key === 'bwMHz'){
     const n = parseFloat(val);
     val = isFinite(n) ? n : 0;
+  } else if(key === 'maxCfg'){
+    val = _DEF_CFG_MULT[val] ? val : null;       // v8.7b: null = no limit
+  } else if(key === 'maxAnt'){
+    const n = parseFloat(val);
+    val = (isFinite(n) && n > 0) ? n : null;     // v8.7b: null = no limit
   }
   DEFAULTS_STATE.rules[idx][key] = val;
 
@@ -4346,7 +4418,7 @@ window.defaultsUpdateRule = function(idx, key, val){
   // new target capacity from the dropdown leaves the Auto cell showing
   // the old resolution (config + reference modulation) until some other
   // field changes or the page is reloaded.
-  if(key === 'band' || key === 'frequency' || key === 'product' || key === 'bwMHz' || key === 'capacity'){
+  if(key === 'band' || key === 'frequency' || key === 'product' || key === 'bwMHz' || key === 'capacity' || key === 'maxCfg'){   // v8.7b: max config changes the Auto cell
     _renderDefaultsRules();
   }
 };
@@ -4627,6 +4699,8 @@ function _defaultsResolveRule(rule){
     configList = configList.filter(c => _rfusxCfgOK(rule.product, c));
   }
   const CFG_MULT = {'1+0':1,'1+1':1,'2+0':2,'2+2':2,'4+0':4};
+  // v8.7b: honour the rule's maximum configuration
+  { const lim = configList.filter(c => _defCfgAllowed(rule, c)); configList = lim.length ? lim : configList.slice(0, 1); }
 
   // Same byte→idx mapping as frameIdxFromBytes() inside the planner.
   const frameMap = {0:0, 64:1, 128:2, 256:3, 512:4, 1024:5, 1518:6, 9612:7};
@@ -5921,26 +5995,64 @@ function calcP530_18_chi(f) {
   return 1.0;
 }
 
-// ITU-R P.838-3 (rain coefficients k, α) / ITU-R P.530-18 (path reduction factor)
-// Path reduction: d0_base = 35·exp(−0.015·R), d0_eff = d0_base/χ(f), dEff = d/(1+d/d0_eff)
-function calcRain(f,pol,R,d){
-  const Rc=Math.min(R,100); // cap at 100 mm/h (P.530-18 §2.3.1)
+// ── v8.7: ITU-R P.530 rain attenuation, selectable version ──────────────────
+// Specific attenuation γR = k·R^α with ITU-R P.838-3 coefficients.
+//  'P530-14/18' (default): r = 1 / (0.477·d^0.633·R^(0.073α)·f^0.123
+//                          − 10.579·(1 − e^(−0.024·d))), r ≤ 2.5, A0.01 = γR·d·r.
+//                          Ap/A0.01 = C1·p^−(C2 + C3·log10 p) with
+//                          C0 = 0.12 + 0.4·log10((f/10)^0.8) for f ≥ 10 GHz, else 0.12;
+//                          C1 = 0.07^C0 · 0.12^(1−C0); C2 = 0.855·C0 + 0.546·(1−C0);
+//                          C3 = 0.139·C0 + 0.043·(1−C0).
+//  'P530-8/13', 'P530-7': d0 = 35·e^(−0.015·R) (R capped at 100 mm/h),
+//                          r = 1/(1 + d/d0); Ap/A0.01 = 0.12·p^−(0.546 + 0.043·log10 p)
+//                          for |latitude| ≥ 30°, 0.07·p^−(0.855 + 0.139·log10 p) below 30°.
+// The previous v8.5–v8.6 form (d0 divided by a hand-calibrated χ(f)) is not
+// used any more; calcP530_18_chi() is kept only for reference.
+const RAIN_ALGOS={'P530-14/18':'ITU-R P.530-14/18','P530-8/13':'ITU-R P.530-8/13','P530-7':'ITU-R P.530-7'};
+function calcRain(f,pol,R,d,opt){
+  opt=opt||{};
+  let algo=RAIN_ALGOS[opt.algo]?opt.algo:'P530-14/18';
+  const lat=isFinite(+opt.lat)?+opt.lat:45;
   const c=llLerp(RC,f),k=pol==='H'?c.kH:c.kV,a=pol==='H'?c.aH:c.aV;
+  if(algo==='P530-14/18'){
+    const Rr=Math.max(R,0);
+    const gamma=k*Math.pow(Rr,a);
+    let r=1/(0.477*Math.pow(d,0.633)*Math.pow(Rr,0.073*a)*Math.pow(f,0.123)-10.579*(1-Math.exp(-0.024*d)));
+    if(!(r>0)||r>2.5) r=2.5;
+    const dEff=r*d, A001=gamma*dEff;
+    const C0=f>=10?0.12+0.4*Math.log10(Math.pow(f/10,0.8)):0.12;
+    const C1=Math.pow(0.07,C0)*Math.pow(0.12,1-C0), C2=0.855*C0+0.546*(1-C0), C3=0.139*C0+0.043*(1-C0);
+    return{gamma,dEff,A001,k,a,Rcapped:Rr,r,algo,C0,C1,C2,C3,lat};
+  }
+  const Rc=Math.min(R,100);
   const gamma=k*Math.pow(Rc,a);
-  const d0=35*Math.exp(-0.015*Rc);           // base effective path factor
-  const chi=calcP530_18_chi(f);              // ITU-R P.530-18 frequency correction
-  const d0_eff=d0/chi;                       // frequency-adjusted effective path factor
-  const dEff=d/(1+d/d0_eff);                // effective rain path (ITU-R P.530-18)
-  const A001=gamma*dEff;                     // rain attenuation at 0.01% (A₀.₀₁)
-  return{gamma,dEff,A001,k,a,Rcapped:Rc,d0,d0_eff,chi};
+  const d0=35*Math.exp(-0.015*Rc);
+  const r=1/(1+d/d0), dEff=d*r, A001=gamma*dEff;
+  const lo=Math.abs(lat)<30;
+  return{gamma,dEff,A001,k,a,Rcapped:Rc,d0,r,algo,lat,C1:lo?0.07:0.12,C2:lo?0.855:0.546,C3:lo?0.139:0.043};
+}
+// options for calcRain from a state object (single link or saved design)
+function _rainOpt(s){
+  s=s||state;
+  let lat=+s.pathLat;
+  if(!isFinite(lat) && typeof window!=='undefined' && isFinite(+window._rainLatHint)) lat=+window._rainLatHint;
+  return {algo:s.rainAlgo||'P530-14/18', lat:isFinite(lat)?lat:45};
 }
 // ITU-R P.530-17 §2.3.1 — rain outage probability from fade margin
 // Non-tropical: Ap = A0.01 × 0.12 × p^{-(0.546+0.043*log10(p))}
 // Solve for p: 0.043y² + 0.546y + log10(A0.01×0.12/FM) = 0, y=log10(p), p in %
 // Equivalent: 0.043y² + 0.546y + log10(0.12) + log10(A0.01/FM) = 0
-function rainPct(A001,FM){
+function rainPct(A001,FM,rain){
   if(FM<=0) return 100;
   if(A001<=0) return 0;
+  // v8.7: version-specific coefficients from calcRain(); 0.12/0.546/0.043 otherwise
+  if(rain && rain.C1>0 && rain.C3>0){
+    const x=Math.log10(FM/(A001*rain.C1));
+    const disc=rain.C2*rain.C2-4*rain.C3*x;
+    if(disc<0) return 0;
+    const y=(-rain.C2+Math.sqrt(disc))/(2*rain.C3);
+    return Math.min(Math.max(Math.pow(10,y),0),100);
+  }
   // ITU-R P.530-17 §2.3.1: A_p = A_0.01 · 0.12 · p^-(0.546+0.043·log10(p))
   // Solve for p given A_p = FM:
   //   0.043y² + 0.546y + log10(FM / (A001·0.12)) = 0  where y = log10(p%)
@@ -6410,7 +6522,7 @@ function ptmpCalc(s){
   const Gn=PTMP_RADIOS[near].gain, Gf=ptmpFarGain(far,dish);
   const FSL=fslFn(d,f);
   const gO=ptmpGamma(f), atm={gW:0,gO:gO}, atmLoss=gO*d;      // gaseous total in gO
-  const rain=calcRain(f,pol,R,d);
+  const rain=calcRain(f,pol,R,d,_rainOpt(s));
   const misc=(s.miscLoss||0), bl=misc;                        // no branch loss; misc only
   const path=FSL+atmLoss+bl;
   const rslOff=(typeof PTMP_RSL_OFFSETS!=='undefined')?(PTMP_RSL_OFFSETS[s.rslMode||'typ_e6']||0):0;
@@ -6425,7 +6537,7 @@ function ptmpCalc(s){
     const ffmDl=rxDl-thr, ffmUl=rxUl-thr;
     const lim=ffmDl<=ffmUl?'DL':'UL';
     const rxu=lim==='DL'?rxDl:rxUl, tx=lim==='DL'?txN:txF, ffm=Math.min(ffmDl,ffmUl), efm=ffm;
-    const pR=rainPct(rain.A001,ffm), pM=mpPct(efm,d,f,C), pT=Math.min(pR+pM,100);
+    const pR=rainPct(rain.A001,ffm,rain), pM=mpPct(efm,d,f,C), pT=Math.min(pR+pM,100);
     const avail=Math.max(0,100-pT);
     return {mod:'MCS'+m, tx, rsl:thr, rxu, efm, ffm, dfm:null, pR, pM, pT, avail,
       rainSec:pR/100*31536e3, mpSec:pM/100*31536e3, totSec:pT/100*31536e3, ok:avail>=ta, xpd:null,
@@ -6456,7 +6568,7 @@ function renderPtmpFull(){
   setEl('v_rsl',n(op.rsl,1)+' dBm'); setEl('v_rxu',n(op.rxu,2)+' dBm','hl');
   setEl('v_efm',n(op.efm,2)+' dB',op.efm>0?'hl':op.efm>-5?'warn':'err');
   if(c.rain){ setEl('v_gam',n(c.rain.gamma,4)+' dB/km'); setEl('v_a001',n(c.rain.A001,3)+' dB',c.rain.A001>op.efm?'warn':'');
-    setEl('v_deff',ptmpDispDist(c.rain.dEff).toFixed(1)+' '+ptmpDistUnit()); setEl('v_d0',ptmpDispDist(c.rain.d0_eff).toFixed(1)+' '+ptmpDistUnit()+' (\u03c7='+n(c.rain.chi,2)+')','td-dim'); }
+    setEl('v_deff',ptmpDispDist(c.rain.dEff).toFixed(1)+' '+ptmpDistUnit()); setEl('v_d0','r='+n(c.rain.r,3)+' · '+RAIN_ALGOS[c.rain.algo],'td-dim'); }
   ['v_eps_row','v_sd_row','v_xpdRow'].forEach(id=>{const e=document.getElementById(id); if(e)e.style.display='none';});
   setEl('v_tgt',fmtA(ta)+'%'); setEl('v_tsec',fmtSec(tSec));
   setEl('v_rsec',fmtSec(op.rainSec),op.pR>(100-ta)?'warn':'');
@@ -6624,7 +6736,7 @@ function computeWith(s){
     const dipTerm=mwDiplexerLoss(product,band);
     const dipLink=2*dipTerm;
     const blMW=mwBranchLoss(mount,s.config||'1+0',band,mA,mB)+(s.miscLoss||0)+dipLink;
-    const rain=calcRain(band,pol,R,d);
+    const rain=calcRain(band,pol,R,d,_rainOpt(s));
     const perf=s.rslMode&&s.rslMode.indexOf('e3')>=0?'e3':'e6';  // not used directly; see below
     const isTyp=(s.rslMode||'typ_e6').indexOf('typ')===0;
     const isE3=(s.rslMode||'typ_e6').indexOf('e3')>=0;
@@ -6657,7 +6769,7 @@ function computeWith(s){
       const ffm=ffm1+sdGc;                    // flat fade margin incl. combining gain
       const dfm=mwDfm(product,bw,mod,isTyp?'typ':'gty',isE3?'e3':'e6');
       const efm=effFM(ffm,dfm);               // effective (flat ⊕ dispersive)
-      const pR=rainPct(rain.A001,ffm);        // rain uses flat margin
+      const pR=rainPct(rain.A001,ffm,rain);        // rain uses flat margin
       const vbC=(s.vbCFactor!=null&&isFinite(s.vbCFactor))?s.vbCFactor:1.0;
       const pM=mwMultipath(method,efm,d,band,eps,K,vbC,p19); // multipath uses EFM; VB uses vbCFactor, P530 uses K/grids
       // ── Space Diversity — Vigants non-selective improvement (ITU P.530-8 Eq.23) ──
@@ -6712,7 +6824,7 @@ function computeWith(s){
   const Gt_def=antG(antA,f),Gr_def=antG(antB,f);
   const Gt=(s._gainOverrideA!=null&&isFinite(s._gainOverrideA))?s._gainOverrideA:Gt_def;
   const Gr=(s._gainOverrideB!=null&&isFinite(s._gainOverrideB))?s._gainOverrideB:Gr_def;
-  const rain=calcRain(f,pol,R,d);
+  const rain=calcRain(f,pol,R,d,_rainOpt(s));
   const vModList = validMods(bw);  // v7.8: routes through validMods so ACMB filter applies to IP-50E too
   const lastMod=vModList[0]; // lowest modulation = last step (no ACM offset)
   const mods=vModList.map(mod=>{
@@ -6744,7 +6856,7 @@ function computeWith(s){
     const isE3 = (s.rslMode||'typ_e6').indexOf('e3')>=0;
     const dfm  = isIp50e ? ip50eDfm(bw, mod, isE3) : null;
     const efm  = (dfm!=null) ? effFM(ffm, dfm) : ffm;
-    const pR=rainPct(rain.A001,ffm);
+    const pR=rainPct(rain.A001,ffm,rain);
     const _epsM=(s.pathEps!=null&&isFinite(s.pathEps))?s.pathEps:((typeof pathInclination==='function')?pathInclination(d):0);
     const _Km=(s.geoK!=null&&isFinite(s.geoK))?s.geoK:1e-4;
     const pM=mwMultipath('P530-17',efm,d,f,_epsM,_Km,s.vbCFactor,null), pT=Math.min(pR+pM,100);
@@ -6778,7 +6890,7 @@ function ehCalc(s,f,d,band){
   const _gA=(s.ehAntA!=null&&isFinite(s.ehAntA))?s.ehAntA:42, _gB=(s.ehAntB!=null&&isFinite(s.ehAntB))?s.ehAntB:42;
   const Gt=(s._gainOverrideA!=null&&isFinite(s._gainOverrideA))?s._gainOverrideA:_gA;
   const Gr=(s._gainOverrideB!=null&&isFinite(s._gainOverrideB))?s._gainOverrideB:_gB;
-  const rain=calcRain(f,s.pol||'V',s.rainRate,d);
+  const rain=calcRain(f,s.pol||'V',s.rainRate,d,_rainOpt(s));
   const perf=(s.rslMode||'typ_e6').indexOf('gty')===0?'gty':'typ';
   const ber=(s.rslMode||'typ_e6').indexOf('e3')>=0?'e3':'e6';
   const ta=s.targetAvail;
@@ -6794,7 +6906,7 @@ function ehCalc(s,f,d,band){
     const rsl=rslBase+acmAdj;
     const rxu=tx+Gt+Gr-FSL-atmLoss-bl-(s.miscLoss||0);
     const ffm=rxu-rsl, efm=ffm;
-    const pR=rainPct(rain.A001,ffm), pM=mwMultipath('P530-17',efm,d,f,_eps,_K,s.vbCFactor,null), pT=Math.min(pR+pM,100);
+    const pR=rainPct(rain.A001,ffm,rain), pM=mwMultipath('P530-17',efm,d,f,_eps,_K,s.vbCFactor,null), pT=Math.min(pR+pM,100);
     const avail=Math.max(0,100-pT);
     return{mod,tx,rsl,rxu,efm,ffm,dfm:null,pR,pM,pT,avail,
       rainSec:pR/100*31536e3,mpSec:pM/100*31536e3,totSec:pT/100*31536e3,ok:avail>=ta,xpd:(p==='EH-8020'&&_cfg==='2+0'&&typeof ehXpif==='function')?ehXpif(bw,mod):null,cap:(typeof ehCap==='function')?ehCap(p,bw,mod,_cfg):null};
@@ -6812,7 +6924,7 @@ function vbandMplCalc(s,radio,f,d,band){
   const _gB=_isP280?((s.ehAntB!=null&&isFinite(s.ehAntB))?s.ehAntB:42):22;
   const Gt=(s._gainOverrideA!=null&&isFinite(s._gainOverrideA))?s._gainOverrideA:_gA;
   const Gr=(s._gainOverrideB!=null&&isFinite(s._gainOverrideB))?s._gainOverrideB:_gB;
-  const rain=calcRain(f,s.pol||'V',s.rainRate,d);
+  const rain=calcRain(f,s.pol||'V',s.rainRate,d,_rainOpt(s));
   const rslOff=(typeof PTMP_RSL_OFFSETS!=='undefined')?(PTMP_RSL_OFFSETS[s.rslMode||'typ_e6']||0):0;
   const C=s.cFactor, ta=s.targetAvail;
   const mcs=[2,3,4,6,7,8,9,10,11,12], lowest=mcs[0];
@@ -6824,7 +6936,7 @@ function vbandMplCalc(s,radio,f,d,band){
     const rslV=baseRSL+rslOff+hyst;
     const rxu=tx+Gt+Gr-FSL-atmLoss-bl-(s.miscLoss||0);
     const ffm=rxu-rslV, efm=ffm;
-    const pR=rainPct(rain.A001,ffm);
+    const pR=rainPct(rain.A001,ffm,rain);
     const _epsM=(s.pathEps!=null&&isFinite(s.pathEps))?s.pathEps:((typeof pathInclination==='function')?pathInclination(d):0);
     const _Km=(s.geoK!=null&&isFinite(s.geoK))?s.geoK:1e-4;
     const pM=mwMultipath('P530-17',efm,d,f,_epsM,_Km,s.vbCFactor,null), pT=Math.min(pR+pM,100);
@@ -7002,6 +7114,12 @@ let state={freq:80,bw:2000,pol:'V',antA:.6,antB:.6,bl:1,config:'1+0',cFactor:2,
            sdEnabled:false,   // Space Diversity enabled (IP-20C/RFU-D/RFU-D-HP/IP-20C-HP 4-11 GHz)
            sdMode:'BBC',      // v8.7: 'BBC' baseband combining (+3 dB) | 'BBS' baseband switching (no gain)
            obstacles:[],      // v8.7: [{id,type,mode,fromKm,toKm,h,off,w}] metres / km
+           profileK:4/3,      // v8.7: k-factor for the earth bulge on the terrain profile (Infinity = flat earth)
+           rainAlgo:'P530-14/18', // v8.7: ITU-R P.530 rain prediction version ('P530-14/18' | 'P530-8/13' | 'P530-7')
+           pathLat:null,      // v8.7: path mid-point latitude (P.530-7/8/13 use different coefficients below 30°)
+           // v8.7: clearance criteria. C1: normal atmosphere; C2: sub-standard atmosphere at k_min;
+           // diversity antennas: one criterion at k = 4/3.
+           clrClimate:'temperate', clrC1Pct:100, clrC2Pct:30, clrKmin:2/3, clrDivPct:60,
            reflSurface:'flat', reflKmin:0.67, reflKmax:4, reflSweepSite:'B', reflFadeThr:10, // v8.7 reflection advisor
            sdDivLossA:null, sdDivLossB:null, // v8.7: diversity path loss per site (dB); null = same as main
            sdSep:12,          // (legacy) SD antenna separation — kept in sync = min(sdSepA, sdSepB)
@@ -7132,7 +7250,7 @@ function render(){
   showHideXpdCard();
   setEl('v_gam',n(rain.gamma,4)+' dB/km');
   setEl('v_deff',fmtDist(rain.dEff,4));
-  setEl('v_d0',fmtDist(rain.d0_eff,2)+' (χ='+n(rain.chi,2)+' · r='+n(rain.dEff/state.distance,3)+')','td-dim');
+  setEl('v_d0','r='+n(rain.r,3)+(rain.d0?' · d₀='+fmtDist(rain.d0,2):'')+' · '+RAIN_ALGOS[rain.algo],'td-dim');
   setEl('v_gw',n(atm.gW,6)+' dB/km (P.676-12)','td-dim');
   setEl('v_go',n(atm.gO,6)+' dB/km (P.676-12)','td-dim');
   setEl('v_a001',n(rain.A001,3)+' dB',rain.A001>sel.efm?'warn':'');
@@ -7419,7 +7537,7 @@ function renderMW(){
    }}
   setEl('v_gam',n(c.rain.gamma,4)+' dB/km');
   setEl('v_deff',fmtDist(c.rain.dEff,4));
-  setEl('v_d0',fmtDist(c.rain.d0_eff,2)+' (χ='+n(c.rain.chi,2)+' · r='+n(c.rain.dEff/state.distance,3)+')','td-dim');
+  setEl('v_d0','r='+n(c.rain.r,3)+(c.rain.d0?' · d₀='+fmtDist(c.rain.d0,2):'')+' · '+RAIN_ALGOS[c.rain.algo],'td-dim');
   setEl('v_a001',n(c.rain.A001,3)+' dB',c.rain.A001>sel.ffm?'warn':'');
   setEl('v_tgt',fmtA(ta)+'%');setEl('v_tsec',fmtSec(tSec));
   setEl('v_rsec',fmtSec(sel.rainSec),sel.pR>(100-ta)?'warn':'');
@@ -7942,15 +8060,22 @@ function syncRelMethodUI(){
   if(rcField) rcField.style.display=(state.p530PathType==='inland')?'none':'';
   updateHdrMethodRef();
 }
+function onRainAlgoChange(){
+  const v=document.getElementById('rainAlgo')?.value;
+  state.rainAlgo=RAIN_ALGOS[v]?v:'P530-14/18';
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  updateHdrMethodRef(); update(true);
+}
+function _rainAlgoShort(){ return ({'P530-14/18':'P.530-14/18','P530-8/13':'P.530-8/13','P530-7':'P.530-7'})[state.rainAlgo||'P530-14/18']||'P.530-14/18'; }
 function updateHdrMethodRef(){
   const el=document.getElementById('hdrMethodRef');
   if(!el) return;
   if(state.isMW){
     const m=state.relMethod||'P530-17';
     const mp=m==='VB'?'Vigants‑Barnett (multipath)':m==='P530-78'?'ITU-R P.530-7/8 (multipath)':m==='P530-19'?'ITU-R P.530-19 (multipath · dN75 · LogK)':'ITU-R P.530-17 (multipath)';
-    el.innerHTML=mp+'  ·  P.530-18 (rain)  ·  P.838-3  ·  P.676-12  |  Ceragon Planning tool ©';
+    el.innerHTML=mp+'  ·  '+_rainAlgoShort()+' (rain)  ·  P.838-3  ·  P.676-12  |  Ceragon Planning tool ©';
   }else{
-    el.innerHTML='Vigants‑Barnett (multipath)  ·  P.530-18 (rain)  ·  P.838-3  ·  P.676-12  |  Ceragon Planning tool ©';
+    el.innerHTML='Vigants‑Barnett (multipath)  ·  '+_rainAlgoShort()+' (rain)  ·  P.838-3  ·  P.676-12  |  Ceragon Planning tool ©';
   }
 }
 
@@ -8050,7 +8175,7 @@ function autoVBFromMap(){
     return;
   }
 
-  const elev=td.elevations;
+  const elev=td.rawElevations||td.elevations;   // v8.7: roughness from the raw DEM
   const n=elev.length;
   const samples=[];
   for(let i=0;i<50;i++){
@@ -8086,7 +8211,7 @@ function autoCalcVBFromTerrain(){
     if(hint)hint.textContent='Pin sites & load terrain to auto-calculate C';
     return;
   }
-  const elev=td.elevations;
+  const elev=td.rawElevations||td.elevations;   // v8.7: roughness from the raw DEM
   const n=elev.length;
   const samples=[];
   for(let i=0;i<50;i++){
@@ -8194,7 +8319,7 @@ function p841Q(p){
 function p530ClassifyTerrain(){
   const td=window._terrainData;
   if(!td||!td.elevations||td.elevations.length<10) return null;
-  const e=td.elevations, n=e.length, sm=[];
+  const e=td.rawElevations||td.elevations, n=e.length, sm=[];   // v8.7: raw DEM
   for(let i=0;i<50;i++) sm.push(e[Math.min(n-1,Math.round(i*(n-1)/49))]);
   const M=sm.reduce((a,b)=>a+b,0)/50;
   const S=Math.sqrt(sm.reduce((a,b)=>a+(b-M)*(b-M),0)/50);
@@ -8248,7 +8373,10 @@ function calcGeoK(){
   // ── C0: lower antenna altitude × terrain type (ITU-R P.530-7/8 Table 1) ──
   const alt=state.lowerAntAlt||200;
   const ttype=is78?(state.terrainType||'hills'):(document.getElementById('terrainType')?.value==='auto'?'hills':(state.terrainType||'hills'));
-  const C0_TABLE={'low':[0.0,3.5,1.75],'mid':[2.5,6.0,4.25],'high':[5.5,8.0,10.5]};
+  // v8.7: P.530-7/8 Table 1 lists Mountains only above 700 m. Below that the
+  // Hills value is used (mountains never have MORE multipath than hills at
+  // the same altitude, so this is the conservative choice).
+  const C0_TABLE={'low':[0.0,3.5,3.5],'mid':[2.5,6.0,6.0],'high':[5.5,8.0,10.5]};
   const tier=alt<400?'low':alt<700?'mid':'high';
   const tIdx=ttype==='plains'?0:ttype==='hills'?1:2;
   const C0=C0_TABLE[tier][tIdx];
@@ -8338,7 +8466,7 @@ function calcGeoK(){
 
   state.p530C0=C0; state.p530PLused=PL;
   if(hint)hint.textContent=
-    pathLabel+' · C₀='+C0+' dB ('+ttype+', '+Math.round(alt)+' m) · pL='+PL.toFixed(1)+'% · K='+K_final.toExponential(2)+
+    pathLabel+' · C₀='+C0+' dB ('+ttype+', '+Math.round(alt)+' m'+(ttype==='mountains'&&alt<700?', hills value — Table 1 has no Mountains entry below 700 m':'')+') · pL='+PL.toFixed(1)+'% · K='+K_final.toExponential(2)+
     ' ('+lat.toFixed(2)+'°, '+lon.toFixed(2)+'°)';
 
   update(true);
@@ -8586,6 +8714,9 @@ function renderChart(){
 
 // ===== MAX RANGE =====
 function calcMaxDistAll(){
+  // v8.7b: without site coordinates, Max also sets the distance to the
+  // reference modulation's range at the target availability
+  if(!lbcDistanceIsGeographic()){ state.distAuto=true; try{ update(); }catch(_){} }
   const btn=document.getElementById('maxBtn');
   btn.innerHTML='<span class="spin-sm"></span>';btn.disabled=true;
   setTimeout(()=>{
@@ -8856,7 +8987,7 @@ async function exportToExcel(){
     const BLACK_BOLD=S('000000',null,true,10,'center',FULL_BDR);
     for(let r=36;r<=46;r++){for(let c=0;c<=12;c++){const k=ec(r,c);if(ws[k])ws[k].s=BLACK_BOLD;}}
     row++;
-    cs(row,0,'Reference: ITU-R P.838-3 · ITU-R P.676-12 · ITU-R P.530-17 (multipath) · ITU-R P.530-18 (rain path reduction, frequency-dependent χ(f)) · Ceragon mmW RSL, TX & Capacity tables','s',ST.foot);
+    cs(row,0,'Reference: ITU-R P.838-3 · ITU-R P.676-12 · ITU-R P.530-17 (multipath) · ITU-R '+_rainAlgoShort()+' (rain) · Ceragon mmW RSL, TX & Capacity tables','s',ST.foot);
     // A49: no borders
     const refK=ec(row,0);if(ws[refK])ws[refK].s={...ws[refK].s,border:{}};
     mgc(row,0,row,NC-1);row++;
@@ -9496,8 +9627,14 @@ function lbcSyncDistLockUI(locked){
 function refreshMaxDist(){
   // Auto-set distance = max range for a reference mod at target availability
   if(lbcDistanceIsGeographic()) return;   // hop length is set by the sites
+  if(state.distAuto === false) return;    // v8.7b: the user typed a distance
   let targetMod;
-  if(state.isMW){
+  // v8.7b: use the REFERENCE MODULATION chosen in Link Budget Detail when it is
+  // valid for the current radio / BW; the old fixed choice is the fallback
+  const _refList = (typeof calc!=='undefined' && calc && calc.mods) ? calc.mods.map(m=>m.mod) : [];
+  if(state.selMod && (_refList.indexOf(state.selMod) >= 0 || (state.isMW ? mwMods(state.mwProduct||'IP-20C',state.bw,state.mwBand) : validMods(state.bw)).indexOf(state.selMod) >= 0)){
+    targetMod = state.selMod;
+  } else if(state.isMW){
     const all=mwMods(state.mwProduct||'IP-20C',state.bw,state.mwBand);
     if(!all.length)return;
     targetMod=all[Math.floor(all.length/2)]; // mid-order modulation
@@ -9512,10 +9649,28 @@ function refreshMaxDist(){
     const el=document.getElementById('distance');
     if(el&&document.activeElement!==el) el.value=distShort()?String(Math.round(ptmpDispDist(state.distance))):(isFCC()?(state.distance/1.60934).toFixed(2):state.distance.toFixed(2));
   }
+  _distAutoHint(targetMod, maxD>0.05);
+}
+// v8.7b: one-line note under Distance saying what drives it
+function _distAutoHint(mod, ok){
+  const h=document.getElementById('distAutoHint'); if(!h) return;
+  if(lbcDistanceIsGeographic()){ h.textContent=''; return; }
+  if(state.distAuto===false){ h.innerHTML='Manual distance &middot; <a href="javascript:void(0)" onclick="lbcDistAutoOn()">follow reference modulation</a>'; return; }
+  h.textContent = ok ? ('Auto: max range of '+mod+' @ '+state.targetAvail+'%')
+                     : ('Auto: '+mod+' cannot meet '+state.targetAvail+'% at any distance');
+}
+function lbcDistAutoOn(){
+  state.distAuto=true;
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  update();
 }
 function update(skipDistRefresh){
+  // v8.7: path mid-point latitude for the latitude-dependent P.530-7/8/13 rain conversion
+  try{ const la=parseDMS(document.getElementById('siteLatA')?.value), lb=parseDMS(document.getElementById('siteLatB')?.value);
+       state.pathLat = (isFinite(la)&&isFinite(lb)) ? (la+lb)/2 : (isFinite(la)?la:(isFinite(lb)?lb:state.pathLat)); }catch(_){}
   const _geo = lbcDistanceIsGeographic();
   if(!skipDistRefresh && !_geo) refreshMaxDist();
+  else { try{ _distAutoHint(state.selMod, true); }catch(_){} }
   lbcSyncDistLockUI(_geo);
   compute();render();scheduleChart();renderCapChart();
   if(state.btaEnabled&&typeof updateBTA==='function') updateBTA();
@@ -10193,12 +10348,15 @@ function setCFactor(v){
   document.querySelectorAll('.c-btn').forEach((b,i)=>{b.className='c-btn'+(v===i*2?' active':'');});
   update();
 }
-function setSelMod(m){state.selMod=m;document.getElementById('selMod').value=m;if(typeof populateMaxMod==='function')populateMaxMod();render();}
+function setSelMod(m){state.selMod=m;document.getElementById('selMod').value=m;if(typeof populateMaxMod==='function')populateMaxMod();
+  // v8.7b: without site coordinates the distance follows the reference modulation
+  if(!lbcDistanceIsGeographic()){ state.distAuto=true; update(); } else render();}
 
 ['freq','bw','antA','antB','distance','cFactor'].forEach(id=>{
   document.getElementById(id).addEventListener('input',function(){
     let _v=id==='bw'?parseFloat(this.value):+this.value;
     if(id==='distance'){
+      state.distAuto=false;                           // v8.7b: typed distance stays until Max / ref. modulation / availability
       if(distShort())_v=ptmpToKm(+this.value);        // PtMP: input is metres (ft on FCC)
       else if(state.std==='FCC')_v=_v*1.60934;         // FCC: input is miles
     }
@@ -10858,7 +11016,8 @@ function getCustomMods(){
 function onRainZone(){
   const v=document.getElementById('rainZone').value;
   const rc=document.getElementById('rainCustom');
-  if(v==='custom'){rc.style.display='block';}
+  state.rainSrcInfo=null;
+  if(v==='custom'){rc.style.display='block'; const x=+rc.value; if(x>0){ state.rainRate=x; update(true); }}
   else if(v==='map'){rc.style.display='none';if(state.mapR001!=null){state.rainRate=state.mapR001;update(true);}}
   else{rc.style.display='none';state.rainRate=+v;update(true);}
 }
@@ -10875,7 +11034,7 @@ function renderClimateRows(){
   if(state.mapR001!=null&&document.getElementById('rainZone')?.value==='map'){
     rsrc='ITU-R P.837-8 (map)';rcls='cap';
   }else if(document.getElementById('rainZone')?.value==='custom'){
-    rsrc='Custom (manual)';rcls='warn';
+    rsrc='User specified value';rcls='warn';
   }else{
     const zEl=document.getElementById('rainZone');
     rsrc='Zone '+(zEl?zEl.options[zEl.selectedIndex]?.text?.split(' ')[0]:'—');
@@ -12412,7 +12571,7 @@ function _reflKList(){
   return out;
 }
 function reflAtK(hA,hB,k,td,freq,g0){
-  const el=td.elevations, n=el.length-1, D=td.totalKm, Dm=D*1000, a=6371;
+  const el=td.rawElevations||td.elevations, n=el.length-1, D=td.totalKm, Dm=D*1000, a=6371;   // v8.7: bulged here per k
   const lam=0.3/freq;
   const x=i=>i/n*D;
   const ek=i=>el[i]+x(i)*(D-x(i))*1000/(2*k*a);
@@ -12457,7 +12616,7 @@ function reflAtK(hA,hB,k,td,freq,g0){
 }
 // Clearance at k=4/3 as fraction of F1 (min over path)
 function _reflClearF1(hA,hB,td,freq,kOpt){
-  const el=td.elevations, n=el.length-1, D=td.totalKm, a=6371, k=kOpt||4/3;
+  const el=td.rawElevations||td.elevations, n=el.length-1, D=td.totalKm, a=6371, k=kOpt||4/3;   // v8.7
   const HA=el[0]+hA, HB=el[n]+hB; let worst=Infinity;
   for(let i=1;i<n;i++){ const x=i/n*D; const e=el[i]+x*(D-x)*1000/(2*k*a);
     const los=HA+(HB-HA)*i/n; const F1=fresnelR1(x,D-x,freq); worst=Math.min(worst,(los-e)/F1); }
@@ -12473,9 +12632,12 @@ function reflSweep(td,freq,hA,hB,site){
     const a=site==='A'?h:hA, b=site==='B'?h:hB;
     const sigs=ks.map(k=>{ const r=reflAtK(a,b,k,td,freq,g0); return r.ok?r.sig:0; });
     const worst=Math.min(...sigs), best=Math.max(...sigs);
-    // clearance criteria: ≥60% F1 at k=4/3 and ≥30% F1 at the low end of the k range
-    const clr=_reflClearF1(a,b,td,freq), clrLo=_reflClearF1(a,b,td,freq,Math.min(ks[0],2/3));
-    rows.push({h,worst,best,sigs,clr,clrLo,valid:clr>=0.6&&clrLo>=0.3});
+    // v8.7: clearance criteria (C1 at 4/3, C2 at k_min, diversity at 4/3)
+    const C=_clrCrit();
+    const clr=_reflClearF1(a,b,td,freq), clrLo=_reflClearF1(a,b,td,freq,C.kmin);
+    const sdOn=state.sdEnabled&&isSdEligible();
+    const clrDiv=sdOn?_reflClearF1(a-(state.sdSepA||12),b-(state.sdSepB||12),td,freq):Infinity;
+    rows.push({h,worst,best,sigs,clr,clrLo,valid:clr>=C.c1&&clrLo>=C.c2&&clrDiv>=C.div});
   }
   // recommendation: valid height with the best worst-case; ties → lower height
   let rec=null;
@@ -12541,7 +12703,8 @@ function renderMultipathAdvisor(hA,hB,D,freq,elevations,distances,sdVis){
   // ── HTML ──
   const opt=(o,cur)=>Object.entries(o).map(([k,v])=>'<option value="'+k+'"'+(k===cur?' selected':'')+'>'+v.l+' (Γ0 '+v.g+')</option>').join('');
   let h='<div style="margin-top:14px;border-top:1px solid var(--border-l);padding-top:10px">'+
-    '<div style="font-size:11px;font-weight:700;color:var(--navy2);margin-bottom:6px">&#128225; Ground Reflection &amp; SD Advisor <span style="font-weight:400;font-size:10px;color:var(--text3)">real terrain + earth bulge for each k · '+freq+' GHz · '+D.toFixed(2)+' km</span></div>'+
+    '<div style="font-size:11px;font-weight:700;color:var(--navy2);margin-bottom:6px;display:flex;align-items:center;gap:8px">&#128225; Ground Reflection &amp; SD Advisor <span style="font-weight:400;font-size:10px;color:var(--text3)">real terrain + earth bulge for each k · '+freq+' GHz · '+D.toFixed(2)+' km · target '+state.targetAvail+'%</span>'+
+      '<button onclick="reflAdvisorRefresh()" title="Recalculate the reflection analysis and SD verdict with the current settings" style="margin-left:auto;padding:2px 9px;font-size:10.5px;border:1px solid var(--border);border-radius:5px;background:var(--bg);cursor:pointer">&#8635; Refresh</button></div>'+
     '<div style="display:flex;flex-wrap:wrap;gap:10px;font-size:10.5px;align-items:flex-end;margin-bottom:8px">'+
     '<label>Reflecting surface<br><select onchange="onReflParam(\'reflSurface\',this.value)" style="font-size:10.5px">'+opt(REFL_SURF,state.reflSurface||'flat')+'</select></label>'+
     '<label>k range<br><input type="number" step="0.01" min="0.3" value="'+(state.reflKmin||0.67)+'" style="width:56px" onchange="onReflParam(\'reflKmin\',this.value)"> – <input type="number" step="0.1" min="0.5" value="'+(state.reflKmax||4)+'" style="width:56px" onchange="onReflParam(\'reflKmax\',this.value)"></label>'+
@@ -12551,7 +12714,7 @@ function renderMultipathAdvisor(hA,hB,D,freq,elevations,distances,sdVis){
     '<div style="background:'+V[2]+';border:1px solid '+V[1]+'33;border-radius:8px;padding:8px 12px;margin-bottom:10px">'+
     '<div style="font-size:13px;font-weight:800;color:'+V[1]+'">'+V[0]+'</div>'+
     '<ul style="margin:4px 0 0 16px;padding:0;font-size:10.5px;color:var(--text2)">'+reasons.map(r=>'<li>'+r+'</li>').join('')+'</ul></div>'+
-    '<div style="font-size:11px;font-weight:700;color:var(--navy2);margin-bottom:4px">&#8597; Antenna-height sweep at Site '+site+' <span style="font-weight:400;font-size:10px;color:var(--text3)">signal relative to free space for each k · bold = worst case · grey band = fails clearance (60% F1 at k=4/3, 30% F1 at low k)</span></div>'+
+    '<div style="font-size:11px;font-weight:700;color:var(--navy2);margin-bottom:4px">&#8597; Antenna-height sweep at Site '+site+' <span style="font-weight:400;font-size:10px;color:var(--text3)">signal relative to free space for each k · bold = worst case · grey band = fails the clearance criteria (C1 '+state.clrC1Pct+'% F1 @ 4/3, C2 '+state.clrC2Pct+'% F1 @ k='+(+state.clrKmin).toFixed(2)+')</span></div>'+
     '<div style="background:var(--card-bg);border:1px solid var(--border-l);border-radius:8px;padding:4px"><canvas id="reflSweepChart" style="width:100%;height:230px;display:block"></canvas></div>'+
     '<div style="display:flex;gap:10px;align-items:center;margin-top:6px;font-size:10.5px;flex-wrap:wrap">'+
     (sw.rec?'<span style="font-weight:700;color:#065f46">&#11088; Least prone to multipath: Site '+site+' = '+cv(sw.rec.h)+' '+U+' (worst case '+sw.rec.worst.toFixed(1)+' dB)</span>'+
@@ -13421,6 +13584,10 @@ async function fetchTerrainProfile(){
     const distScale=fcc?1/1.60934:1;
     const distUnit=fcc?'mi':'km';
 
+    // v8.7: earth curvature. Keep the raw DEM for terrain statistics and
+    // bulge the profile by x(D−x)/(2·k·a) for every clearance check.
+    window._terrainRaw = elevations.slice();
+    elevations = _bulgeProfile(window._terrainRaw, kmTotal);
     // LOS line: straight line from (elev[0]+hA) to (elev[N]+hB)
     const e0=elevations[0]+hA;
     const eN=elevations[N]+hB;
@@ -13440,10 +13607,10 @@ async function fetchTerrainProfile(){
     const statusEl=document.getElementById('losStatus');
     if(statusEl){
       if(obstructed){
-        statusEl.textContent='✗ Obstructed';
+        statusEl.textContent='✗ Obstructed (k='+_profileKLabel()+')';
         statusEl.style.cssText='background:#fee2e2;color:#991b1b;font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px';
       } else {
-        statusEl.textContent='✓ Clear LOS (min '+maxClearance.toFixed(0)+' m)';
+        statusEl.textContent='✓ LOS clear '+maxClearance.toFixed(0)+' m (k='+_profileKLabel()+')';
         statusEl.style.cssText='background:#d1fae5;color:#065f46;font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px';
       }
     }
@@ -13650,8 +13817,10 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
   if(reflToggle)reflToggle.style.display=state.isMW?'flex':'none';
 
   // Cache for optimiser
-  _terrainData = { distances, elevations, losLine, fresnelDn, distUnit, n, totalKm, freq };
+  const rawElevations = (window._terrainRaw && window._terrainRaw.length === elevations.length) ? window._terrainRaw : elevations;
+  _terrainData = { distances, elevations, rawElevations, losLine, fresnelDn, distUnit, n, totalKm, freq, k:_profileK() };
   window._terrainData = _terrainData;   // v8.7: readers use window._terrainData (was never set)
+  try{ _clrSyncUI(); _aglMirrorSync(); }catch(_){}
   // Auto-update reliability parameters from terrain profile
   if(state.isMW&&state.relMethod==='VB') autoCalcVBFromTerrain();
   if(state.isMW){
@@ -13736,7 +13905,10 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
     options:{
       responsive:false, maintainAspectRatio:false, animation:{duration:0},
       interaction:{mode:'index',intersect:false},
-      onClick:(ev,els,chart)=>{ try{ obstPickFromChart(ev,chart); }catch(_){} },
+      onClick:(ev,els,chart)=>{ try{
+          const op=document.getElementById('obstPanel');
+          if(op && op.open) obstPickFromChart(ev,chart); else profileSiteMenu(ev,chart);   // v8.7b
+        }catch(_){} },
       plugins:{
         legend:{display:false},
         tooltip:{
@@ -13781,7 +13953,7 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
     if(showRefl){
       if(sdVis && reflPaths.length) renderReflectionPanel(reflPaths, hA_m, hB_m, sdSepA, sdSepB, totalKm, freq, elevations, distances);
       else { reflPanel.innerHTML=''; reflPanel.style.display=''; }
-      try{ renderMultipathAdvisor(hA_m, hB_m, totalKm, freq, elevations, distances, sdVis); }catch(e){ console.warn('multipath advisor failed',e); }
+      try{ renderMultipathAdvisor(hA_m, hB_m, totalKm, freq, (window._terrainRaw && window._terrainRaw.length===elevations.length)?window._terrainRaw:elevations, distances, sdVis); }catch(e){ console.warn('multipath advisor failed',e); }
     } else {
       reflPanel.style.display='none';
       reflPanel.innerHTML='';
@@ -13789,6 +13961,35 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
   }
 }
 
+// ── v8.7: earth bulge on the terrain profile ─────────────────────────────────
+function _profileK(){ const k=+state.profileK; return (k>0)?k:4/3; }
+function _profileKLabel(){ const k=_profileK(); return !isFinite(k)?'∞':Math.abs(k-4/3)<1e-3?'4/3':Math.abs(k-2/3)<1e-3?'2/3':String(+k.toFixed(2)); }
+function _bulgeProfile(raw, D){
+  const k=_profileK(), n=raw.length-1; if(!isFinite(k)||n<1) return raw.slice();
+  return raw.map((e,i)=>{ const x=i/n*D; return e + x*(D-x)*1000/(2*k*6371); });
+}
+function onProfileKChange(){
+  const v=document.getElementById('profileKSel')?.value;
+  state.profileK = v==='Infinity' ? Infinity : parseFloat(v);
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  const td=window._terrainData;
+  if(td && window._terrainRaw && window._terrainRaw.length===td.elevations.length){
+    const eff=_bulgeProfile(window._terrainRaw, td.totalKm);
+    const hasObstr=td.losLine.some((l,i)=>l<eff[i]);
+    let minC=Infinity; td.losLine.forEach((l,i)=>{ minC=Math.min(minC,l-eff[i]); });
+    const st=document.getElementById('losStatus');
+    if(st){ if(hasObstr){ st.textContent='✗ Obstructed (k='+_profileKLabel()+')'; st.style.cssText='background:#fee2e2;color:#991b1b;font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px'; }
+            else { st.textContent='✓ LOS clear '+minC.toFixed(0)+' m (k='+_profileKLabel()+')'; st.style.cssText='background:#d1fae5;color:#065f46;font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px'; } }
+    renderTerrainChart(td.distances, eff, td.losLine, hasObstr, td.distUnit);
+  }
+}
+function _syncProfileKSel(){
+  const sel=document.getElementById('profileKSel'); if(!sel) return;
+  const k=_profileK(); sel.value = !isFinite(k)?'Infinity':Math.abs(k-4/3)<1e-3?'1.3333333':Math.abs(k-2/3)<1e-3?'0.6666667':String(k);
+}
+// v8.7b: the reflection / SD advisor depends on the target availability and
+// the SD settings — recalculate it on demand and whenever the target changes
+function reflAdvisorRefresh(){ try{ if(window._terrainData) redrawTerrainOverlays(); }catch(e){ console.warn('advisor refresh failed', e); } }
 function redrawTerrainOverlays(){
   // Just re-fetch from cache without hitting API
   if(!_terrainData) return;
@@ -13849,6 +14050,67 @@ function obstChanged(){
   if(typeof redrawTerrainOverlays==='function' && window._terrainData) redrawTerrainOverlays(); else obstRender();
   try{ update(true); }catch(_){}
 }
+// ── v8.7b: click the profile to move Site A or B to that point of the path ──
+function profileSiteMenu(ev, chart){
+  const td=window._terrainData; if(!td) return;
+  const idx=chart.scales.x.getValueForPixel(ev.x); if(!isFinite(idx)) return;
+  const km=Math.max(0,Math.min(td.totalKm,(idx/td.n)*td.totalKm));
+  if(km < 0.02 || km > td.totalKm-0.02) return;
+  const card=document.getElementById('terrainProfileCard'); if(!card) return;
+  let m=document.getElementById('profSiteMenu');
+  if(!m){ m=document.createElement('div'); m.id='profSiteMenu';
+    m.style.cssText='position:absolute;z-index:50;background:var(--card-bg,#fff);border:1px solid #cbd5e1;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:6px 8px;font-size:11.5px;display:flex;gap:6px;align-items:center;white-space:nowrap';
+    card.style.position = card.style.position || 'relative'; card.appendChild(m); }
+  const fcc=isFCC(), dTxt=fcc?(km/1.60934).toFixed(2)+' mi':km.toFixed(2)+' km';
+  const gnd=_obInterp(td.rawElevations||td.elevations,km,td.totalKm,td.n);
+  m.innerHTML='<span style="color:var(--text3)">At '+dTxt+' ('+Math.round(fcc?gnd/0.3048:gnd)+(fcc?' ft':' m')+' ASL):</span>'+
+    '<button onclick="profileMoveSite(\'A\','+km+')" style="padding:2px 9px;border:1px solid #2563eb;background:#eff6ff;color:#1d4ed8;border-radius:5px;cursor:pointer;font-weight:600">Move Site A here</button>'+
+    '<button onclick="profileMoveSite(\'B\','+km+')" style="padding:2px 9px;border:1px solid #d97706;background:#fffbeb;color:#b45309;border-radius:5px;cursor:pointer;font-weight:600">Move Site B here</button>'+
+    '<button onclick="this.parentNode.style.display=\'none\'" style="border:none;background:none;cursor:pointer;font-size:14px;color:var(--text3)">&times;</button>';
+  const cr=card.getBoundingClientRect(), cv=chart.canvas.getBoundingClientRect();
+  m.style.display='flex';
+  const x=cv.left-cr.left+ev.x, y=cv.top-cr.top+ev.y;
+  m.style.left=Math.max(4, Math.min(cr.width-m.offsetWidth-4, x-m.offsetWidth/2))+'px';
+  m.style.top=Math.max(4, y-46)+'px';
+}
+function profileMoveSite(site, km){
+  const m=document.getElementById('profSiteMenu'); if(m) m.style.display='none';
+  const td=window._terrainData; if(!td) return;
+  const la=parseDMS(document.getElementById('siteLatA').value), lo=parseDMS(document.getElementById('siteLonA').value);
+  const lb=parseDMS(document.getElementById('siteLatB').value), lob=parseDMS(document.getElementById('siteLonB').value);
+  if(![la,lo,lb,lob].every(isFinite)) return;
+  // point at fraction f along the great circle A → B
+  const f=km/td.totalKm, R=Math.PI/180;
+  const p1=la*R, l1=lo*R, p2=lb*R, l2=lob*R;
+  const d=2*Math.asin(Math.sqrt(Math.sin((p2-p1)/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin((l2-l1)/2)**2));
+  let lat, lon;
+  if(d<1e-12){ lat=la; lon=lo; }
+  else{
+    const a=Math.sin((1-f)*d)/Math.sin(d), b=Math.sin(f*d)/Math.sin(d);
+    const x=a*Math.cos(p1)*Math.cos(l1)+b*Math.cos(p2)*Math.cos(l2);
+    const y=a*Math.cos(p1)*Math.sin(l1)+b*Math.cos(p2)*Math.sin(l2);
+    const z=a*Math.sin(p1)+b*Math.sin(p2);
+    lat=Math.atan2(z,Math.sqrt(x*x+y*y))/R; lon=Math.atan2(y,x)/R;
+  }
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  document.getElementById('siteLat'+site).value=lat.toFixed(6);
+  document.getElementById('siteLon'+site).value=lon.toFixed(6);
+  try{ onManualCoordChange(site); }catch(e){ console.warn('move site failed',e); }
+  try{ (window._histToast||function(){})('Site '+site+' moved to '+(isFCC()?(km/1.60934).toFixed(2)+' mi':km.toFixed(2)+' km')+' along the path. Ctrl+Z to undo.'); }catch(_){}
+}
+// ── v8.7b: antenna heights (AGL) editable in the profile header too ──
+function _aglMirrorSync(){
+  ['A','B'].forEach(k=>{ const src=document.getElementById('antHgt'+k), dst=document.getElementById('profAgl'+k);
+    if(src&&dst&&document.activeElement!==dst) dst.value=src.value; });
+  const u=document.getElementById('profAglUnit'); if(u) u.textContent=isFCC()?'ft':'m';
+}
+function profAglSet(k, v){
+  const src=document.getElementById('antHgt'+k); if(!src) return;
+  const x=parseFloat(v); if(!isFinite(x)||x<0) { _aglMirrorSync(); return; }
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  src.value=String(x); updateTerrainProfile();
+}
+
 function obstPickFromChart(ev,chart){
   const panel=document.getElementById('obstPanel'); if(!panel||!panel.open) return;
   const td=window._terrainData; if(!td) return;
@@ -13987,21 +14249,77 @@ function _obstMapDraw(){
 // ── v8.7: antenna-height feasibility shared by Optimise and the ▲▼ steppers ──
 const ANT_H_MIN = 5;            // m: lowest antenna height considered realistic
 function _antStepM(){ return isFCC() ? 15*0.3048 : 5; }      // 5 m or 15 ft
+// v8.7: clearance criteria. Required line height at each profile point:
+//   main antennas : max( C1 % F1 at k = 4/3 , C2 % F1 at k_min )
+//   diversity     : Div % F1 at k = 4/3 (diversity line = main line − SD separation)
+// Terrain is the RAW DEM bulged for each k; +0.5 m safety margin.
+function _clrCrit(){
+  return { c1:(+state.clrC1Pct>=0?+state.clrC1Pct:100)/100, c2:(+state.clrC2Pct>=0?+state.clrC2Pct:30)/100,
+           kmin:(+state.clrKmin>0?+state.clrKmin:2/3), div:(+state.clrDivPct>=0?+state.clrDivPct:60)/100 };
+}
 function _antDeficits(){
   const td=_terrainData; if(!td) return null;
-  const {elevations, n, totalKm, freq} = td;
-  const eA = elevations[0], eB = elevations[n];
+  const raw = td.rawElevations || td.elevations;
+  const {n, totalKm, freq} = td;
+  const eA = raw[0], eB = raw[n];
   const sdVis = state.sdEnabled && isSdEligible();
   const sepA = sdVis ? (state.sdSepA||state.sdSep||12) : 0;
   const sepB = sdVis ? (state.sdSepB||state.sdSep||12) : 0;
-  const def = elevations.map((e,i) => {
+  const C = _clrCrit(), a = 6371;
+  const bul = (x,k) => x*(totalKm-x)*1000/(2*k*a);
+  const def = raw.map((e,i) => {
     const t = i/n, d1 = t*totalKm, d2 = (1-t)*totalKm;
-    const r60 = (d1>0.001&&d2>0.001) ? fresnelR1(d1,d2,freq)*0.6 : 0;
-    const req = e + r60 + 0.5;
-    const mainDef = req - (eA*(1-t) + eB*t);
-    return sdVis ? mainDef + sepA*(1-t) + sepB*t : mainDef;
+    const F1 = (d1>0.001&&d2>0.001) ? fresnelR1(d1,d2,freq) : 0;
+    const ground = eA*(1-t) + eB*t;
+    const req1 = e + bul(d1,4/3) + C.c1*F1;
+    const req2 = e + bul(d1,C.kmin) + C.c2*F1;
+    let d = Math.max(req1, req2) + 0.5 - ground;
+    if(sdVis){ const reqD = e + bul(d1,4/3) + C.div*F1 + 0.5 - ground; d = Math.max(d, reqD + sepA*(1-t) + sepB*t); }
+    return d;
   });
   return {def, n, sepA, sepB};
+}
+// Check the current heights against the criteria → {ok, c1, c2, div} (worst ratio of F1 achieved)
+function _clrCheck(hA, hB){
+  const td=_terrainData; if(!td) return null;
+  const raw = td.rawElevations || td.elevations, n = td.n, D = td.totalKm, f = td.freq, a = 6371, C = _clrCrit();
+  const sdVis = state.sdEnabled && isSdEligible();
+  const sepA = sdVis ? (state.sdSepA||state.sdSep||12) : 0, sepB = sdVis ? (state.sdSepB||state.sdSep||12) : 0;
+  const worst = (k, ha, hb) => { let w = Infinity; const HA = raw[0]+ha, HB = raw[n]+hb;
+    for(let i=1;i<n;i++){ const x=i/n*D, F1=fresnelR1(x,D-x,f); const e=raw[i]+x*(D-x)*1000/(2*k*a); w=Math.min(w,(HA+(HB-HA)*i/n-e)/F1); } return w; };
+  const r = { c1:worst(4/3,hA,hB), c2:worst(C.kmin,hA,hB), div:sdVis?worst(4/3,hA-sepA,hB-sepB):null };
+  r.ok = r.c1 >= C.c1 - 1e-3 && r.c2 >= C.c2 - 1e-3 && (!sdVis || r.div >= C.div - 1e-3);
+  return r;
+}
+function _clrSyncUI(){
+  const set=(id,v)=>{ const e=document.getElementById(id); if(e&&document.activeElement!==e) e.value=v; };
+  set('clrC1Pct', state.clrC1Pct); set('clrC2Pct', state.clrC2Pct); set('clrDivPct', state.clrDivPct);
+  set('clrKmin', (+state.clrKmin).toFixed(2)); set('clrClimate', state.clrClimate||'temperate');
+  const st=document.getElementById('clrCritStatus'); if(!st) return;
+  const h=_antHeightsM(); const r=_clrCheck(h.A,h.B);
+  if(!r){ st.textContent=''; return; }
+  const pc=v=>v<0?'blocked':Math.round(v*100)+'%';   // v8.7b: a path below the terrain reads "blocked"
+  st.textContent=(r.ok?'✓':'✗')+' C1 '+pc(r.c1)+' · C2 '+pc(r.c2)+(r.div!=null?' · Div '+pc(r.div):'');
+  st.style.color=r.ok?'#15803d':'#b91c1c';
+}
+function onClrChange(what){
+  const g=id=>parseFloat(document.getElementById(id)?.value);
+  if(what==='climate'){
+    state.clrClimate=document.getElementById('clrClimate').value;
+    // climate presets for the sub-standard criterion
+    if(state.clrClimate==='temperate'){ state.clrC2Pct=30; }
+    else if(state.clrClimate==='tropical'){ state.clrC2Pct=60; }
+  } else {
+    if(isFinite(g('clrC1Pct'))) state.clrC1Pct=g('clrC1Pct');
+    if(isFinite(g('clrC2Pct'))) state.clrC2Pct=g('clrC2Pct');
+    if(isFinite(g('clrKmin'))&&g('clrKmin')>0) state.clrKmin=g('clrKmin');
+    if(isFinite(g('clrDivPct'))) state.clrDivPct=g('clrDivPct');
+    const pre={temperate:30,tropical:60}[state.clrClimate];
+    if(pre!=null && state.clrC2Pct!==pre){ state.clrClimate='custom'; }
+  }
+  if(typeof _hist!=='undefined') _hist.lastUser=Date.now();
+  _clrSyncUI();
+  try{ if(window._terrainData) redrawTerrainOverlays(); }catch(_){}
 }
 // minimum height needed at the OTHER end when `site` is at hSite (metres AGL)
 function _antNeedOther(site, hSite){
@@ -14044,14 +14362,15 @@ function antHeightStep(site, dir){
     if(dir > 0){
       // raising this end: lower the other end by one step if clearance is still met
       if(hO - step >= need - 1e-6 && hO - step >= ANT_H_MIN){ hO -= step; note = 'Site '+other+' lowered to '+fmtH(hO)+'.'; }
-      else note = 'Site '+other+' kept at '+fmtH(hO)+' (one step lower would break 60% Fresnel clearance).';
+      else note = 'Site '+other+' kept at '+fmtH(hO)+' (one step lower would break the clearance criteria).';
     } else {
       // lowering this end: raise the other end by whole steps until clearance is met
-      if(hO < need - 1e-6){ const k = Math.ceil((need - hO)/step - 1e-9); hO += k*step; note = 'Site '+other+' raised to '+fmtH(hO)+' to keep 60% Fresnel clearance.'; }
+      if(hO < need - 1e-6){ const k = Math.ceil((need - hO)/step - 1e-9); hO += k*step; note = 'Site '+other+' raised to '+fmtH(hO)+' to keep the clearance criteria.'; }
       else note = 'Clearance still met; Site '+other+' unchanged.';
     }
   } else note = 'Load the terrain profile to have the other site follow automatically.';
   _antSetHeightsM(site==='A'?hS:hO, site==='A'?hO:hS);
+  try{ _aglMirrorSync(); }catch(_){}
   if(typeof _hist!=='undefined') _hist.lastUser = Date.now();
   updateTerrainProfile();
   try{ (window._histToast||function(){})('Site '+site+' '+fmtH(hS)+'. '+note); }catch(_){}
@@ -14071,21 +14390,9 @@ function optimiseAntennaHeights(){
   const sepA = sdVis ? (state.sdSepA||state.sdSep||12) : 0;
   const sepB = sdVis ? (state.sdSepB||state.sdSep||12) : 0;
 
-  // Compute required clearance at each point: terrain + 60% Fresnel radius
-  // Main LOS: (eA+hA)*(1-t) + (eB+hB)*t >= req[i]
-  // Div  LOS: (eA+hA-sepA)*(1-t) + (eB+hB-sepB)*t >= req[i]
-  //   → hA*(1-t) + hB*t >= deficit[i] + sepA*(1-t) + sepB*t
-  // Use the harder constraint (max of main & diversity) at each point.
-  const deficits = elevations.map((e,i) => {
-    const t = i/n;
-    const d1 = t * totalKm, d2 = (1-t) * totalKm;
-    const r60 = (d1>0.001&&d2>0.001) ? fresnelR1(d1,d2,freq)*0.6 : 0;
-    const req = e + r60 + 0.5; // +0.5m safety margin
-    const mainDef = req - (eA*(1-t) + eB*t);
-    // Diversity path: LOS is lower by interpolated separation
-    const divDef = sdVis ? mainDef + sepA*(1-t) + sepB*t : mainDef;
-    return Math.max(mainDef, divDef);
-  });
+  // v8.7: required line height per point from the clearance criteria
+  // (C1 at k=4/3, C2 at k_min, diversity at k=4/3), see _antDeficits().
+  const deficits = _antDeficits().def;
 
   // v8.7: BALANCED search. The old objective (smallest hA + hB) drove one
   // end to 0 m and the other very high. Now: smallest TALLER antenna first
@@ -14121,7 +14428,8 @@ function optimiseAntennaHeights(){
   const sepBd=isFCC()?(sepB/0.3048).toFixed(1):sepB;
   const extra=sdVis?' (incl. diversity clearance with sep '+sepAd+'/'+sepBd+' '+sepU+')':'';
   alert('Optimised (balanced): Site A = '+fmtLen(bestHa,0)+' AGL, Site B = '+fmtLen(bestHb,0)+' AGL\n'+
-        '(lowest possible taller antenna, minimum '+fmtLen(ANT_H_MIN,0)+' per site; 60% Fresnel zone clearance + 0.5 m safety margin'+extra+')\n\n'+
+        '(lowest possible taller antenna, minimum '+fmtLen(ANT_H_MIN,0)+' per site)\n'+
+        'Criteria: C1 '+state.clrC1Pct+'% F1 @ k=4/3, C2 '+state.clrC2Pct+'% F1 @ k='+(+state.clrKmin).toFixed(2)+(sdVis?', diversity '+state.clrDivPct+'% F1 @ k=4/3':'')+', +0.5 m margin'+extra+'\n\n'+
         'Use the ▲▼ arrows next to each height to trade height between the two sites in '+(isFCC()?'15 ft':'5 m')+' steps while keeping clearance.');
 }
 
@@ -14251,6 +14559,21 @@ loadR001Grid();
 
 </script>
 
+<!-- v8.7b: Help assistant — answers from the built-in Help text (offline) -->
+<button id="askBtn" onclick="askToggle()" title="Ask a question about the tool (answers come from the Help)"
+  style="position:fixed;right:18px;bottom:18px;z-index:9990;border:none;border-radius:22px;padding:9px 15px;background:#0f766e;color:#fff;font-weight:700;font-size:12.5px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer">&#128172; Ask</button>
+<div id="askPanel" style="display:none;position:fixed;right:18px;bottom:66px;z-index:9991;width:380px;max-width:calc(100vw - 36px);height:480px;max-height:calc(100vh - 100px);background:var(--card-bg,#fff);border:1px solid var(--border,#cbd5e1);border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.28);flex-direction:column;overflow:hidden;font-size:12.5px">
+  <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;background:#0f172a;color:#e2e8f0">
+    <b>&#128172; Help assistant</b><span style="font-size:10.5px;color:#94a3b8">answers from the built-in Help</span>
+    <button onclick="askToggle()" style="margin-left:auto;background:none;border:none;color:#e2e8f0;font-size:17px;cursor:pointer">&times;</button>
+  </div>
+  <div id="askLog" style="flex:1;overflow:auto;padding:10px 12px;display:flex;flex-direction:column;gap:8px"></div>
+  <div style="display:flex;gap:6px;padding:8px;border-top:1px solid var(--border-l,#e2e8f0)">
+    <input id="askInput" type="text" placeholder="e.g. how is the rain algorithm chosen?" style="flex:1;padding:6px 8px;border:1px solid var(--border,#cbd5e1);border-radius:6px;font-size:12.5px"
+      onkeydown="if(event.key==='Enter'){askSend();}">
+    <button onclick="askSend()" style="padding:6px 12px;border:none;border-radius:6px;background:#0f766e;color:#fff;font-weight:700;cursor:pointer">Ask</button>
+  </div>
+</div>
 <!-- ══════════════ HELP MODAL ══════════════ -->
 <div class="help-overlay" id="helpOverlay">
   <div class="help-modal" id="helpModal" role="dialog" aria-labelledby="helpTitle">
@@ -14338,6 +14661,7 @@ loadR001Grid();
       <strong>rain and multipath outage</strong>, predicted <strong>availability</strong> and <strong>capacity</strong>
       for every supported modulation profile. Real terrain and climate data can be pulled from the map to auto-size
       antenna heights and rain rate.</p>
+      <p><strong>&#128172; Ask</strong> (bottom right) answers questions from this Help, offline, with links to the matching sections.</p>
       <div class="help-note">All propagation maths follows the ITU-R Recommendations listed in the header.
       RSL / TX / capacity tables are Ceragon equipment figures. Results are planning estimates &mdash; always
       confirm against the official datasheet and a field survey before deployment.</div>
@@ -14440,7 +14764,8 @@ loadR001Grid();
 
       <div class="help-tip">Tip for large networks: drop all sites first, sketch the entire topology with Quick-Link (just click site &rarr; site &rarr; site &rarr; &hellip; building a chain in one continuous gesture), then come back and design each leg by double-clicking the dashed lines. The colour of each line tells you which still need attention. For dense maps, toggle <em>Site Names</em> OFF to declutter once you know the layout.</div>
 
-            <h3 id="h-los">&#128225; LOS Check (Network Designer)</h3>
+                  <p><strong>Reference modulation (v8.7b):</strong> opening a designed link (double-click, or from the Links list) sets the Link Budget Detail reference modulation to the one the link was designed on. A change made on one link does not carry over to the next.</p>
+<h3 id="h-los">&#128225; LOS Check (Network Designer)</h3>
       <p>Four modes for vetting line-of-sight between sites. All use the same engine: ITU-R standard <strong>K = 4/3</strong> atmospheric refraction, <strong>60% Fresnel-1</strong> clearance, Open-Meteo Copernicus 90&nbsp;m DEM with per-coordinate caching. Each site contributes the antenna height stored on the site (<code>antAlt</code>); when a site has no antenna height set the tool falls back to a configurable default (30&nbsp;m AGL).</p>
       <table class="help-deftable">
         <tr><th>Mode</th><th>How to use</th></tr>
@@ -14717,7 +15042,8 @@ loadR001Grid();
             The tool compares every modulation&apos;s predicted availability against this target.</td></tr>
       </table>
 
-      <h3 id="h-site">&#127757; Site Location &amp; Climate (map)</h3>
+            <p><strong>Rain source and algorithm (v8.7b):</strong> R<sub>0.01</sub> comes from the P.837 map (From Map), an ITU rain zone or a <em>User specified value</em>. The <em>ITU rain algorithm</em> selector picks ITU-R P.530-14/18 (default), P.530-8/13 or P.530-7; see Methodology for the formulas.</p>
+<h3 id="h-site">&#127757; Site Location &amp; Climate (map)</h3>
       <p><strong>Map toolbar (v8.2).</strong> The horizontal strip above the map carries every action that operates on the LBC link or map: <em>&#128193;&nbsp;File &#9662;</em> (Reports &middot; LBC native Save / Load Design &middot; Pathloss in / out &middot; Add Current Link to Network), <em>&#128065;&nbsp;View &#9662;</em> (map background &mdash; Street / Satellite / Terrain / HOT / Blank), <em>&#127760;&nbsp;Fetch Climate Data</em>, and on the right the two destructive controls <em>&#10005;&nbsp;Clear Link</em> and <em>&#10006;&nbsp;Clear highlights</em>. The Network view has a symmetric toolbar above its own map host.</p>
       <p><strong>Distance ruler (v8.3).</strong> The <em>&#128207;</em> button at the map's top-left measures the distance between two points. Click it (it highlights), then click two spots on the map: a dashed line appears with a label showing the great-circle distance in km and miles plus the bearing, with a live read-out as you move the mouse to the second point. A small panel at the top of the map then offers <em>Continue</em> (measure another pair) or <em>Close</em> (exit); pressing <kbd>Esc</kbd> or the ruler button also exits. It works on both the LBC and Network maps, and never pins a site or starts a link while active.</p>
 
@@ -14781,6 +15107,13 @@ loadR001Grid();
             <em>User select</em> modes with click-to-pick hour selection on the 24-hour curve.</li>
       </ul>
 
+      <h4 id="h-terrain-tools">Terrain profile tools (v8.7b)</h4>
+      <p><strong>Move a site from the profile:</strong> click the terrain profile (with the Obstacles section closed) and choose <em>Move Site A here</em> or <em>Move Site B here</em>; the site moves to that point of the path and the profile reloads. Ctrl+Z undoes it.</p>
+      <p><strong>Antenna heights (AGL):</strong> type them in the profile header (AGL A / B) or use the &#9650;&#9660; arrows (5&nbsp;m / 15&nbsp;ft steps; the other site follows to keep clearance).</p>
+      <p><strong>Earth curvature and k factor:</strong> the profile is bulged by the earth curvature for the k selected next to the LOS status (4/3, 1, 2/3, 0.5 or flat).</p>
+      <p><strong>Clearance criteria:</strong> C1 100% F1 at k&nbsp;=&nbsp;4/3; C2 30% (Temperate) or 60% (Tropical) F1 at k<sub>min</sub>; diversity antennas 60% F1 at k&nbsp;=&nbsp;4/3. The status next to the LOS badge shows how much of each is achieved.</p>
+      <p><strong>Reflection / SD advisor:</strong> recalculates when the target availability changes; its <em>Refresh</em> button recalculates it on demand.</p>
+      <p><strong>Distance without coordinates:</strong> Distance follows the maximum range of the reference modulation at the target availability; <em>Max</em> applies it; a typed distance stays until one of those changes.</p>
       <h3 id="h-climate-explorer">&#127777;&#65039; Climate Explorer</h3>
       <p>The Climate Explorer is an optional override panel that sits directly below the existing Site Climate
       badge. Where the basic <em>&#127760; Fetch Climate</em> button gives you a single annual mean of T / P / WVD
@@ -14918,7 +15251,9 @@ loadR001Grid();
         <li><strong>Rules Template.</strong> Click <em>&#128206; Rules Template</em> to download a ready-to-fill <code>.xlsx</code> with the eleven expected columns and 6 example rows (1 E-Band + 5 Microwave).</li>
       </ul>
 
-      <h3 id="h-netreport">&#128202; Network Report (v8.1.21)</h3>
+            <h4 id="h-defaults-limits">Max config and Max antenna (v8.7b)</h4>
+      <p>Each rule can cap the <strong>configuration</strong> (1+0 / 1+1, 2+0 / 2+2 or 4+0) and the <strong>antenna size</strong> allowed on the tower. Auto-Plan escalates configuration and antenna as usual but never beyond these limits; a link that cannot reach its target capacity or availability within them is flagged.</p>
+<h3 id="h-netreport">&#128202; Network Report (v8.1.21)</h3>
       <p>A multi-link summary report covering every link in the network. Opens from <em>Network &rarr; File &#9662; &rarr; &#128202; Network Report</em>. One row per link with the <strong>reference modulation</strong> result &mdash; configuration, polarization, capacity, antenna sizes (A + B), expected RSL, fade margin, rain and multipath outages, achieved availability against target.</p>
 
       <h4 style="margin:10px 0 4px 0;color:var(--navy)">Status colours</h4>
@@ -15286,7 +15621,7 @@ loadR001Grid();
       <table class="help-deftable">
         <tr><th>Recommendation</th><th>Used for</th></tr>
         <tr><td>ITU-R P.530-17</td><td>Multipath fading model (default MW method). Also used for rain outage probability formula (§2.3.1).</td></tr>
-        <tr><td>ITU-R P.530-18</td><td>Rain path reduction factor (frequency-dependent). Base: d<sub>0</sub> = 35·exp(&minus;0.015·R). P.530-18 applies a frequency correction χ(f) ≥ 1: d<sub>0,eff</sub> = d<sub>0</sub>/χ(f), d<sub>eff</sub> = d/(1+d/d<sub>0,eff</sub>). χ=1.0 below ~10&nbsp;GHz (same as P.530-16); χ=1.145 at 19&nbsp;GHz; χ=1.777 at 37&nbsp;GHz; χ=2.583 at 80&nbsp;GHz. Higher χ → shorter effective rain path → less predicted attenuation → better availability at medium and long distances. Significant improvement over P.530-16 for all bands ≥ 19&nbsp;GHz, especially E-band (70/80&nbsp;GHz).</td></tr>
+        <tr><td>ITU-R P.530 rain algorithm (v8.7)</td><td>The rain algorithm is selectable under the rain zone (ITU rain algorithm): <b>P.530-14/18</b> (default) r = 1 / (0.477&middot;d<sup>0.633</sup>&middot;R<sup>0.073&alpha;</sup>&middot;f<sup>0.123</sup> &minus; 10.579&middot;(1 &minus; e<sup>&minus;0.024d</sup>)), r &le; 2.5, A<sub>0.01</sub> = &gamma;<sub>R</sub>&middot;d&middot;r, and A<sub>p</sub>/A<sub>0.01</sub> = C<sub>1</sub>&middot;p<sup>&minus;(C<sub>2</sub>+C<sub>3</sub>&middot;log p)</sup> with C<sub>0</sub> = 0.12 + 0.4&middot;log((f/10)<sup>0.8</sup>) above 10&nbsp;GHz (0.12 below), C<sub>1</sub> = 0.07<sup>C0</sup>&middot;0.12<sup>1&minus;C0</sup>, C<sub>2</sub> = 0.855C<sub>0</sub>+0.546(1&minus;C<sub>0</sub>), C<sub>3</sub> = 0.139C<sub>0</sub>+0.043(1&minus;C<sub>0</sub>). <b>P.530-8/13</b> and <b>P.530-7</b>: d<sub>0</sub> = 35&middot;e<sup>&minus;0.015R</sup> (R &le; 100&nbsp;mm/h), r = 1/(1+d/d<sub>0</sub>); A<sub>p</sub>/A<sub>0.01</sub> = 0.12&middot;p<sup>&minus;(0.546+0.043 log p)</sup> for latitude &ge; 30&deg;, 0.07&middot;p<sup>&minus;(0.855+0.139 log p)</sup> below 30&deg; (path mid-point latitude). Before v8.7 the tool used d<sub>0</sub>/&chi;(f) with a hand-calibrated &chi; and the &ge;&nbsp;30&deg; coefficients everywhere.</td></tr>
         <tr><td>ITU-R P.530-19</td><td>Latest (09/2025) multipath fading model, selectable for MW links. Uses the integral digital products LogK.csv and dN75.csv (0.25&deg; global grids, embedded in this tool) with the new regression Eq.(7) and the all-percentages interpolation of &#167;2.3.2. Worst-month results optionally converted to annual via ITU-R P.841.</td></tr>
         <tr><td>ITU-R P.530-7/8</td><td>Earlier multipath model, selectable for MW links.</td></tr>
         <tr><td>ITU-R P.838-3</td><td>Specific rain attenuation coefficients k and &alpha;.</td></tr>
@@ -15385,6 +15720,19 @@ loadR001Grid();
       <p>Reverse chronological, one row per feature. v7.5, v7.9, v8.0, v8.1 and v8.2 are exact release dates; v7.6, v7.7 and v7.8 dates are approximate (they sit between v7.5 and v7.9, all in mid-June 2026).</p>
       <table class="help-deftable">
         <tr><th style="white-space:nowrap">Version</th><th style="white-space:nowrap">Date</th><th>Feature</th><th>Description</th></tr>
+<tr><td rowspan="13" style="vertical-align:top;white-space:nowrap"><strong>v8.7b</strong></td><td rowspan="13" style="vertical-align:top;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2)">2026-10-07</td><td><strong>Earth curvature</strong></td><td>Terrain profile bulged by earth curvature with a selectable k (4/3, 1, 2/3, 0.5, flat).</td></tr>
+<tr><td><strong>Clearance criteria</strong></td><td>C1 100% F1 at k&nbsp;=&nbsp;4/3; C2 30% / 60% F1 (Temperate / Tropical) at k<sub>min</sub>; diversity 60% F1. Live status next to the LOS badge.</td></tr>
+<tr><td><strong>Terrain profile tools</strong></td><td>Click the profile to move Site A or B to that point; type antenna heights (AGL) in the profile header.</td></tr>
+<tr><td><strong>Distance without coordinates</strong></td><td>Follows the max range of the reference modulation at the target availability; <em>Max</em> applies it.</td></tr>
+<tr><td><strong>Rain algorithm</strong></td><td>ITU-R P.530-14/18 (default), -8/13 or -7 with the published formulas. <em>User specified value</em> fixed.</td></tr>
+<tr><td><strong>P.530-7/8 C&#8320;</strong></td><td>Mountains below 700&nbsp;m use the Hills value.</td></tr>
+<tr><td><strong>Reflection / SD advisor</strong></td><td>Recalculates when the target availability changes; Refresh button added.</td></tr>
+<tr><td><strong>Planning rules</strong></td><td><em>Max config</em> and <em>Max antenna on tower</em> per rule; Auto-Plan stays within them and flags shortfalls.</td></tr>
+<tr><td><strong>Network</strong></td><td>An opened link uses its own reference modulation.</td></tr>
+<tr><td><strong>Range Slide: look</strong></td><td>Colour per radio, arrows on the range circles, Assumptions lower-right, single footer, scrollable results.</td></tr>
+<tr><td><strong>Range Slide: content</strong></td><td>ETSI / FCC units (follow Defaults), nines wording, <em>Detailed Report</em> slide, Save / Load project.</td></tr>
+<tr><td><strong>Range Slide: multi-band</strong></td><td>IP-50CX + mmW aggregation: aggregate target, separate availabilities, per-carrier capacity and fade margin.</td></tr>
+<tr><td><strong>Help assistant</strong></td><td>&#128172; <em>Ask</em> answers from the built-in Help, offline.</td></tr>
 <tr><td rowspan="23" style="vertical-align:top;white-space:nowrap"><strong>v8.7</strong></td><td rowspan="23" style="vertical-align:top;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2)">2026-10-05</td><td><strong>No restore prompt at start-up</strong></td><td>The &ldquo;Restore your last session&rdquo; bar no longer appears when the page opens. Autosave continues; the previous session is restored from <em>File &#9656; Restore last session</em> (Ctrl+Z undoes it).</td></tr>
 <tr><td><strong>Miscellaneous Loss in 0.1 dB steps</strong></td><td>The Miscellaneous Loss field (and the RSG misc field) now accepts and steps in 0.1&nbsp;dB; it was rounded to 0.5&nbsp;dB.</td></tr>
 <tr><td><strong>Customisable Network Report with templates</strong></td><td>&#9881; Columns now lists ~50 extra planning fields (sites, link data, TR / DR antennas, per-site losses, TX line, performance at the reference modulation, channels, propagation) named as in customer reports, e.g. <em>TR Circulator Branching Loss (dB) S1</em>, <em>Effective Fade Margin (dB) S1</em>, <em>Rain Region 0.01% Rain Rate (mm/hr)</em>. Columns can be re-ordered (&#9650;&#9660;) and the selection + order saved as a named <b>report template</b> (apply / rename / delete / export / import); the on-screen table, Excel and PDF all follow it. Fields the tool has no data for (TX line model / unit loss / length, far-end channel frequency, diffraction loss) are shown as &mdash;.</td></tr>
@@ -15610,6 +15958,107 @@ loadR001Grid();
 </div>
 
 <script>
+// ═══ v8.7b: HELP ASSISTANT (offline retrieval over the Help) ═══════════════
+// Splits the Help into passages (paragraphs, list items, table rows) under
+// their section heading, scores them against the question (term frequency x
+// rarity, with a few planning synonyms) and answers with the best passages and
+// links into the Help. No data leaves the page.
+let _askIdx = null, _askHelpHtml = null;
+const ASK_SYN = { sd:'space diversity', xpic:'cross polarization', fm:'fade margin', efm:'effective fade margin', rsl:'receive signal level',
+  mb:'multi band aggregation', multiband:'multi band', avail:'availability', nines:'availability', los:'line of sight', agl:'antenna height',
+  dem:'terrain', k:'k factor', bbc:'baseband combining', bbs:'baseband switching', mmw:'e band', pptx:'slide powerpoint', xlsx:'excel',
+  kml:'google earth', rpe:'antenna pattern', acm:'adaptive modulation', p530:'p.530', p837:'p.837', p838:'p.838', fcc:'fcc standard', etsi:'etsi standard' };
+const ASK_STOP = new Set('a an the is are be to of in on for and or how what when why where which do does can i it this that with by as at from my me we you your should would could there their about into than then so if not'.split(' '));
+function _askTok(t){
+  return String(t||'').toLowerCase().replace(/p\.?\s?(\d{3})/g,'p$1').replace(/[^a-z0-9.+\-]+/g,' ').split(/\s+/)
+    .map(w => w.replace(/^[.\-+]+|[.\-+]+$/g,'')).filter(w => w && !ASK_STOP.has(w))
+    .map(w => w.length > 4 ? w.replace(/(ing|ed|es|s)$/,'') : w);
+}
+function _askBuild(){
+  const body = document.getElementById('helpBody'); if(!body) return [];
+  if(!_askHelpHtml) _askHelpHtml = body.innerHTML;            // the planner Help, captured once
+  const box = document.createElement('div');
+  // the Range Slide installs its own Help text: search both
+  box.innerHTML = _askHelpHtml + (body.innerHTML !== _askHelpHtml ? body.innerHTML : '');
+  const out = []; let sec = 'Help', secId = '';
+  const walk = el => {
+    Array.prototype.forEach.call(el.children, ch => {
+      const tag = ch.tagName;
+      if(/^H[2-4]$/.test(tag)){ sec = ch.textContent.trim().replace(/\s+/g,' '); if(ch.id) secId = ch.id; return; }
+      if(tag === 'P' || tag === 'LI' || tag === 'TR' || tag === 'DT' || tag === 'DD'){
+        const txt = ch.textContent.replace(/\s+/g,' ').trim();
+        if(txt.length > 25) out.push({ sec, secId, txt, toks:_askTok(sec+' '+txt) });
+        if(tag !== 'LI') return;
+      }
+      if(ch.children && ch.children.length) walk(ch);
+    });
+  };
+  walk(box);
+  const df = {}; out.forEach(p => new Set(p.toks).forEach(w => df[w] = (df[w]||0) + 1));
+  out.forEach(p => { p.tf = {}; p.toks.forEach(w => p.tf[w] = (p.tf[w]||0) + 1); });
+  return { passages: out, df, N: out.length };
+}
+function _askAnswer(q){
+  if(!_askIdx) _askIdx = _askBuild();
+  const I = _askIdx; if(!I.N) return null;
+  const base = _askTok(q);
+  const wq = {}; base.forEach(w => wq[w] = 1);
+  base.forEach(w => { if(ASK_SYN[w]) _askTok(ASK_SYN[w]).forEach(x => { if(!wq[x]) wq[x] = 0.5; }); });   // synonyms count half
+  const uq = Object.keys(wq); if(!uq.length) return null;
+  const wantsHist = /\b(new|changed?|changes|version|release|history|added|fixed)\b/i.test(q);
+  const scored = I.passages.map(p => {
+    let sc = 0, hit = 0;
+    uq.forEach(w => { const tf = p.tf[w] || 0; if(!tf) return; hit++;
+      const idf = Math.log(1 + I.N / (I.df[w] || 1)); sc += wq[w] * idf * (tf / (tf + 1.2)); });
+    sc *= (0.5 + hit / uq.length);                                  // reward covering more of the question
+    const secHits = _askTok(p.sec).filter(w => uq.indexOf(w) >= 0).length;
+    if(secHits) sc *= 1 + 0.8 * secHits;                            // heading matches count most
+    if(/revision history/i.test(p.sec) && !wantsHist) sc *= 0.7;    // change log: slightly behind the main Help text
+    sc /= Math.pow(Math.max(30, p.toks.length) / 30, 0.25);        // do not favour very long rows
+    return { p, sc };
+  }).filter(x => x.sc > 0).sort((a,b) => b.sc - a.sc);
+  return scored.slice(0, 6);
+}
+function _askEsc(t){ return String(t).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function _askMsg(html, who){
+  const log = document.getElementById('askLog'); if(!log) return;
+  const d = document.createElement('div');
+  d.style.cssText = who === 'me' ? 'align-self:flex-end;background:#0f766e;color:#fff;padding:6px 10px;border-radius:10px 10px 2px 10px;max-width:85%'
+                                 : 'align-self:flex-start;background:var(--sl,#f1f5f9);padding:8px 10px;border-radius:10px 10px 10px 2px;max-width:95%;line-height:1.45';
+  d.innerHTML = html; log.appendChild(d); log.scrollTop = log.scrollHeight;
+}
+document.addEventListener('DOMContentLoaded', () => { const b = document.getElementById('helpBody'); if(b && !_askHelpHtml) _askHelpHtml = b.innerHTML; });
+function askToggle(){
+  const p = document.getElementById('askPanel'); if(!p) return;
+  const open = p.style.display !== 'flex';
+  p.style.display = open ? 'flex' : 'none';
+  if(open){
+    if(!document.getElementById('askLog').children.length)
+      _askMsg('Ask anything about the tool, for example <i>"how do I move a site from the profile?"</i>, <i>"what does BBC do?"</i> or <i>"which rain algorithm is the default?"</i>. Answers are taken from the Help; each one links to the full section.', 'bot');
+    setTimeout(() => { const i = document.getElementById('askInput'); if(i) i.focus(); }, 50);
+  }
+}
+function askSend(){
+  const inp = document.getElementById('askInput'); const q = (inp && inp.value || '').trim(); if(!q) return;
+  inp.value = ''; _askMsg(_askEsc(q), 'me');
+  const res = _askAnswer(q);
+  if(!res || !res.length || res[0].sc < 0.8){
+    _askMsg('I could not find that in the Help. Try other words (for example the feature name), or open the Help and use its search.', 'bot');
+    return;
+  }
+  const top = res[0].p;
+  const cut = t => t.length > 520 ? t.slice(0, 500).replace(/\s+\S*$/,'') + '…' : t;
+  let html = '<div style="font-size:10.5px;color:var(--text3);margin-bottom:3px">From <b>' + _askEsc(top.sec) + '</b></div>' + _askEsc(cut(top.txt));
+  // a second passage from the same section often completes the answer
+  const same = res.slice(1).find(x => x.p.sec === top.sec && x.sc > res[0].sc * 0.6);
+  if(same) html += '<div style="margin-top:6px">' + _askEsc(cut(same.p.txt)) + '</div>';
+  if(top.secId) html += '<div style="margin-top:6px"><a href="javascript:void(0)" onclick="openHelp(\'' + top.secId + '\')">Open this section in Help &rarr;</a></div>';
+  const others = []; res.slice(1).forEach(x => { if(x.p.sec !== top.sec && others.every(o => o.sec !== x.p.sec) && others.length < 3) others.push(x.p); });
+  if(others.length) html += '<div style="margin-top:6px;font-size:11px;color:var(--text3)">See also: ' + others.map(o =>
+    o.secId ? '<a href="javascript:void(0)" onclick="openHelp(\'' + o.secId + '\')">' + _askEsc(o.sec) + '</a>' : _askEsc(o.sec)).join(' · ') + '</div>';
+  _askMsg(html, 'bot');
+}
+
 function openHelp(anchor){
   var ov=document.getElementById('helpOverlay');
   ov.classList.add('open');
@@ -17728,7 +18177,7 @@ function _p19altsFromTerrain(){
   if(isFinite(hB)&&typeof isFCC==='function'&&isFCC()) hB=ftToM(hB);
   let eA=null,eB=null,ht=null;
   if(td?.elevations?.length>=2){
-    const el=td.elevations;
+    const el=td.rawElevations||td.elevations;   // v8.7: mean terrain height from the raw DEM
     eA=el[0]; eB=el[el.length-1];
     ht=el.reduce((a,b)=>a+b,0)/el.length;
   }
@@ -17871,7 +18320,7 @@ const P19_DN75_B64="H4sIAK1uKGoC/+y9h5NkSXLe2ale5kutdVaW1q2me/T0iBWzi8UuABLAHo8E
 // ════════════════════════════════════════════════════════════════════════════
 const LBC_DESIGN_FORMAT  = 'ceragon-lbc-design';
 const LBC_DESIGN_VERSION = '1.0';
-const LBC_TOOL_VERSION   = 'v8.7';
+const LBC_TOOL_VERSION   = 'v8.7b';
 
 // ---- helpers --------------------------------------------------------------
 function _lbcReadSite(site){
@@ -18112,6 +18561,17 @@ function _lbcApplyDesign(obj, fname){
 // Push every state value into its matching DOM control, populating any
 // dependent dropdowns along the way (band → product → bandwidths → antennas).
 function _lbcSyncDomFromState(){
+  try{ _syncProfileKSel(); _clrSyncUI(); if(!RAIN_ALGOS[state.rainAlgo]) state.rainAlgo='P530-14/18'; const ra=document.getElementById('rainAlgo'); if(ra) ra.value=state.rainAlgo; updateHdrMethodRef(); _rainAlgoHint(); }catch(_){}   // v8.7
+  try{ // v8.7: rain-source selector follows the restored state
+    const rz=document.getElementById('rainZone'), rc=document.getElementById('rainCustom');
+    if(rz){
+      state.rainSrcInfo=null;   // monthly-data / statistics sources were withdrawn: the saved R0.01 stays as a user value
+      if(rz.value!=='map' && +rz.value!==+state.rainRate){
+        const opt=[...rz.options].find(o=>o.value!=='custom'&&+o.value===+state.rainRate);
+        if(opt){ rz.value=opt.value; if(rc) rc.style.display='none'; } else { rz.value='custom'; if(rc){ rc.style.display='block'; rc.value=state.rainRate; } }
+      }
+    }
+  }catch(_){}
   const $ = id => document.getElementById(id);
   const set = (id, v) => { const el = $(id); if(el != null && v != null && v !== '') el.value = v; };
 
@@ -18527,7 +18987,7 @@ const LBC_TPL_KEY='lbcLinkTemplates_v1';
 const LBC_TPL_EXCLUDE=new Set(['distance','rainRate','mapR001','climate','useClimate','geoK','pathEps',
   'p19K','p19dN75','p19HeA','p19HeB','p19Ht','lowerAntAlt','terrainType','p530PlManual','p530PlAnn','p530PlWm',
   'p530dN1','p530dNmed','p530C0','p530PLused','p530Rc','p530PathType','obstacles','vbCFactor','vbCf','openTopoKey',
-  'reflSurface','reflKmin','reflKmax','reflSweepSite','reflFadeThr','selectedMods']);
+  'reflSurface','reflKmin','reflKmax','reflSweepSite','reflFadeThr','selectedMods','pathLat','rainSrcInfo']);
 function _tplLoad(){ try{ const a=JSON.parse(localStorage.getItem(LBC_TPL_KEY)||'[]'); return Array.isArray(a)?a:[]; }catch(_){ return []; } }
 function _tplStore(a){ try{ localStorage.setItem(LBC_TPL_KEY, JSON.stringify(a)); return true; }catch(e){ alert('Could not save templates: '+e.message); return false; } }
 function _tplSnapshot(){
@@ -21566,7 +22026,12 @@ window.AUTOPLAN = (function(){
     const targetAvail = Number(rule.availability);
 
     // 1+2. Capacity sizing — pick lowest config that delivers required cap.
-    const configList = configsToTry(isMW, isProtected);
+    let configList = configsToTry(isMW, isProtected);
+    // v8.7b: the rule may cap the configuration (number of carriers)
+    if(rule.maxCfg && typeof _defCfgAllowed === 'function'){
+      const lim = configList.filter(c => _defCfgAllowed(rule, c));
+      configList = lim.length ? lim : configList.slice(0, 1);
+    }
     let chosenCfg = null;
     let refMod = null;
     const warnings = [];
@@ -21630,7 +22095,14 @@ window.AUTOPLAN = (function(){
     }
 
     // 3. Antenna sweep: smallest -> largest, until refMod's availability >= target.
-    const antList = antennaSizes(rule.band, rule.frequency, defaultsGlobals.standard);
+    let antList = antennaSizes(rule.band, rule.frequency, defaultsGlobals.standard);
+    // v8.7b: the tower limits the antenna size
+    const _maxAnt = (rule.maxAnt != null && isFinite(+rule.maxAnt) && +rule.maxAnt > 0) ? +rule.maxAnt : null;
+    if(_maxAnt != null && antList.length){
+      const allowed = antList.filter(a => a <= _maxAnt + 1e-6);
+      antList = allowed.length ? allowed : [antList[0]];
+      if(!allowed.length) warnings.push('No antenna size up to the tower limit (' + _maxAnt + '); the smallest available size was used.');
+    }
     let chosenAnt = null;
     let achievedAvail = -1;
 
@@ -21673,7 +22145,7 @@ window.AUTOPLAN = (function(){
       const _stdW = defaultsGlobals.standard || 'ETSI';
       const _antUnitW = (_stdW === 'FCC' && rule.band === 'Microwave Band') ? 'ft' : 'm';
       warnings.push('Target availability ' + targetAvail.toFixed(3) +
-                    '% not met at the largest available antenna (' + chosenAnt +
+                    '% not met at the largest ' + (_maxAnt != null ? 'antenna allowed on the tower' : 'available antenna') + ' (' + chosenAnt +
                     ' ' + _antUnitW + '). Achieved ' + (achievedAvail >= 0 ? achievedAvail.toFixed(4) : '?') +
                     '%. Manual override required (longer mast, smaller BW, lower target, ' +
                     'or carrier diversity).');
@@ -21746,6 +22218,7 @@ window.AUTOPLAN = (function(){
       antB:      plan.antenna,
       distance:  Number(plan.distKm),
       targetAvail: Number(plan.targetAvailability),
+      selMod:    plan.modulation,   // v8.7b: the reference modulation the plan was sized on
       // mmW product family — single source of truth used by validMods,
       // applyEBandBandwidths, refreshEBandConfigs, etc.
       eBandProduct: eBandProduct,
@@ -21833,7 +22306,10 @@ window.AUTOPLAN = (function(){
       }
       const distKm = haversineKm(a.lat, a.lon, b.lat, b.lon);
       const rsPick = opts.ruleSetFor ? opts.ruleSetFor(link) : { id:null };
+      window._rainLatHint = (a.lat + b.lat) / 2;   // v8.7: rain coefficients for the synthetic state
       const plan = planLink(link, distKm, defaultsGlobals, rsPick.id);
+      window._rainLatHint = null;
+      if(plan && plan.state && !isFinite(+plan.state.pathLat)) plan.state.pathLat = (a.lat + b.lat) / 2;
       if(plan){ plan.ruleSetId = rsPick.id; plan.ruleSetName = _rsName(rsPick.id); plan.ruleSetVia = rsPick.via || ''; }
       if(plan && (plan.status === 'ok' || plan.status === 'warning')){
         applyPlanToLink(link, plan);
@@ -25087,8 +25563,24 @@ window.AUTOPLAN = (function(){
       alert('Could not load saved design:\n\n' + (e && e.message || e));
       return;
     }
+    // v8.7b: the reference modulation belongs to the link's design (Auto-Plan
+    // sizes every link on its own). Apply it after the design, so a value left
+    // over from the previous link never carries across.
+    const _refMod = (l.design && l.design.state && l.design.state.selMod) || (l.summary && l.summary.modulation) || null;
+    const _applyRef = () => { try{
+      if(!_refMod) return;
+      const sel = document.getElementById('selMod');
+      const ok = sel && Array.prototype.some.call(sel.options, o => o.value === _refMod);
+      if(!ok) return;
+      state.selMod = _refMod; sel.value = _refMod;
+      if(typeof populateMaxMod === 'function') populateMaxMod();
+      if(typeof render === 'function') render();
+    }catch(_){} };
+    _applyRef();
     // Switch to single-link view so the user sees full details
     window.switchMode('single');
+    setTimeout(_applyRef, 50);
+    setTimeout(_applyRef, 1500);   // after the terrain refresh recomputes
     setTimeout(()=>{
       try{ window.siteMap && window.siteMap.invalidateSize(); }catch(e){}
       try{ if(typeof updateLinkLine === 'function') updateLinkLine(); }catch(e){}
@@ -25857,6 +26349,7 @@ window.AUTOPLAN = (function(){
       const st=JSON.parse(JSON.stringify(l.design.state));
       const oldKm=+st.distance;
       st.distance=+km.toFixed(4);
+      st.pathLat=(a.lat+b.lat)/2;   // v8.7
       let res=null, err=null;
       try{ const safe=(typeof _netRepSafeState==='function')?_netRepSafeState(st).state:st; res=computeWith(safe); }catch(e){ err=e.message||String(e); }
       const sm=l.summary||(l.summary={});
@@ -25923,6 +26416,7 @@ window.AUTOPLAN = (function(){
       // location-specific values: from the link's own design if it had one, else neutral
       if(!(l.design && l.design.state)){ st.obstacles = []; st.pathEps = null; ['p19K','p19dN75','p19HeA','p19HeB','p19Ht'].forEach(k => st[k] = null); }
       st.distance = +km.toFixed(4);
+      st.pathLat = (a.lat + b.lat) / 2;   // v8.7
       let res = null, err = null;
       try{ res = computeWith((typeof _netRepSafeState === 'function') ? _netRepSafeState(st).state : st); }catch(e){ err = e.message || String(e); }
       const target = +st.targetAvail || 99.99;
@@ -28126,6 +28620,7 @@ window.AUTOPLAN = (function(){
         // because some saved states (very old versions, missing fields)
         // can blow up — we don't want one bad link to break the report.
         if(typeof computeWith === 'function'){
+          if(!isFinite(+s.pathLat) && a && b) s.pathLat = (a.lat + b.lat) / 2;   // v8.7: rain coefficients
           res = computeWith(s);
         }
       } catch(e){
@@ -36027,6 +36522,10 @@ window.INTERFERENCE_ENGINE = (function(){
   font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text3)}
 .rsg-x{border:none;background:transparent;color:#b91c1c;cursor:pointer;font-size:14px;line-height:1;padding:0 3px}
 .rsg-res{width:100%;border-collapse:collapse;font-size:12px}
+.rsg-res-wrap{overflow:auto;max-height:440px;scrollbar-gutter:stable}
+.rsg-res-wrap .rsg-res th{position:sticky;top:0;z-index:1}
+.rsg-res-wrap::-webkit-scrollbar{height:10px;width:10px}
+.rsg-res-wrap::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:6px}
 .rsg-res th{background:var(--sl);padding:6px 8px;text-align:left;font-size:10.5px;letter-spacing:.05em;
   text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border-l);white-space:nowrap}
 .rsg-res td{padding:6px 8px;border-bottom:1px solid var(--border-l);white-space:nowrap}
@@ -36091,8 +36590,6 @@ window.INTERFERENCE_ENGINE = (function(){
                hence hidden. ETSI keeps antenna sizes metric throughout. -->
           <div class="fld" id="rsgMwBandFld" style="display:none"><div class="lbl">MW Band (GHz)</div>
             <select id="rsgMwBand" onchange="rsgOnBandChange()"></select></div>
-          <div class="fld" style="display:none"><div class="lbl">Standard</div>
-            <select id="rsgStd"><option value="ETSI" selected>ETSI</option></select></div>
           <div class="fld"><div class="lbl">Channel BW (MHz)</div>
             <select id="rsgBw" onchange="rsgOnBwChange()"></select></div>
           <div class="fld"><div class="lbl">Rain zone (P.837)</div>
@@ -36104,7 +36601,7 @@ window.INTERFERENCE_ENGINE = (function(){
               <option value="99.9">99.9 (3 nines)</option>
               <option value="99.95" selected>99.95 (3.5 nines)</option>
               <option value="99.99">99.99 (4 nines)</option>
-              <option value="99.995">99.995 (4.3 nines)</option>
+              <option value="99.995">99.995 (4.5 nines)</option>
               <option value="99.999">99.999 (5 nines)</option>
             </select></div>
           <div class="fld"><div class="lbl">Target capacity</div>
@@ -36126,6 +36623,34 @@ window.INTERFERENCE_ENGINE = (function(){
               <option value="typ_e6" selected>Typical</option>
               <option value="gty_e6">Guaranteed</option>
             </select></div>
+        </div>
+        <!-- v8.7: multi-band aggregation (IP-50CX microwave + each trace's mmW radio) -->
+        <div style="margin-top:10px;padding:8px 10px;border:1px solid #99f6e4;border-radius:8px;background:rgba(15,118,110,.06)">
+          <label class="rsg-chk" style="font-weight:700;color:#0f766e" title="Each mmW trace becomes an IP-50CX + mmW multi-band link. The target capacity is the AGGREGATED capacity of both carriers; each carrier is held to its own availability.">
+            <input type="checkbox" id="rsgMbOn" onchange="rsgOnMbToggle()"> &#128279; Multi-band aggregation (IP-50CX + mmW)</label>
+          <div id="rsgMbBox" style="display:none;margin-top:6px">
+            <div class="rsg-grid2">
+              <div class="fld"><div class="lbl">mmW availability (%)</div>
+                <select id="rsgMbAvail" onchange="rsgSave()">
+                  <option value="99.9" selected>99.9 (3 nines)</option><option value="99.95">99.95 (3.5 nines)</option>
+                  <option value="99.99">99.99 (4 nines)</option><option value="99.995">99.995 (4.5 nines)</option>
+                </select></div>
+              <div class="fld"><div class="lbl">MW (IP-50CX) availability (%)</div>
+                <select id="rsgMwAvail" onchange="rsgSave()">
+                  <option value="99.99">99.99 (4 nines)</option><option value="99.995" selected>99.995 (4.5 nines)</option>
+                  <option value="99.999">99.999 (5 nines)</option><option value="99.95">99.95 (3.5 nines)</option>
+                </select></div>
+              <div class="fld"><div class="lbl">MW frequency</div>
+                <select id="rsgMwFreq" onchange="rsgMbPanelFill();rsgSave()"></select></div>
+              <div class="fld"><div class="lbl">MW channel BW</div>
+                <select id="rsgMwBw" onchange="rsgMbPanelFill();rsgSave()"></select></div>
+              <div class="fld"><div class="lbl">MW configuration</div>
+                <select id="rsgMwCfg" onchange="rsgMbPanelFill();rsgSave()"></select></div>
+              <div class="fld"><div class="lbl">MW antenna</div>
+                <select id="rsgMwAnt" onchange="rsgSave()"></select></div>
+            </div>
+            <div class="rsg-hint" style="margin:4px 0 0">The panel's <b>Target capacity</b> is the aggregate (MW + mmW). Each trace's radio, antenna and configuration set its mmW carrier. Microwave-only traces keep the panel availability.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -36225,9 +36750,16 @@ window.INTERFERENCE_ENGINE = (function(){
         <div class="fld"><div class="lbl">Title</div>
           <input type="text" id="rsgTitle" value="Extending the Range of the E-Band Links"></div>
         <div class="rsg-grid2">
+          <div class="fld"><div class="lbl" title="ETSI: antenna sizes in metres and distances in km. FCC: antenna sizes in feet and distances in miles. Display only: the link budgets are unchanged.">Standard (display units)</div>
+            <select id="rsgStd" onchange="rsgOnStd()">
+              <option value="auto" selected>As Defaults tab</option>
+              <option value="ETSI">ETSI (m, km)</option>
+              <option value="FCC">FCC (ft, miles)</option>
+            </select></div>
           <div class="fld"><div class="lbl">Distance units</div>
             <select id="rsgUnits" onchange="rsgRender()">
-              <option value="km" selected>km only</option>
+              <option value="auto" selected>Per standard (km / miles)</option>
+              <option value="km">km only</option>
               <option value="km+mi_top">km + miles (longest)</option>
               <option value="km+mi">km + miles (all)</option>
               <option value="mi">miles only</option>
@@ -36255,12 +36787,15 @@ window.INTERFERENCE_ENGINE = (function(){
                 data-busy="Exporting…" onclick="rsgRunBusy(this, rsgExportXlsx)" title="Export this table, with the assumptions, to an Excel workbook">
           &#11015; Excel</button></div>
       <div class="card-body" style="padding:0">
+        <!-- v8.7b: scrollable (both ways) so wide multi-band rows stay readable -->
+        <div class="rsg-res-wrap">
         <table class="rsg-res"><thead><tr>
           <th>#</th><th>Trace</th><th>Product</th><th>Band / BW</th><th>Ant.</th><th>Cfg</th>
           <th>Modulation</th><th>Capacity</th><th>Max distance</th><th>Fade margin</th>
         </tr></thead><tbody id="rsgResBody">
           <tr><td colspan="10" style="padding:14px;color:var(--text3)">Press <b>Compute &amp; Render</b> to run the link budget for every trace.</td></tr>
         </tbody></table>
+        </div>
       </div>
     </div>
 
@@ -36268,10 +36803,13 @@ window.INTERFERENCE_ENGINE = (function(){
       <div class="card-hdr">&#128228; Generate Slide</div>
       <div class="card-body">
         <div class="rsg-bar" style="margin-bottom:10px">
+          <button class="rsg-btn" onclick="rsgSaveProject()" title="Save every setting and trace of this Range Slide to a project file">&#128190; Save project</button>
+          <button class="rsg-btn" onclick="rsgLoadProject()" title="Open a Range Slide project file">&#128194; Load project</button>
           <button class="rsg-btn" data-busy="Computing…"
                   onclick="rsgRunBusy(this, rsgCompute)">&#9889; Compute &amp; Render</button>
           <button class="rsg-btn primary" data-busy="Building slide…"
                   onclick="rsgRunBusy(this, rsgExportPptx)">&#11015; Download PPTX slide</button>
+          <label style="font-size:11.5px;display:inline-flex;align-items:center;gap:4px" title="Add a second slide with the Detailed Report table (same as the Excel export)"><input type="checkbox" id="rsgReportSlide" checked style="margin:0"> + Detailed Report slide</label>
           <span id="rsgStatus" style="font-size:11.5px;color:var(--text3)"></span>
         </div>
         <div class="rsg-stage" id="rsgStage"></div>
@@ -36322,6 +36860,15 @@ const ORIGIN = { x: 129, y: 517 };
 const M_ANG = [24.94, 22.53, 18.16, 13.85, 4.81, 0.0, -10.95, -20.68, -28.52, -51.71];
 const M_LEN = [9.29, 8.52, 7.87, 7.47, 6.82, 6.03, 5.44, 4.68, 3.88, 1.89];
 const M_COL = ['#FD4934','#FFC000','#FFFF00','#8F6FE8','#FD4934','#FFC000','#FFFF00','#8F6FE8','#FD4934','#FD4934'];
+// v8.7: one colour per RADIO (same product = same colour on every trace), taken
+// in order of first appearance from the longest trace down. The first four are
+// the colours of the reference deck (pink, green, yellow, light blue).
+const RSG_PROD_COL = ['#FF9CDA','#6FE3AE','#FFE45C','#66D9FF','#FFB066','#B9A2FF','#FF7F7F','#C6F36B','#7FE7E7','#F2F2F2'];
+function rsgProductColours(traces){
+  const map = {}; let k = 0;
+  traces.forEach(t => { const p = rsgProdKey(t.row); if(!(p in map)) map[p] = RSG_PROD_COL[(k++) % RSG_PROD_COL.length]; });
+  return map;
+}
 // Range arcs, per ray: centre offset from the tower and the two radii, in
 // inches, read off the master. They are full ellipses clipped by the slide
 // edge — drawing them as short segments made the curvature read backwards.
@@ -36551,7 +37098,16 @@ function rsgOpts(){
     acm    : $('rsgAcm').checked,
     bestEffort: $('rsgBestEffort') ? $('rsgBestEffort').checked : true,
     acmb   : false,          // ACMB (BPSK 1/4, 1/2) is not offered on this slide
-    units  : $('rsgUnits').value,
+    units  : rsgResolveUnits(),
+    // v8.7 multi-band aggregation
+    mbOn   : !!($('rsgMbOn') && $('rsgMbOn').checked),
+    mbAvail: parseFloat(($('rsgMbAvail')||{}).value) || 99.9,      // mmW carrier
+    mwAvail: parseFloat(($('rsgMwAvail')||{}).value) || 99.995,    // IP-50CX carrier
+    mwFreq : ($('rsgMwFreq') && $('rsgMwFreq').value) || '23',
+    mwBw   : ($('rsgMwBw') && $('rsgMwBw').value) || '112',
+    mwCfg  : ($('rsgMwCfg') && $('rsgMwCfg').value) || '1+0',
+    mwAnt  : ($('rsgMwAnt') && $('rsgMwAnt').value) || 'auto',
+    disp   : rsgResolveStd(),   // v8.7b: ETSI m/km, FCC ft/mi; 'As Defaults tab' follows the Defaults Standard
     title  : $('rsgTitle').value,
     page   : $('rsgPage').value,
     showAssum: $('rsgShowAssum').checked,
@@ -36651,7 +37207,91 @@ function rsgOverride(o, row){
 }
 
 // ── one trace → { mod, cap, dist } ──────────────────────────────────────────
+// ═══ v8.7: MULTI-BAND traces ═══════════════════════════════════════════════
+// One trace = IP-50CX microwave carrier + a mmW radio. Each carrier is solved on
+// its own (own availability, capacity, configuration) and the trace's range is
+// the SHORTER of the two: the link only meets both objectives up to there.
+function rsgNines(a){
+  const d = String(a).replace('.','').replace(/0+$/,'');
+  const m = /^(9+)(5?)$/.exec(d);
+  if(m) return String(m[1].length + (m[2] ? 0.5 : 0));
+  return (typeof availToNines==='function') ? availToNines(+a).toFixed(1).replace(/\.0$/,'') : String(a);
+}
+function rsgIsAgg(o, row){ return !!(o.mbOn && row && !rsgRowOpts(o, row).isMW); }
+function rsgProdKey(row){ return row && row._agg ? ('MB '+row.product) : ((row && row.product) || '?'); }
+function rsgProdLabel(row){ return row._agg ? ('IP-50CX + '+row.product+' (MB)') : row.product; }
+// the IP-50CX carrier of an aggregated trace (panel settings; antenna 'auto' =
+// the microwave size closest to the trace's mmW antenna, i.e. one dual-band dish)
+function rsgMbMwRow(row, o){
+  o = o || rsgOpts();
+  const mw = { product:'IP-50CX', band:'MW', freq:String(o.mwFreq||'23'), bw:String(o.mwBw||'112'), ant:'', cfg:o.mwCfg||'1+0', mod:'', cap1:'', cap2:'' };
+  if(o.mwAnt && o.mwAnt !== 'auto') mw.ant = String(o.mwAnt);
+  else {
+    const ants = rsgAntChoices(rsgRowOpts(o, mw), 'IP-50CX', mw.cfg);
+    const want = parseFloat(row && row.ant) || 0.6;
+    mw.ant = ants.length ? ants.slice().sort((a,b)=>Math.abs(parseFloat(a.v)-want)-Math.abs(parseFloat(b.v)-want))[0].v : '0.6';
+  }
+  return mw;
+}
+// every modulation of one carrier with its capacity and the range it holds at `avail`
+function rsgModRanges(oGlobal, row, avail){
+  const o = rsgRowOpts(oGlobal, row);
+  const valid = rsgProductChoices(o);
+  if(valid.indexOf(row.product) < 0) return { err: row.product+' is not a '+(o.isMW ? ('microwave '+o.mwBand+' GHz') : (o.band+'-Band'))+' product' };
+  return rsgWithState(rsgOverride(o, row), () => {
+    let mods;
+    try { mods = (computeWith(Object.assign({}, state, {distance:1})).mods)||[]; }
+    catch(e){ return { err:'engine error: '+e.message }; }
+    const out = [];
+    mods.forEach(m => {
+      const cap = getCap(state.bw, m.mod, state.frameIdx);
+      if(cap==null || !isFinite(cap)) return;
+      const d = findMaxDistAt(m.mod, avail);
+      if(d > 0.06) out.push({ mod:m.mod, cap, dist:d });
+    });
+    if(!out.length) return { err:'no range at '+avail+'%' };
+    return { list: out, bandLbl: o.isMW ? (o.mwBand+' GHz') : (o.band+'-Band'), bw: o.bw };
+  });
+}
+// v8.7 multi-band aggregation: the longest distance at which
+//   capacity(IP-50CX @ MW availability) + capacity(mmW @ mmW availability) >= target,
+// with BOTH carriers closing at that distance (each at its best modulation there).
+function rsgSolveAgg(o, row){
+  const mwRow = rsgMbMwRow(row, o);
+  const A = rsgModRanges(o, row, o.mbAvail);          // mmW
+  const B = rsgModRanges(o, mwRow, o.mwAvail);        // IP-50CX
+  if(A.err) return { err:'mmW: '+A.err };
+  if(B.err) return { err:'MW: '+B.err };
+  const best = (L, d) => L.filter(x => x.dist >= d - 1e-9).sort((a,b) => b.cap - a.cap)[0] || null;
+  const dMax = Math.min(Math.max.apply(null, A.list.map(x=>x.dist)), Math.max.apply(null, B.list.map(x=>x.dist)));
+  const cand = A.list.map(x=>x.dist).concat(B.list.map(x=>x.dist)).filter(d => d <= dMax + 1e-9)
+                .filter((v,i,a) => a.indexOf(v)===i).sort((a,b) => b - a);
+  const target = o.capM;
+  let d = null, a = null, b = null, bestEffort = false;
+  for(const x of cand){ const pa = best(A.list, x), pb = best(B.list, x);
+    if(pa && pb && pa.cap + pb.cap >= target - 1e-6){ d = x; a = pa; b = pb; break; } }
+  if(d == null){
+    // not reachable: highest aggregate capacity, at the longest distance it holds
+    let top = null;
+    cand.forEach(x => { const pa = best(A.list, x), pb = best(B.list, x); if(!pa || !pb) return;
+      const c = pa.cap + pb.cap; if(!top || c > top.c + 1e-6 || (Math.abs(c-top.c) < 1e-6 && x > top.d)) top = { c, d:x, pa, pb }; });
+    if(!top) return { err:'the two carriers never close at the same distance' };
+    if(!o.bestEffort) return { err:'aggregate target not reachable (max '+fmtCap(top.c)+')' };
+    d = top.d; a = top.pa; b = top.pb; bestEffort = true;
+  }
+  const lim = (Math.abs(d - Math.max.apply(null, B.list.filter(x=>x.mod===b.mod).map(x=>x.dist))) < 1e-6) ? 'MW' : 'mmW';
+  // v8.7: fade margin of each carrier at the trace's range, at its own modulation
+  const fmAt = (oo, rw, mod) => { try{ const ro = rsgRowOpts(oo, rw);
+      return rsgWithState(rsgOverride(ro, rw), () => { const m = (computeWith(Object.assign({}, state, {distance:d})).mods||[]).find(x => x.mod === mod);
+        return m ? (m.efm != null ? m.efm : m.ffm) : null; }); }catch(_){ return null; } };
+  const fmMm = fmAt(o, row, a.mod), fmMw = fmAt(o, mwRow, b.mod);
+  return { mod: b.mod+' + '+a.mod, cap: a.cap + b.cap, dist: d, efm: null, bestEffort, pinned:false,
+           bandLbl: B.bandLbl+' + '+A.bandLbl, bw: B.bw+' + '+A.bw, isMW:false,
+           mb: { mm:{mod:a.mod, cap:a.cap, fm:fmMm}, mw:{mod:b.mod, cap:b.cap, fm:fmMw}, lim, mwRow, mmAvail:o.mbAvail, mwAvail:o.mwAvail } };
+}
+
 function rsgSolve(oGlobal, row){
+  if(row && row._agg) return rsgSolveAgg(oGlobal, row);   // v8.7
   const o = rsgRowOpts(oGlobal, row);
   // v1: a product must belong to the band its own trace is on. Without this the
   // engine happily computed an E-Band budget for a microwave radio — rsgOverride
@@ -36798,6 +37438,16 @@ function rsgProductChoices(o){
 //   1) the radio  2) band + antenna  3) configuration (+ the delivered capacity
 //   when the target could not be met).
 function rsgAutoCaption(o, row, res){
+  if(row._agg){   // v8.7 multi-band: radios, antenna(s), each carrier's capacity
+    const ro = rsgRowOpts(o, row), mwRow = rsgMbMwRow(row, o), mro = rsgRowOpts(o, mwRow);
+    const aMm = rsgAntSize(ro, row), aMw = rsgAntSize(mro, mwRow);
+    // kept short so a multi-band label is no wider than a normal one; the
+    // availability of each carrier is stated once in the Assumptions box
+    const l2 = mwRow.freq+' GHz + '+(ro.band||'E')+'-Band, '+(aMm===aMw ? aMm : (aMw.replace(/ (m|ft)$/,'')+' / '+aMm))+' Ant.';
+    let l3 = '';
+    if(res && res.mb) l3 = fmtCap(res.mb.mw.cap)+' + '+fmtCap(res.mb.mm.cap);
+    return ['IP-50CX + '+row.product, l2, l3].filter(Boolean);
+  }
   const ro = rsgRowOpts(o, row);
   const l2 = (ro.isMW ? ro.mwBand + ' GHz, ' : '') + rsgAntCaption(ro, row);
   const tail = [];
@@ -36806,16 +37456,40 @@ function rsgAutoCaption(o, row, res){
   if(res && res.bestEffort && res.cap) tail.push(fmtCap(res.cap));
   return [row.product, l2, tail.join(', ')].filter(Boolean);
 }
-function rsgAntCaption(o, row){
+// v8.7: antenna size in the display standard: ETSI metres, FCC feet
+function rsgAntSize(o, row){
+  const fcc = (o.disp || rsgResolveStd()) === 'FCC';
   if(!o.isMW && rsgIsEh(row.product)){
     const meta = EH_META[rsgEhKey(row.product,row.cfg)];
     const a = meta && meta.ant.find(x => String(x[1])===String(row.ant));
-    if(a){ const ft=(a[0].split('/')[1]||a[0]); return ft.replace('ft',' ft')+' Antenna'; }
-    return row.ant+' dBi Antenna';
+    if(a){ const pr = a[0].split('/'); const t = fcc ? (pr[1]||pr[0]) : pr[0]; return t.replace('ft',' ft').replace(/m(\+?)$/,' m$1'); }
+    return row.ant+' dBi';
   }
-  if(o.isMW) return row.ant + (o.std==='FCC' ? ' ft' : ' m') + ' Antenna';
-  return (RSG_ANT_FT[String(parseFloat(row.ant))] || row.ant+' m') + ' Antenna';
+  const m = parseFloat(row.ant);
+  if(!isFinite(m)) return String(row.ant);
+  if(fcc){
+    if(!o.isMW && RSG_ANT_FT[String(m)]) return RSG_ANT_FT[String(m)];
+    return Math.round(m/0.3048) + ' ft';
+  }
+  if(String(row.ant) === '0.31') return '0.3 m+';
+  return m + ' m';
 }
+function rsgAntCaption(o, row){ return rsgAntSize(o, row) + ' Antenna'; }
+// v8.7b: the display standard can follow the Defaults tab (ETSI / FCC)
+function rsgResolveStd(){
+  const v = ($('rsgStd') && $('rsgStd').value) || 'auto';
+  if(v === 'ETSI' || v === 'FCC') return v;
+  return (typeof _defaultsIsFcc === 'function' && _defaultsIsFcc()) ? 'FCC' : 'ETSI';
+}
+function rsgResolveUnits(){
+  const v = ($('rsgUnits') && $('rsgUnits').value) || 'auto';
+  return v === 'auto' ? (rsgResolveStd() === 'FCC' ? 'mi' : 'km') : v;
+}
+window.rsgOnStd = function(){
+  if($('rsgUnits')) $('rsgUnits').value = 'auto';   // distances follow the chosen standard
+  if(typeof rsgRenderRows === 'function') try{ rsgRenderRows(); }catch(_){}
+  rsgRender();
+};
 
 function rsgRenderRows(){
   const o = rsgOpts();
@@ -36909,6 +37583,31 @@ window.rsgSetRow = function(i, k, v){
   }
   rsgRenderRows(); rsgSave();
 };
+// v8.7: multi-band panel (IP-50CX carrier choices follow its frequency / BW)
+window.rsgMbPanelFill = function(){
+  const o = rsgOpts();
+  const fSel = $('rsgMwFreq'), bSel = $('rsgMwBw'), cSel = $('rsgMwCfg'), aSel = $('rsgMwAnt');
+  if(!fSel) return;
+  const keep = (sel, vals, def) => { const was = sel.value; sel.innerHTML = vals.map(v => '<option value="'+esc(String(v.v))+'">'+esc(v.label)+'</option>').join('');
+    sel.value = vals.some(v => String(v.v)===String(was)) ? was : (vals.some(v => String(v.v)===String(def)) ? def : (vals[0] ? vals[0].v : '')); };
+  keep(fSel, [6,7,8,10,11,13,15,18,23,26,28,32,38,42].map(f => ({v:String(f), label:f+' GHz'})), '23');
+  const mw0 = { product:'IP-50CX', band:'MW', freq:fSel.value, bw:'', ant:'', cfg:'1+0' };
+  const bws = rsgBwChoices(rsgRowOpts(o, mw0), 'IP-50CX');
+  keep(bSel, bws.map(b => ({v:String(b), label:b+' MHz'})), '112');
+  const mw1 = Object.assign({}, mw0, { bw:bSel.value });
+  const ro1 = rsgRowOpts(o, mw1);
+  keep(cSel, rsgCfgChoices(ro1, 'IP-50CX', ro1.bw).map(c => ({v:c, label:c})), '1+0');
+  const ants = rsgAntChoices(ro1, 'IP-50CX', cSel.value);
+  keep(aSel, [{v:'auto', label:'Auto (= mmW size)'}].concat(ants.map(a => ({v:a.v, label:a.label||a.v}))), 'auto');
+};
+window.rsgOnMbToggle = function(){
+  const on = !!($('rsgMbOn') && $('rsgMbOn').checked);
+  if($('rsgMbBox')) $('rsgMbBox').style.display = on ? '' : 'none';
+  if(on) rsgMbPanelFill();
+  rsgSave();
+  if(typeof rsgAssumAutoOn === 'function' ? rsgAssumAutoOn() : true) try{ rsgRegenAssumptions(); }catch(_){}
+};
+
 window.rsgDelRow = function(i){ RSG.rows.splice(i,1); rsgRenderRows(); rsgSave(); };
 window.rsgAddRow = function(){
   if(RSG.rows.length>=RSG_MAX_ROWS){
@@ -36943,7 +37642,7 @@ window.rsgAddRow = function(){
 };
 
 window.rsgLoadExample = function(){
-  $('rsgBand').value='E'; $('rsgFreq').value=80; $('rsgStd').value='ETSI';
+  $('rsgBand').value='E'; $('rsgFreq').value=80; $('rsgStd').value='auto';
   rsgOnBandChange();
   $('rsgBw').value='2000'; $('rsgRain').value=42; $('rsgZone').value='K';
   $('rsgAvail').value='99.95'; $('rsgCap').value='4'; $('rsgCapUnit').value='1000';
@@ -37046,7 +37745,9 @@ function rsgAssumptionLines(){
   const zone = hit
     ? ('Rain Zone '+hit[0]+' ('+o.rain+' mm/h)'+(RSG_ZONE_NOTE[hit[0]] ? ' - '+RSG_ZONE_NOTE[hit[0]] : ''))
     : ('Rain rate - '+o.rain+' mm/h');
-  const nines = (typeof availToNines==='function') ? availToNines(o.avail).toFixed(1).replace(/\.0$/,'') : '';
+  // v8.7: marketing convention — count the nines, a trailing 5 is a half nine
+  // (99.95% = 3.5 nines, 99.995% = 4.5 nines). The log formula gave "3.3".
+  const nines = rsgNines(o.avail);
   const cap = o.capM>=1000 ? (o.capM/1000).toFixed(o.capM%1000?2:0)+' Gbps' : o.capM+' Mbps';
   const lines = [
     zone,
@@ -37074,6 +37775,15 @@ function rsgAssumptionLines(){
   // so it stays unstated. Guaranteed shortens every range materially, so when it
   // is chosen the slide says so rather than presenting the shorter figures as if
   // they came from the usual basis.
+  // v8.7: multi-band aggregation states both objectives and the MW carrier
+  if(o.mbOn && (RSG.rows||[]).some(r => rsgIsAgg(o, r))){
+    lines[2] = 'Capacity - ' + cap + ' aggregated (MW + mmW)';
+    // the panel availability then only applies to single-band (microwave) traces
+    const single = (RSG.rows||[]).some(r => !rsgIsAgg(o, r));
+    if(single) lines[1] = lines[1] + ' (single-band traces)'; else lines.splice(1, 1);
+    lines.push('Multi-band: IP-50CX ' + o.mwFreq + ' GHz, ' + o.mwBw + ' MHz, ' + o.mwCfg + ' @ ' + rsgNines(o.mwAvail) + ' nines (' + o.mwAvail + '%)'
+               + ' + mmW @ ' + rsgNines(o.mbAvail) + ' nines (' + o.mbAvail + '%)');
+  }
   if(o.rsl === 'gty_e6') lines.push('RSL - Guaranteed @ BER 1E-6');
   // The modulation per trace is already implicit in the ranges and is listed in
   // the results table, so it is deliberately kept off the slide.
@@ -37090,13 +37800,59 @@ function rsgAutoAssumptions(){
 }
 
 // ── persistence (localStorage) ──────────────────────────────────────────────
+function rsgCollect(){
+  const ids = ['rsgMbAvail','rsgMwAvail','rsgMwFreq','rsgMwBw','rsgMwCfg','rsgMwAnt','rsgBand','rsgFreq','rsgMwBand','rsgBw','rsgZone','rsgRain','rsgAvail',
+    'rsgCap','rsgCapUnit','rsgFrame','rsgRsl','rsgRslE6','rsgMethod','rsgK','rsgEps','rsgMisc','rsgVbc',
+    'rsgStd','rsgUnits','rsgTitle','rsgPage','rsgAssum','rsgCountry','rsgLat','rsgLon','rsgTerrain',
+    'rsgAlt','rsgPathType','rsgRc'];
+  const f = {}; ids.forEach(i => { const e=$(i); if(e) f[i]=e.value; });
+  f._mbOn = !!($('rsgMbOn') && $('rsgMbOn').checked);
+  f._acm = $('rsgAcm').checked; f._best = $('rsgBestEffort').checked; f._assum = $('rsgShowAssum').checked; f._assumAuto = $('rsgAssumAuto').checked;
+  return { fields:f, rows:(RSG.rows||[]).map(r => { const c = Object.assign({}, r); delete c._agg; return c; }) };
+}
+// v8.7b: Range Slide projects as files
+window.rsgSaveProject = function(){
+  const o = rsgCollect();
+  const base = String(($('rsgTitle')||{}).value || 'Range_Slide').replace(/[^A-Za-z0-9 _.-]+/g,'').trim().replace(/\s+/g,'_') || 'Range_Slide';
+  const name = prompt('Project file name:', base + '_' + new Date().toISOString().slice(0,10));
+  if(!name) return;
+  const doc = Object.assign({ _format:'ceragon-lbc-rangeslide', _version:1, _lbcVersion:(typeof LBC_TOOL_VERSION!=='undefined'?LBC_TOOL_VERSION:''), _savedAt:new Date().toISOString() }, o);
+  rsgDownload(new Blob([JSON.stringify(doc, null, 2)], {type:'application/json'}), name.replace(/\.json$/i,'').replace(/\.lbcrange$/i,'') + '.lbcrange.json');
+  rsgStatus('Project saved.');
+};
+window.rsgLoadProject = function(){
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+  inp.onchange = e => { const f = e.target.files && e.target.files[0]; if(!f) return; const rd = new FileReader();
+    rd.onload = ev => {
+      try{
+        const obj = JSON.parse(ev.target.result);
+        if(!obj || !obj.fields || !Array.isArray(obj.rows)) throw new Error('not a Range Slide project file');
+        localStorage.setItem('lbc_rangeSlide_v1', JSON.stringify({ fields:obj.fields, rows:obj.rows }));
+        rsgLoad();
+        rsgSetRslMode(($('rsgRslE6')||{}).value || 'typ_e6', true);
+        if(!RSG.rows.length) RSG.rows = rsgDefaultRows();
+        rsgFillBw();
+        if(obj.fields.rsgBw != null && $('rsgBw')) $('rsgBw').value = obj.fields.rsgBw;
+        if(!$('rsgUnits').value) $('rsgUnits').value = 'auto';
+        if($('rsgStd') && !$('rsgStd').value) $('rsgStd').value = 'auto';
+        rsgRenderRows();
+        if(!$('rsgAssum').value) rsgRegenAssumptions();
+        rsgSave();
+        rsgCompute();
+        rsgStatus('Project "' + f.name + '" loaded: ' + RSG.rows.length + ' trace' + (RSG.rows.length!==1?'s':'') + '.');
+      }catch(err){ alert('Could not load the project: ' + err.message); }
+    };
+    rd.readAsText(f); };
+  inp.click();
+};
 function rsgSave(){
   try{
-    const ids = ['rsgBand','rsgFreq','rsgMwBand','rsgBw','rsgZone','rsgRain','rsgAvail',
+    const ids = ['rsgMbAvail','rsgMwAvail','rsgMwFreq','rsgMwBw','rsgMwCfg','rsgMwAnt','rsgBand','rsgFreq','rsgMwBand','rsgBw','rsgZone','rsgRain','rsgAvail',
       'rsgCap','rsgCapUnit','rsgFrame','rsgRsl','rsgRslE6','rsgMethod','rsgK','rsgEps','rsgMisc','rsgVbc',
-      'rsgUnits','rsgTitle','rsgPage','rsgAssum','rsgCountry','rsgLat','rsgLon','rsgTerrain',
+      'rsgStd','rsgUnits','rsgTitle','rsgPage','rsgAssum','rsgCountry','rsgLat','rsgLon','rsgTerrain',
       'rsgAlt','rsgPathType','rsgRc'];
     const f = {}; ids.forEach(i => { const e=$(i); if(e) f[i]=e.value; });
+    f._mbOn = !!($('rsgMbOn') && $('rsgMbOn').checked);
     f._acm = $('rsgAcm').checked; f._best = $('rsgBestEffort').checked; f._assum = $('rsgShowAssum').checked; f._assumAuto = $('rsgAssumAuto').checked;
     localStorage.setItem('lbc_rangeSlide_v1', JSON.stringify({fields:f, rows:RSG.rows}));
   }catch(e){}
@@ -37111,6 +37867,15 @@ function rsgLoad(){
     if($('rsgShowAssum')) $('rsgShowAssum').checked = obj.fields._assum!==false;
     if($('rsgAssumAuto')) $('rsgAssumAuto').checked = obj.fields._assumAuto!==false;
     RSG.rows = Array.isArray(obj.rows) ? obj.rows : [];
+    // v8.7: multi-band panel — options depend on each other, so restore in order
+    try{
+      const F = obj.fields || {};
+      if($('rsgMbOn')) $('rsgMbOn').checked = !!F._mbOn;
+      ['rsgMwFreq','rsgMwBw','rsgMwCfg','rsgMwAnt'].forEach(id => { rsgMbPanelFill(); if(F[id] != null && $(id)) $(id).value = F[id]; });
+      rsgMbPanelFill();
+      if($('rsgMbBox')) $('rsgMbBox').style.display = (F._mbOn ? '' : 'none');
+      RSG.rows.forEach(r => { ['mb','mwFreq','mwBw','mwCfg','mwAnt','mwAvail','mwCap'].forEach(k => delete r[k]); });   // old per-trace multi-band fields
+    }catch(_){}
     const isMW = $('rsgBand').value==='MW';
     $('rsgFreqFld').style.display = isMW?'none':''; $('rsgMwBandFld').style.display = isMW?'':'none';
     return true;
@@ -37125,6 +37890,7 @@ window.rsgCompute = function(){
   if(!RSG.rows.length){ rsgStatus('Add at least one trace.', true); return; }
   if(!(o.capM>0)){ rsgStatus('Set a target capacity.', true); return; }
   rsgStatus('Computing…');
+  RSG.rows.forEach(r => { delete r.mb; r._agg = rsgIsAgg(o, r); });   // v8.7: multi-band aggregation
   RSG.results = RSG.rows.map(r => Object.assign({row:r}, rsgSolve(o, r)));
 
   const body = $('rsgResBody');
@@ -37133,7 +37899,7 @@ window.rsgCompute = function(){
     const capt = rsgAutoCaption(o, r, res);
     const name = ((r.cap1||r.cap2) ? [r.cap1,r.cap2].filter(Boolean) : capt).join(' · ');
     const ro = rsgRowOpts(o, r);
-    if(res.err) return '<tr><td>'+(i+1)+'</td><td>'+esc(name)+'</td><td>'+esc(r.product)+'</td><td>'
+    if(res.err) return '<tr><td>'+(i+1)+'</td><td>'+esc(name)+'</td><td>'+esc(rsgProdLabel(r))+'</td><td>'
       + esc(ro.isMW?(ro.mwBand+' GHz'):(ro.band+'-Band'))+' / '+esc(ro.bw)+'</td><td>'
       + esc(r.ant)+'</td><td>'+esc(r.cfg)+'</td>'
       + '<td colspan="4" class="rsg-bad">'+esc(res.err)+'</td></tr>';
@@ -37144,11 +37910,15 @@ window.rsgCompute = function(){
     const modTxt = res.pinned
       ? '<span title="pinned on this trace — not the solver\'s pick">'+esc(res.mod)+' &#128204;</span>'
       : esc(res.mod);
-    return '<tr><td>'+(i+1)+'</td><td>'+esc(name)+'</td><td>'+esc(r.product)+'</td><td>'
-      + esc(res.bandLbl||'')+' / '+esc(res.bw||'')+'</td><td>'+esc(r.ant)
-      + '</td><td>'+esc(r.cfg)+'</td><td>'+modTxt+'</td><td class="mn">'+capTxt
-      + '</td><td class="mn" style="color:#0e7490">'+res.dist.toFixed(2)+' km / '+(res.dist*KM2MI).toFixed(2)
-      + ' mi</td><td class="mn">'+(res.efm!=null?res.efm.toFixed(1)+' dB':'—')+'</td></tr>';
+    const fmS = v => v!=null ? (+v).toFixed(1)+' dB' : '—';
+    const mbNote = res.mb ? '<br><small style="color:#0f766e">MW '+esc(res.mb.mw.mod)+' '+fmtCap(res.mb.mw.cap)+' @ '+res.mb.mwAvail+'% (FM '+fmS(res.mb.mw.fm)+') + mmW '+esc(res.mb.mm.mod)+' '+fmtCap(res.mb.mm.cap)+' @ '+res.mb.mmAvail+'% (FM '+fmS(res.mb.mm.fm)+') · limited by '+res.mb.lim+'</small>' : '';
+    return '<tr><td>'+(i+1)+'</td><td>'+esc(name)+mbNote+'</td><td>'+esc(rsgProdLabel(r))+'</td><td>'
+      + esc(res.bandLbl||'')+' / '+esc(res.bw||'')+'</td><td>'+esc(r._agg ? (res.mb.mwRow.ant+' + '+r.ant) : r.ant)
+      + '</td><td>'+esc(r._agg ? (res.mb.mwRow.cfg+' + '+r.cfg) : r.cfg)+'</td><td>'+modTxt+'</td><td class="mn">'+capTxt
+      + '</td><td class="mn" style="color:#0e7490">'+(rsgResolveStd()==='FCC'
+          ? (res.dist*KM2MI).toFixed(2)+' mi / '+res.dist.toFixed(2)+' km'
+          : res.dist.toFixed(2)+' km / '+(res.dist*KM2MI).toFixed(2)+' mi')
+      + '</td><td class="mn">'+(res.mb ? ('MW '+fmS(res.mb.mw.fm)+'<br>mmW '+fmS(res.mb.mm.fm)) : (res.efm!=null?res.efm.toFixed(1)+' dB':'—'))+'</td></tr>';
   }).join('');
 
   const ok = RSG.results.filter(r=>!r.err).length;
@@ -37184,6 +37954,7 @@ function rsgBuildModel(){
   const slot = [];
   for(let j=0;j<n;j++) slot.push(n===1 ? 0 : Math.round(j*(pool-1)/(n-1)));
 
+  const prodCol = rsgProductColours(traces);   // v8.7: colour by radio
   const fit = (kPx) => traces.map((t,i) => {
     const sl  = slot[i];
     const ang = M_ANG[sl];
@@ -37201,13 +37972,15 @@ function rsgBuildModel(){
     const botExt = 32 + Math.max(0, caps.length-1)*28 + 10;
     return { slot:sl, ang, r, tipX, tipY, labY:tipY, botExt, h:botExt + 26,
              distLabel:dl, caps, cap1:caps[0]||'', cap2:caps[1]||'',
-             colour: M_COL[sl], km:t.dist, w, res:t };
+             colour: prodCol[rsgProdKey(t.row)] || M_COL[sl], km:t.dist, w, res:t };
   });
 
   // master scale: the top slot's own length carries the longest distance
   let kPx = (M_LEN[slot[0]||0] * PX_PER_IN) / dMax;
   let laid = fit(kPx);
-  const bound = t => (!o.showAssum || (t.labY + t.h < 300)) ? 1568 : 1170;
+  // v8.7: Assumptions sit in the lower-right corner — label blocks low on the
+  // slide stop short of it (same rule as the PPTX)
+  const bound = t => (!o.showAssum || (t.labY + t.h < 560)) ? 1568 : 1100;
   // v1: the bottom test asks whether a label block, sitting at its RAW tip
   // position, would fall off the slide. place() below repositions and clamps every
   // label, so that is over-conservative — the block never renders there. At 10
@@ -37231,8 +38004,9 @@ function rsgBuildModel(){
     const bad = laid.some(t => {
       if(t.tipX + 14 + t.w > bound(t)) return true;
       if(t.tipY < 104) return true;
-      const lim = !steepInUse ? (800 - t.h)
-                : (t.slot === steepSlot ? 800 : 800 - 36);
+      // v8.7: with every ray in play (10 traces, the default) keep all tips above
+      // the footer band too; the steepest ray used to run into it
+      const lim = !steepInUse ? (800 - t.h) : 776;
       return t.tipY > lim;
     });
     if(!bad) break;
@@ -37418,19 +38192,21 @@ function rsgSvg(model, withText){
 
     // assumptions
     if(model.showAssum && model.assum.length){
-      s += '<text x="1195" y="368" fill="'+C_ASSUM+'" font-size="26">Assumptions:</text>';
-      const AW = 368;
-      let fs = 20, wrapped = [];
-      for(; fs >= 14; fs -= 1){
+      // v8.7: lower-right corner, above the footer (box 9.3-13.1 in across,
+      // 4.7-6.45 in down, same as the PPTX)
+      s += '<text x="1118" y="590" fill="'+C_ASSUM+'" font-size="22">Assumptions:</text>';
+      const AW = 440;
+      let fs = 18, wrapped = [];
+      for(; fs >= 12; fs -= 1){
         wrapped = [];
         model.assum.forEach(l => rsgWrap(l, AW, fs).forEach((w,j) => wrapped.push({t:w, cont:j>0})));
-        if(wrapped.length * (fs*1.62) <= 380) break;
+        if(wrapped.length * (fs*1.5) <= 170) break;
       }
-      let y = 414;
+      let y = 620;
       wrapped.forEach(l => {
-        s += '<text x="'+(l.cont?1218:1200)+'" y="'+y.toFixed(0)+'" fill="'+C_TXT+'" font-size="'+fs+'">'
+        s += '<text x="'+(l.cont?1138:1120)+'" y="'+y.toFixed(0)+'" fill="'+C_TXT+'" font-size="'+fs+'">'
            + (l.cont ? '' : '&#8226; ') + esc(l.t) + '</text>';
-        y += fs*1.62;
+        y += fs*1.5;
       });
     }
   }
@@ -37494,8 +38270,11 @@ window.rsgExportXlsx = function(){
     aoa.push(['', 'Misc. loss (dB)', o.misc]);
     aoa.push(['', 'Frame size', (typeof CAP_SIZES!=='undefined' ? CAP_SIZES[o.frame] : o.frame)]);
     aoa.push([]);
+    const anyAggX = RSG.results.some(r => r.mb);   // v8.7: per-carrier capacity columns
     aoa.push(['#','Product','Band','Channel BW (MHz)','Antenna','Config','Modulation',
-              'Capacity (Mbps)','Target met','Max distance (km)','Max distance (mi)','Fade margin (dB)']);
+              anyAggX ? 'Aggregated capacity (Mbps)' : 'Capacity (Mbps)'].concat(anyAggX ? ['MW capacity (Mbps)','mmW capacity (Mbps)'] : [])
+              .concat(['Target met','Max distance (km)','Max distance (mi)','Fade margin (dB)'])
+              .concat(anyAggX ? ['MW fade margin (dB)','mmW fade margin (dB)'] : []));
     RSG.results.forEach((r,i) => {
       const row = r.row, ro = rsgRowOpts(o, row);
       const band = ro.isMW ? (ro.mwBand+' GHz') : (ro.band+'-Band');
@@ -37504,10 +38283,14 @@ window.rsgExportXlsx = function(){
         aoa.push(['', 'not solved: '+r.err]);
         return;
       }
-      aoa.push([i+1, row.product, band, ro.bw, row.ant, row.cfg, r.mod,
-                +r.cap.toFixed(1), r.bestEffort ? 'best effort' : 'yes',
+      aoa.push([i+1, rsgProdLabel(row), r.mb ? r.bandLbl : band, r.mb ? r.bw : ro.bw, r.mb ? (r.mb.mwRow.ant+' + '+row.ant) : row.ant,
+                r.mb ? (r.mb.mwRow.cfg+' + '+row.cfg) : row.cfg, r.mod,
+                +r.cap.toFixed(1)].concat(anyAggX ? [ r.mb ? +r.mb.mw.cap.toFixed(1) : (ro.isMW ? +r.cap.toFixed(1) : ''),
+                                                     r.mb ? +r.mb.mm.cap.toFixed(1) : (ro.isMW ? '' : +r.cap.toFixed(1)) ] : []).concat([ r.bestEffort ? 'best effort' : 'yes',
                 +r.dist.toFixed(2), +(r.dist*KM2MI).toFixed(2),
-                r.efm!=null ? +r.efm.toFixed(1) : '']);
+                r.efm!=null ? +r.efm.toFixed(1) : ''])
+                .concat(anyAggX ? [ r.mb && r.mb.mw.fm!=null ? +(+r.mb.mw.fm).toFixed(1) : (ro.isMW && r.efm!=null ? +r.efm.toFixed(1) : ''),
+                                    r.mb && r.mb.mm.fm!=null ? +(+r.mb.mm.fm).toFixed(1) : (!ro.isMW && !r.mb && r.efm!=null ? +r.efm.toFixed(1) : '') ] : []));
     });
     aoa.push([]);
     aoa.push(['Ranges are produced by the LBC link-budget engine '
@@ -38011,6 +38794,230 @@ async function rsgPruneMaster(zip){
   return stats;
 }
 
+// ── v8.7: colour a ray group (arrow + its labels) ───────────────────────────
+// Arrow: solid line in the colour, dotted (sysDot) with the triangle head, as in
+// the reference deck. Labels: every run / paragraph end in the colour.
+function rsgRecolourRay(r, hex){
+  if(!hex) return;
+  const val = String(hex).replace('#','').toUpperCase();
+  const doc = r.node.ownerDocument;
+  const mkFill = () => { const f = doc.createElementNS(RSG_A_NS, 'a:solidFill'); const c = doc.createElementNS(RSG_A_NS, 'a:srgbClr'); c.setAttribute('val', val); f.appendChild(c); return f; };
+  const FILLS = ['a:noFill','a:solidFill','a:gradFill','a:blipFill','a:pattFill','a:grpFill'];
+  const setFill = (parent, after) => {
+    let had = null;
+    Array.prototype.slice.call(parent.childNodes).forEach(ch => { if(ch.nodeType===1 && FILLS.indexOf(ch.nodeName)!==-1){ if(!had) had = ch; else parent.removeChild(ch); } });
+    const nf = mkFill();
+    if(had){ parent.replaceChild(nf, had); return; }
+    const ref = after ? rsgFirstChildEl(parent, after) : null;
+    if(ref) parent.insertBefore(nf, ref.nextSibling); else parent.insertBefore(nf, parent.firstChild);
+  };
+  // arrow line
+  const conn = r.conn || r.node.getElementsByTagName('p:cxnSp')[0];
+  if(conn){
+    const ln = conn.getElementsByTagName('a:ln')[0];
+    if(ln){
+      setFill(ln, null);
+      let dash = ln.getElementsByTagName('a:prstDash')[0];
+      if(!dash){ dash = doc.createElementNS(RSG_A_NS, 'a:prstDash'); const f = rsgFirstChildEl(ln, 'a:solidFill'); ln.insertBefore(dash, f ? f.nextSibling : ln.firstChild); }
+      dash.setAttribute('val', 'sysDot');
+    }
+    // a style reference (lnRef) would otherwise override nothing, but keep it consistent
+    Array.prototype.slice.call(conn.getElementsByTagName('a:lnRef')).forEach(lr => {
+      Array.prototype.slice.call(lr.childNodes).forEach(ch => lr.removeChild(ch));
+      const c = doc.createElementNS(RSG_A_NS, 'a:srgbClr'); c.setAttribute('val', val); lr.appendChild(c);
+    });
+  }
+  // labels
+  [r.distBox, r.capBox].forEach(b => {
+    if(!b) return;
+    ['a:rPr','a:endParaRPr','a:defRPr'].forEach(tag => {
+      Array.prototype.slice.call(b.getElementsByTagName(tag)).forEach(rp => setFill(rp, 'a:ln'));
+    });
+    // runs without an rPr get one
+    Array.prototype.slice.call(b.getElementsByTagName('a:r')).forEach(run => {
+      if(!rsgFirstChildEl(run, 'a:rPr')){ const rp = doc.createElementNS(RSG_A_NS, 'a:rPr'); rp.setAttribute('lang','en-US'); run.insertBefore(rp, run.firstChild); setFill(rp, null); }
+    });
+  });
+}
+// ── v8.7: "Detailed Report" table slide ────────────────────────────────────
+function rsgXmlEsc(t){ return String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function rsgReportRows(model){
+  const o = rsgOpts();
+  const prodCol = rsgProductColours(model.traces.map(t => t.res));   // keyed by rsgProdKey
+  const good = RSG.results.filter(r => !r.err && r.dist > 0).sort((a,b) => a.dist - b.dist);   // shortest first, as in the reference deck
+  const bad  = RSG.results.filter(r => r.err || !(r.dist > 0));
+  const rows = [];
+  good.forEach((r,i) => {
+    const row = r.row, ro = rsgRowOpts(o, row);
+    const fcc = o.disp === 'FCC';
+    const dA = fcc ? (+r.dist*KM2MI).toFixed(2) : (+r.dist).toFixed(2), dB = fcc ? (+r.dist).toFixed(2) : (+r.dist*KM2MI).toFixed(2);
+    const antTxt = (rr, rw) => rsgAntSize(rr, rw).replace(/ (m|ft)\+?$/,(x)=>x.indexOf('+')>=0?'+':'' ).trim();
+    const mbw = r.mb ? r.mb.mwRow : null, mro = mbw ? rsgRowOpts(o, mbw) : null;
+    rows.push({ col: prodCol[rsgProdKey(row)] || null, cells: [i+1, rsgProdLabel(row),
+      mbw ? (mbw.freq+' GHz + '+ro.band+'-Band') : (ro.isMW ? (ro.mwBand+' GHz') : (ro.band+'-Band')),
+      mbw ? (mro.bw+' + '+ro.bw) : ro.bw,
+      mbw ? (antTxt(mro, mbw)+' + '+antTxt(ro, row)) : antTxt(ro, row),
+      mbw ? (mbw.cfg+' + '+row.cfg) : row.cfg, r.mod,
+      (+r.cap).toFixed(1), r.bestEffort ? 'best effort' : 'yes', dA, dB,
+      r.mb ? ((r.mb.mw.fm!=null ? (+r.mb.mw.fm).toFixed(1) : '—') + ' / ' + (r.mb.mm.fm!=null ? (+r.mb.mm.fm).toFixed(1) : '—'))
+           : (r.efm!=null ? (+r.efm).toFixed(1) : '')],
+      // v8.7: per-carrier capacity for the multi-band columns
+      mwCap: r.mb ? (+r.mb.mw.cap).toFixed(1) : (ro.isMW ? (+r.cap).toFixed(1) : '—'),
+      mmCap: r.mb ? (+r.mb.mm.cap).toFixed(1) : (ro.isMW ? '—' : (+r.cap).toFixed(1)) });
+  });
+  bad.forEach((r,i) => {
+    const row = r.row, ro = rsgRowOpts(o, row);
+    rows.push({ col:null, cells: [good.length+i+1, row.product, ro.isMW ? (ro.mwBand+' GHz') : (ro.band+'-Band'), ro.bw, rsgAntSize(ro, row).replace(/ (m|ft)\+?$/,(x)=>x.indexOf('+')>=0?'+':'' ).trim(), row.cfg, '', '', 'not solved', '', '', ''] });
+  });
+  return rows;
+}
+async function rsgAddReportSlide(zip, model){
+  const fccT = rsgOpts().disp === 'FCC';
+  let HDR = ['#','Product','Band','Channel BW (MHz)', fccT ? 'Antenna (ft)' : 'Antenna (m)','Config','Modulation','Capacity (Mbps)','Target met',
+               fccT ? 'Max distance (mi)' : 'Max distance (km)', fccT ? 'Max distance (km)' : 'Max distance (mi)','Fade margin (dB)'];
+  let W   = [0.32,1.45,0.95,1.05,0.85,0.65,0.95,1.0,1.0,1.05,1.05,1.0];          // inches, total 11.32
+  const EMU = 914400;
+  const rows = rsgReportRows(model);
+  // v8.7: with multi-band traces, show the aggregate AND what each carrier provides
+  const anyAgg = (RSG.results || []).some(r => r.mb);
+  if(anyAgg){
+    HDR.splice(7, 1, 'Aggregated capacity (Mbps)', 'MW capacity (Mbps)', 'mmW capacity (Mbps)');
+    HDR[HDR.length-1] = 'Fade margin MW / mmW (dB)';
+    W = [0.3,1.85,0.95,0.85,0.75,0.6,0.95,0.95,0.85,0.85,0.75,0.8,0.8,0.95];          // total 12.2
+    rows.forEach(r => { if(r.cells.length === 12) r.cells.splice(8, 0, r.mwCap || '', r.mmCap || ''); });
+  }
+  const fs = (rows.length > 12 || anyAgg) ? 1000 : (rows.length > 9 ? 1100 : 1200);
+  const rowH = Math.round((fs/100) * 2.1 * 12700), hdrH = Math.round(rowH * 1.7);
+  const line = (tag, on) => on ? '<a:'+tag+' w="9525"><a:solidFill><a:srgbClr val="FFFFFF"><a:alpha val="70000"/></a:srgbClr></a:solidFill></a:'+tag+'>' : '<a:'+tag+' w="0"><a:noFill/></a:'+tag+'>';
+  const cell = (txt, opt) => {
+    const lines = String(txt==null?'':txt).split('\n');
+    const col = (opt.col || '#FFFFFF').replace('#','').toUpperCase();
+    return '<a:tc><a:txBody><a:bodyPr/><a:lstStyle/>' + lines.map(l =>
+        '<a:p><a:pPr algn="'+(opt.align||'ctr')+'"/><a:r><a:rPr lang="en-US" sz="'+fs+'"'+(opt.b?' b="1"':'')+' dirty="0"><a:solidFill><a:srgbClr val="'+col+'"/></a:solidFill><a:latin typeface="Calibri"/></a:rPr><a:t>'+rsgXmlEsc(l)+'</a:t></a:r></a:p>').join('') +
+      '</a:txBody><a:tcPr marL="45720" marR="45720" marT="27432" marB="27432" anchor="ctr">' +
+        line('lnL', false) + line('lnR', false) + line('lnT', opt.top) + line('lnB', true) + '<a:noFill/></a:tcPr></a:tc>';
+  };
+  const hdrTxt = h => h.replace(' (', '\n(');
+  let tbl = '<a:tbl><a:tblPr firstRow="1"/><a:tblGrid>' + W.map(w => '<a:gridCol w="'+Math.round(w*EMU)+'"/>').join('') + '</a:tblGrid>';
+  tbl += '<a:tr h="'+hdrH+'">' + HDR.map((h,i) => cell(hdrTxt(h), { b:true, top:true, align:i===1?'l':'ctr' })).join('') + '</a:tr>';
+  rows.forEach(r => {
+    tbl += '<a:tr h="'+rowH+'">' + r.cells.map((c,i) => cell(c, { col: i===1 ? r.col : null, b: i===1, align: i===1 ? 'l' : 'ctr' })).join('') + '</a:tr>';
+  });
+  tbl += '</a:tbl>';
+  const totW = Math.round(W.reduce((a,b)=>a+b,0)*EMU), totH = hdrH + rowH*rows.length;
+  const x0 = Math.round((12192000 - totW)/2), y0 = Math.round(1.75*EMU);
+  const NS = 'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"';
+  const xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n<p:sld '+NS+'><p:cSld><p:spTree>' +
+    '<p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/><a:chOff x="0" y="0"/><a:chExt cx="0" cy="0"/></a:xfrm></p:grpSpPr>' +
+    '<p:sp><p:nvSpPr><p:cNvPr id="2" name="Title 1"/><p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr></p:nvSpPr><p:spPr/>' +
+      '<p:txBody><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang="en-US" b="1" dirty="0"/><a:t>'+rsgXmlEsc(model.title)+'</a:t></a:r></a:p></p:txBody></p:sp>' +
+    '<p:sp><p:nvSpPr><p:cNvPr id="3" name="Subtitle"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="'+Math.round(0.66*EMU)+'" y="'+Math.round(1.18*EMU)+'"/><a:ext cx="'+Math.round(4*EMU)+'" cy="'+Math.round(0.36*EMU)+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr>' +
+      '<p:txBody><a:bodyPr wrap="none" lIns="0" rtlCol="0"><a:spAutoFit/></a:bodyPr><a:lstStyle/><a:p><a:pPr algn="l"/><a:r><a:rPr lang="en-US" sz="1600" b="1" dirty="0"><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill><a:latin typeface="Calibri"/></a:rPr><a:t>Detailed Report</a:t></a:r></a:p></p:txBody></p:sp>' +
+    '<p:graphicFrame><p:nvGraphicFramePr><p:cNvPr id="4" name="Detailed Report Table"/><p:cNvGraphicFramePr><a:graphicFrameLocks noGrp="1"/></p:cNvGraphicFramePr><p:nvPr/></p:nvGraphicFramePr>' +
+      '<p:xfrm><a:off x="'+x0+'" y="'+y0+'"/><a:ext cx="'+totW+'" cy="'+totH+'"/></p:xfrm>' +
+      '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/table">'+tbl+'</a:graphicData></a:graphic></p:graphicFrame>' +
+    '</p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>';
+  const chk = new DOMParser().parseFromString(xml, 'application/xml');
+  if(chk.getElementsByTagName('parsererror').length) throw new Error('report slide XML invalid');
+  // same layout as the trace slide
+  const rel1 = await zip.file('ppt/slides/_rels/slide1.xml.rels').async('string');
+  const lay = /Target="([^"]*slideLayout\d+\.xml)"/.exec(rel1);
+  if(!lay) throw new Error('trace slide layout not found');
+  zip.file('ppt/slides/slide2.xml', xml, { createFolders:false });
+  zip.file('ppt/slides/_rels/slide2.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="'+lay[1]+'"/></Relationships>', { createFolders:false });
+  let ct = await zip.file('[Content_Types].xml').async('string');
+  if(ct.indexOf('/ppt/slides/slide2.xml') < 0)
+    ct = ct.replace('</Types>', '<Override PartName="/ppt/slides/slide2.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/></Types>');
+  zip.file('[Content_Types].xml', ct, { createFolders:false });
+  let prels = await zip.file('ppt/_rels/presentation.xml.rels').async('string');
+  prels = prels.replace('</Relationships>', '<Relationship Id="rIdRsgReport" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/slide2.xml"/></Relationships>');
+  zip.file('ppt/_rels/presentation.xml.rels', prels, { createFolders:false });
+  let pres = await zip.file('ppt/presentation.xml').async('string');
+  const ids = (pres.match(/<p:sldId id="(\d+)"/g) || []).map(m => +/\d+/.exec(m)[0]);
+  const nid = (ids.length ? Math.max.apply(null, ids) : 256) + 1;
+  pres = pres.replace('</p:sldIdLst>', '<p:sldId id="'+nid+'" r:id="rIdRsgReport"/></p:sldIdLst>');
+  zip.file('ppt/presentation.xml', pres, { createFolders:false });
+}
+
+// v8.7: the trace layout draws its own footer (logo, "Proprietary &
+// Confidential | n", corner mark), but the slide master's generic footer was
+// rendering underneath it: a second corner mark, a second "Proprietary &
+// Confidential" and WWW.CERAGON.COM. Remove the master's footer-band shapes.
+function rsgBakeGroupXfrm(g){
+  const gpr = rsgFirstChildEl(g, 'p:grpSpPr'); if(!gpr) return;
+  const x = gpr.getElementsByTagName('a:xfrm')[0]; if(!x) return;
+  const get = (tag) => { const e = x.getElementsByTagName(tag)[0]; return e; };
+  const off = get('a:off'), ext = get('a:ext'), cho = get('a:chOff'), che = get('a:chExt');
+  if(off && ext && cho && che){
+    const ox = +off.getAttribute('x'), oy = +off.getAttribute('y'), ex = +ext.getAttribute('cx'), ey = +ext.getAttribute('cy');
+    const cx0 = +cho.getAttribute('x'), cy0 = +cho.getAttribute('y'), cex = +che.getAttribute('cx'), cey = +che.getAttribute('cy');
+    const sx = cex > 0 ? ex / cex : 1, sy = cey > 0 ? ey / cey : 1;
+    if(ox !== cx0 || oy !== cy0 || Math.abs(sx-1) > 1e-6 || Math.abs(sy-1) > 1e-6){
+      Array.prototype.slice.call(g.childNodes).forEach(ch => {
+        if(ch.nodeType !== 1) return;
+        const pr = rsgFirstChildEl(ch, 'p:spPr') || rsgFirstChildEl(ch, 'p:grpSpPr');
+        const cx = pr && pr.getElementsByTagName('a:xfrm')[0]; if(!cx) return;
+        const o2 = cx.getElementsByTagName('a:off')[0], e2 = cx.getElementsByTagName('a:ext')[0];
+        if(!o2 || !e2) return;
+        o2.setAttribute('x', Math.round(ox + (+o2.getAttribute('x') - cx0) * sx));
+        o2.setAttribute('y', Math.round(oy + (+o2.getAttribute('y') - cy0) * sy));
+        e2.setAttribute('cx', Math.round(+e2.getAttribute('cx') * sx));
+        e2.setAttribute('cy', Math.round(+e2.getAttribute('cy') * sy));
+      });
+      cho.setAttribute('x', ox); cho.setAttribute('y', oy);
+      che.setAttribute('cx', ex); che.setAttribute('cy', ey);
+    }
+  }
+  Array.prototype.slice.call(g.childNodes).forEach(ch => { if(ch.nodeType === 1 && ch.nodeName === 'p:grpSp') rsgBakeGroupXfrm(ch); });
+}
+
+async function rsgDropMasterFooter(zip){
+  let removed = 0;
+  const presXml = await zip.file('ppt/presentation.xml').async('string');
+  const szM = /<p:sldSz[^>]*cy="(\d+)"/.exec(presXml);
+  const H = szM ? +szM[1] : 6858000;
+  const lim = H * 0.9;
+  for(const name of Object.keys(zip.files)){
+    if(!/^ppt\/slideMasters\/slideMaster\d+\.xml$/.test(name)) continue;
+    const xml = await zip.file(name).async('string');
+    const doc = new DOMParser().parseFromString(xml, 'application/xml');
+    const tree = doc.getElementsByTagName('p:spTree')[0]; if(!tree) continue;
+    Array.prototype.slice.call(tree.childNodes).forEach(n => {
+      if(n.nodeType !== 1 || ['p:sp','p:pic','p:grpSp','p:cxnSp'].indexOf(n.nodeName) < 0) return;
+      const ph = n.getElementsByTagName('p:ph')[0];
+      if(ph && ['title','body'].indexOf(ph.getAttribute('type') || 'body') >= 0 && !ph.getAttribute('type')) return;   // keep body placeholder
+      if(ph && ph.getAttribute('type') === 'title') return;
+      const off = n.getElementsByTagName('a:off')[0];
+      if(!off) return;
+      const y = +off.getAttribute('y');
+      if(y >= lim){ tree.removeChild(n); removed++; }
+    });
+    if(!removed) continue;
+    const DECL = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\r\n';
+    let out = new XMLSerializer().serializeToString(doc);
+    if(out.indexOf('<?xml') !== 0) out = DECL + out;
+    const chk = new DOMParser().parseFromString(out, 'application/xml');
+    if(chk.getElementsByTagName('parsererror').length) throw new Error('master XML did not re-parse');
+    zip.file(name, out, { createFolders:false });
+  }
+  // The layout's own footer text ends in "|" with no number after it (the number
+  // came from the master's placeholder that sat elsewhere). Add the slide-number
+  // field there, so the footer reads "Proprietary & Confidential | 1".
+  for(const name of Object.keys(zip.files)){
+    if(!/^ppt\/slideLayouts\/slideLayout\d+\.xml$/.test(name)) continue;
+    let lx = await zip.file(name).async('string');
+    if(/type="slidenum"/.test(lx)) continue;
+    const re = /(<a:r>(<a:rPr[^>]*?(?:\/>|>[\s\S]*?<\/a:rPr>))<a:t>Proprietary &amp; Confidential\s*\|\s*<\/a:t><\/a:r>)/;
+    const m = re.exec(lx); if(!m) continue;
+    const rPr = m[2].replace(/lang="[^"]*"/, 'lang="en-US"');
+    lx = lx.replace(m[1], m[1] + '<a:fld id="{5C9B2F1E-7A3D-4C1B-9E2A-1F2B3C4D5E6F}" type="slidenum">' + rPr + '<a:t>‹#›</a:t></a:fld>');
+    const chk = new DOMParser().parseFromString(lx, 'application/xml');
+    if(chk.getElementsByTagName('parsererror').length) continue;
+    zip.file(name, lx, { createFolders:false });
+  }
+  return removed;
+}
+
 async function rsgPptxNative(model){
   if(typeof JSZip === 'undefined') throw new Error('JSZip is not loaded');
   const zip = await JSZip.loadAsync(rsgB64ToBytes(RSG_TPL));
@@ -38018,6 +39025,12 @@ async function rsgPptxNative(model){
   const doc  = new DOMParser().parseFromString(await zip.file(path).async('string'), 'application/xml');
   const sl   = rsgReadSlide(doc);
   if(!sl.rays.length) throw new Error('no ray groups found in the master slide');
+  // v8.7: some master rays keep their labels in an inner group whose child
+  // space is offset from its position (chOff != off). The labels were edited in
+  // child coordinates, so on the slide they landed up to ~1.7 in away from their
+  // arrowheads. Bake every such transform into the shapes first, so child space
+  // equals slide space everywhere inside a ray.
+  sl.rays.forEach(r => rsgBakeGroupXfrm(r.node));
 
   // Tower anchor = the clustered end of every ray (median of the near ends).
   const ends = sl.rays.map(r => {
@@ -38084,12 +39097,14 @@ async function rsgPptxNative(model){
         const f = pr[0]; if(!f) return;
         const w = Math.max(f.cx, pr[1]);
         const left = f.x + dx + f.cx/2 - w/2, right = left + w;
-        if(left < 0 || right > SLIDE_W - 0.1*EMU_IN) over = true;   // horizontal always
+        // v8.7: low label blocks stop short of the lower-right Assumptions box
+        const rLim = (model.showAssum && (f.y + dy + f.cy) > 4.6*EMU_IN) ? 9.2*EMU_IN : SLIDE_W - 0.1*EMU_IN;
+        if(left < 0 || right > rLim) over = true;   // horizontal always
         if(steepInUse) return;                                     // block is repositioned later
         if(f.y+dy < 0 || f.y+dy+f.cy > SLIDE_H - 0.35*EMU_IN) over = true;
       });
       if(steepInUse){
-        const lim = (slot[j] === steepRay) ? SLIDE_H : SLIDE_H - TIP_ALLOW;
+        const lim = Math.round(SLIDE_H * 776 / 900);   // v8.7: same rule as the preview, tips clear the footer
         if(ny > lim) over = true;
       }
       if(nx > SLIDE_W || ny > SLIDE_H || ny < 0) over = true;
@@ -38098,64 +39113,98 @@ async function rsgPptxNative(model){
     kEMU *= 0.95;
   }
 
-  // A caption box is spAutoFit, so its stored height only matches the master's
-  // two lines. Resize it for the real line count before anything is positioned.
+  // v8.7: label layout with a label-scale search, the same idea as the preview:
+  // place the blocks, separate real collisions top-down, and if the stack does not
+  // fit between the title band and the footer, shrink the label type a step and
+  // try again. Box heights and widths follow the scale, so smaller type also
+  // removes horizontal overlaps.
   const LINE_EMU = RSG_LINE_EMU, TB_INSET = 91440;
-  for(let j=0;j<n;j++){
-    const r = sl.rays[slot[j]], t = traces[j];
-    if(!r.capBox) continue;
-    const lines = (t.caps && t.caps.length) ? t.caps.length : 2;
-    const cf = rsgXfrm(r.capBox);
-    if(cf) rsgSetXfrm(cf, cf.x, cf.y, cf.cx, lines*LINE_EMU + TB_INSET);
-  }
-
-  const used = {}, scaleOf = {};
-
-  // ── pass 1: where each ray and its label block want to be ────────────────
-  const plan = [];
-  for(let j=0;j<n;j++){
-    const r = sl.rays[slot[j]], t = traces[j];
-    used[slot[j]] = true; scaleOf[slot[j]] = t.km;
-    const L = kEMU * t.km;
-    const nx = T.x + L*Math.cos(r.ang), ny = T.y - L*Math.sin(r.ang);
-    const boxes = [rsgXfrm(r.distBox), r.capBox ? rsgXfrm(r.capBox) : null].filter(Boolean);
-    const dx = nx - r.tip.x, dy = ny - r.tip.y;
-    // label boxes get widened later; account for that here so the collision
-    // test sees the real footprint
-    const need = (txt, per) => Math.round((txt||'').length*per*EMU_IN) + Math.round(0.26*EMU_IN);
-    const capsW = (t.caps||[]).slice().sort((a,b)=>b.length-a.length)[0] || '';
-    const wide = [];
-    const df = rsgXfrm(r.distBox); if(df) wide.push([df, Math.max(df.cx, need(t.distLabel,RSG_PC_DIST))]);
-    if(r.capBox){ const qf = rsgXfrm(r.capBox); if(qf) wide.push([qf, Math.max(qf.cx, need(capsW,RSG_PC_CAP))]); }
-    plan.push({ r, t, nx, ny, dx, dy, push:0, boxes,
-      x0: Math.min.apply(null, wide.map(p => p[0].x + p[0].cx/2 - p[1]/2 + dx)),
-      x1: Math.max.apply(null, wide.map(p => p[0].x + p[0].cx/2 + p[1]/2 + dx)),
-      top   : Math.min.apply(null, boxes.map(f => f.y + dy)),
-      bottom: Math.max.apply(null, boxes.map(f => f.y + f.cy + dy)) });
-  }
-
-  // ── pass 2: separate only the blocks that genuinely collide ──────────────
-  // The master keeps labels apart mostly by horizontal offset — blocks at a
-  // similar height are fine as long as they sit at different X. So push only
-  // on a real 2D overlap, and only the lower block, which keeps the movement
-  // rare and small instead of cascading the whole stack off the slide.
   const GAP = 46000;                                   // ~0.05 in
-  const order = plan.map((p,i) => i).sort((a,b) => plan[a].top - plan[b].top);
-  for(let oi=1; oi<order.length; oi++){
-    const i = order[oi];
-    for(let ok=0; ok<oi; ok++){
-      const k = order[ok];
-      const xOverlap = plan[i].x0 < plan[k].x1 && plan[k].x0 < plan[i].x1;
-      if(!xOverlap) continue;
-      const topI = plan[i].top + plan[i].push, botK = plan[k].bottom + plan[k].push;
-      if(topI < botK + GAP) plan[i].push += (botK + GAP - topI);
-    }
+  const TOP_LIM = 0.08*EMU_IN, BOT_LIM = Math.round(SLIDE_H * 784 / 900);  // clear of the footer band
+  const base = [];
+  for(let j=0;j<n;j++){
+    const r = sl.rays[slot[j]];
+    const df = rsgXfrm(r.distBox), qf = r.capBox ? rsgXfrm(r.capBox) : null;
+    base.push({ d: df ? {x:df.x, y:df.y, cx:df.cx, cy:df.cy} : null, q: qf ? {x:qf.x, y:qf.y, cx:qf.cx, cy:qf.cy} : null });
   }
-  // ── pass 3: keep every block on the slide ────────────────────────────────
-  const TOP_LIM = 0.08*EMU_IN, BOT_LIM = SLIDE_H - 0.62*EMU_IN;  // clear the footer band
+  const used = {}, scaleOf = {};
+  const planFor = (fs) => {
+    const plan = [];
+    for(let j=0;j<n;j++){
+      const r = sl.rays[slot[j]], t = traces[j], B = base[j];
+      const L = kEMU * t.km;
+      const nx = T.x + L*Math.cos(r.ang), ny = T.y - L*Math.sin(r.ang);
+      const dx = nx - r.tip.x, dy = ny - r.tip.y;
+      const lines = (t.caps && t.caps.length) ? t.caps.length : 2;
+      const dH = B.d ? Math.round(B.d.cy*fs) : 0;          // master box height, scaled with the type
+      const qH = Math.round(lines*LINE_EMU*1.1*fs) + TB_INSET;
+      const need = (txt, per) => Math.round((txt||'').length*per*fs*EMU_IN) + Math.round(0.26*EMU_IN);
+      const capsW = (t.caps||[]).slice().sort((x,y)=>y.length-x.length)[0] || '';
+      const boxes = [], wide = [];
+      if(B.d){ const w = Math.max(B.d.cx*Math.min(1,fs+0.2), need(t.distLabel, RSG_PC_DIST)); boxes.push({x:B.d.x+dx, y:B.d.y+dy, cx:B.d.cx, cy:dH, w}); }
+      if(B.q){ // caption hangs just under the range figure, as in the master
+        const qy = B.d ? (B.d.y + dy + (B.q.y - B.d.y)*fs) : (B.q.y + dy);   // master offset, scaled
+        const w = Math.max(B.q.cx*Math.min(1,fs+0.2), need(capsW, RSG_PC_CAP));
+        boxes.push({x:B.q.x+dx, y:qy, cx:B.q.cx, cy:qH, w});
+      }
+      plan.push({ r, t, j, nx, ny, dx, dy, push:0, boxes,
+        x0: Math.min.apply(null, boxes.map(f => f.x + f.cx/2 - f.w/2)),
+        x1: Math.max.apply(null, boxes.map(f => f.x + f.cx/2 + f.w/2)),
+        top   : Math.min.apply(null, boxes.map(f => f.y)),
+        bottom: Math.max.apply(null, boxes.map(f => f.y + f.cy)) });
+    }
+    // a block above the top margin starts pushed down onto the slide; under the
+    // title (left of ~8 in) the margin is the title band
+    const topLim = p => (p.x0 < 8.0*EMU_IN) ? 1.3*EMU_IN : TOP_LIM;
+    plan.forEach(p => { if(p.top < topLim(p)) p.push = topLim(p) - p.top; });
+    // separate genuine 2D collisions top-down
+    const order = plan.map((p,i) => i).sort((a,b) => (plan[a].top + plan[a].push) - (plan[b].top + plan[b].push));
+    for(let oi=1; oi<order.length; oi++){
+      const i = order[oi];
+      for(let ok=0; ok<oi; ok++){
+        const k = order[ok];
+        if(!(plan[i].x0 < plan[k].x1 && plan[k].x0 < plan[i].x1)) continue;
+        const topI = plan[i].top + plan[i].push, botK = plan[k].bottom + plan[k].push;
+        if(topI < botK + GAP) plan[i].push += (botK + GAP - topI);
+      }
+    }
+    // overflow at the bottom: lift each column (chain of overlapping blocks) as one
+    const ord2 = plan.map((p,i)=>i).sort((a,b) => (plan[b].bottom+plan[b].push) - (plan[a].bottom+plan[a].push));
+    ord2.forEach(i => {
+      const over = plan[i].bottom + plan[i].push - BOT_LIM;
+      if(over <= 0) return;
+      plan[i].push -= over;
+      // blocks above that now collide move up by the same amount, recursively
+      let changed = true, guard = 0;
+      while(changed && guard++ < 20){
+        changed = false;
+        plan.forEach((hi, h) => plan.forEach((lo, l) => {
+          if(h === l || !(hi.x0 < lo.x1 && lo.x0 < hi.x1)) return;
+          if(hi.top + hi.push >= lo.top + lo.push) return;          // hi must be above lo
+          const hb = hi.bottom + hi.push, lt = lo.top + lo.push;
+          if(hb + GAP > lt){ hi.push -= (hb + GAP - lt); changed = true; }
+        }));
+      }
+    });
+    const ok = plan.every(p => p.top + p.push >= topLim(p) - 1 && p.bottom + p.push <= BOT_LIM + 1);
+    return { plan, ok };
+  };
+  let fsScale = 1, res = planFor(1);
+  while(!res.ok && fsScale > 0.6){ fsScale = Math.round((fsScale - 0.05)*100)/100; res = planFor(fsScale); }
+  if(!res.ok){ // last resort: keep every block on the slide
+    res.plan.forEach(p => {
+      if(p.bottom + p.push > BOT_LIM) p.push = BOT_LIM - p.bottom;
+      if(p.top + p.push < TOP_LIM)    p.push = TOP_LIM - p.top;
+    });
+  }
+  const plan = res.plan;
+  RSG._pptxLabelScale = fsScale;
+  plan.forEach(p => { used[slot[p.j]] = true; scaleOf[slot[p.j]] = p.t.km; });
+  // apply the planned box geometry (heights/positions before the push)
   plan.forEach(p => {
-    if(p.bottom + p.push > BOT_LIM) p.push = BOT_LIM - p.bottom;
-    if(p.top + p.push < TOP_LIM)    p.push = TOP_LIM - p.top;
+    const r = p.r;
+    const df = rsgXfrm(r.distBox); if(df && p.boxes[0]) rsgSetXfrm(df, p.boxes[0].x - p.dx, p.boxes[0].y - p.dy, df.cx, p.boxes[0].cy);
+    if(r.capBox){ const qf = rsgXfrm(r.capBox); const qb = p.boxes[p.boxes.length-1]; if(qf && qb) rsgSetXfrm(qf, qb.x - p.dx, qb.y - p.dy, qf.cx, qb.cy); }
   });
 
   // ── pass 4: write it ─────────────────────────────────────────────────────
@@ -38174,14 +39223,16 @@ async function rsgPptxNative(model){
       rsgSetXfrm(f, f.x+dx, f.y+dy, f.cx, f.cy);
     });
 
+    rsgRecolourRay(r, t.colour);                           // v8.7: one colour per radio
     rsgSetLines(r.distBox, [t.distLabel]);
-    rsgSetFont(r.distBox, RSG_SZ_DIST);                    // v1: one step down from the master
+    rsgSetFont(r.distBox, Math.round(RSG_SZ_DIST*fsScale/50)*50);   // v8.7: label scale from the layout search
     rsgSetSingleSpacing(r.distBox);
     rsgFitBox(r.distBox, [t.distLabel], RSG_PC_DIST);      // "9.9 km / 6.2 miles" must not wrap
     if(r.capBox){
       const caps = (t.caps && t.caps.length) ? t.caps : [t.cap1, t.cap2].filter(Boolean);
       rsgSetLines(r.capBox, caps.length ? caps : [' ']);   // a txBody must keep one paragraph
-      rsgSetFont(r.capBox, RSG_SZ_CAP);
+      rsgSetFont(r.capBox, Math.round(RSG_SZ_CAP*fsScale/50)*50);
+      rsgRecolourRay(r, t.colour);                         // new paragraphs pick up the colour too
       rsgSetSingleSpacing(r.capBox);                       // master pinned these to a fixed 18.6 pt line
       rsgFitBox(r.capBox, caps, RSG_PC_CAP);
     }
@@ -38214,7 +39265,7 @@ async function rsgPptxNative(model){
   // Pair them up, scale each about the tower by its own ray's factor so it keeps
   // touching the new arrowhead, and delete the arcs whose ray was removed.
   RSG._removedArcIds = [];
-  const arcOf = {};
+  const arcOf = {}, arcHit = {};
   sl.arcs.forEach((a, ai) => {
     const f = rsgXfrm(a); if(!f) return;
     let best = -1, bestErr = Infinity;
@@ -38225,7 +39276,7 @@ async function rsgPptxNative(model){
       if(err < bestErr){ bestErr = err; best = ri; }
     });
     // 0.35" of slack: comfortably inside the gap to the next arc
-    if(best >= 0 && bestErr < 0.35*EMU_IN) arcOf[ai] = best;
+    if(best >= 0 && bestErr < 0.35*EMU_IN){ arcOf[ai] = best; arcHit[ai] = rsgRayHitsEllipse(f, T, sl.rays[best].ang); }
   });
   sl.arcs.forEach((a, ai) => {
     const ri = arcOf[ai];
@@ -38236,7 +39287,11 @@ async function rsgPptxNative(model){
       if(a.parentNode) a.parentNode.removeChild(a);
       return;
     }
-    const fac = (kEMU * scaleOf[ri]) / sl.rays[ri].len;
+    // v8.7: scale so the arc crosses the ray EXACTLY at the new arrowhead. The
+    // master's arcs only pass near their ray's tip (up to 0.35 in off), so use
+    // where the arc actually meets the ray, not the ray's drawn length.
+    const hit = arcHit[ai] > 0 ? arcHit[ai] : sl.rays[ri].len;
+    const fac = (kEMU * scaleOf[ri]) / hit;
     if(!isFinite(fac) || fac <= 0) return;
     rsgSetXfrm(f, T.x + (f.x-T.x)*fac, T.y + (f.y-T.y)*fac, f.cx*fac, f.cy*fac);
   });
@@ -38244,16 +39299,31 @@ async function rsgPptxNative(model){
   sl.arcs.forEach(a => {                      // arcs can be animated too
     if(a.parentNode) return;                  // already detached above
   });
+  // v8.7: the master carries a stray "RANGE" text box (dark text, top right) —
+  // remove it from the exported slide
+  Array.prototype.slice.call(sl.tree.childNodes).forEach(n => {
+    if(n.nodeType !== 1 || n.nodeName !== 'p:sp') return;
+    const ts = rsgTexts(n).map(x => x.trim()).filter(Boolean);
+    if(ts.length === 1 && /^range$/i.test(ts[0])){
+      const idEl = n.getElementsByTagName('p:cNvPr')[0];
+      if(idEl) removedIds.push(idEl.getAttribute('id'));
+      n.parentNode.removeChild(n);
+    }
+  });
   rsgPruneTiming(doc, removedIds.concat(RSG._removedArcIds||[]));
 
   if(sl.title) rsgSetLines(sl.title, [model.title]);
-  // the master's Assumptions box hangs slightly off the right edge — harmless
-  // with its original short lines, not with generated ones. Pull it back on.
+  // v8.7: Assumptions box in the lower-right corner, above the footer
+  // (9.3-13.1 in across, from 4.7 in down; the preview matches)
+  let assumBody = RSG_SZ_ASSUM_BODY;
   if(sl.assum){
     const af = rsgXfrm(sl.assum);
-    if(af && af.x + af.cx > SLIDE_W - 0.1*EMU_IN){
-      rsgSetXfrm(af, Math.max(0.1*EMU_IN, SLIDE_W - 0.1*EMU_IN - af.cx), af.y, af.cx, af.cy);
-    }
+    const lines = model.showAssum ? (model.assumRaw||model.assum||[]) : [];
+    // the master's body font is a wide bold face: about 0.095 in per character at 11 pt
+    const wrapCount = sz => lines.reduce((n, l) => n + Math.max(1, Math.ceil(l.length * 0.095 * (sz/1100) / 3.95)), 0);
+    // heading 0.3 in + body lines at ~1.35 x font size within 1.7 in (footer at ~6.5 in)
+    while(assumBody > 800 && 0.3 + wrapCount(assumBody) * (assumBody/100) * 1.35 / 72 > 1.7) assumBody -= 100;
+    if(af) rsgSetXfrm(af, Math.round(9.3*EMU_IN), Math.round(4.7*EMU_IN), Math.round(3.85*EMU_IN), af.cy);
   }
   if(sl.assum){
     const head = rsgTexts(sl.assum)[0] || 'Assumptions:';
@@ -38263,7 +39333,7 @@ async function rsgPptxNative(model){
     // can otherwise carry the master's 18-22 pt runs onto generated lines.
     const aps = Array.prototype.slice.call(sl.assum.getElementsByTagName('a:p'));
     aps.forEach((p, i) => {
-      const sz = String(i === 0 ? RSG_SZ_ASSUM_HEAD : RSG_SZ_ASSUM_BODY);
+      const sz = String(i === 0 ? RSG_SZ_ASSUM_HEAD : assumBody);
       ['a:rPr','a:defRPr','a:endParaRPr'].forEach(tag => {
         Array.prototype.slice.call(p.getElementsByTagName(tag))
           .forEach(rp => rp.setAttribute('sz', sz));
@@ -38296,9 +39366,13 @@ async function rsgPptxNative(model){
   if(orphan.length) throw new Error('animation targets left dangling: '+orphan.join(', '));
   zip.file(path, outXml, { createFolders:false });
 
+  // v8.7: second slide, "Detailed Report" table (same layout as the trace slide)
+  if(model.reportSlide !== false){ try{ await rsgAddReportSlide(zip, model); }catch(e){ console.warn('report slide skipped', e); RSG._reportErr = e.message; } }
+
   // v1: strip the 23 unused corporate layouts and the media only they reached.
   // Done last, so it can never interfere with the slide rewrite above.
   RSG._prune = await rsgPruneMaster(zip);
+  try{ RSG._prune.footer = await rsgDropMasterFooter(zip); }catch(e){ console.warn('master footer cleanup skipped', e); }
 
   return zip.generateAsync({
     type:'blob',
@@ -38327,6 +39401,8 @@ window.rsgExportPptx = async function(){
     rsgStatus('Building the Ceragon slide…');
     const extra = model.traces.length > 10
       ? ' (only the first 10 traces fit the master slide)' : '';
+    model.reportSlide = !!($('rsgReportSlide') ? $('rsgReportSlide').checked : true);   // v8.7
+    RSG._reportErr = null;
     const blob = await rsgPptxNative(model);
     rsgDownload(blob, rsgFileBase()+'.pptx');
     const pr = RSG._prune || {};
@@ -38451,13 +39527,17 @@ function rsgInit(){
   // that it has done so, because the flag has to outlive the page: an in-memory
   // guard would re-fire on every load and the selector would stop working.
   // The miles options stay in the dropdown for FCC work and persist normally.
-  let unitsPinned = false;
-  try { unitsPinned = localStorage.getItem('rsgUnitsKmOnly_v1') === '1'; } catch(e){}
-  if(!unitsPinned){
-    $('rsgUnits').value = 'km';
-    try { localStorage.setItem('rsgUnitsKmOnly_v1', '1'); } catch(e){}
+  // v8.7b: units and standard follow the Defaults tab unless set otherwise.
+  // Applied once to sessions saved before this option existed.
+  let unitsAuto = false;
+  try { unitsAuto = localStorage.getItem('rsgUnitsAuto_v2') === '1'; } catch(e){}
+  if(!unitsAuto){
+    $('rsgUnits').value = 'auto'; if($('rsgStd')) $('rsgStd').value = 'auto';
+    try { localStorage.setItem('rsgUnitsAuto_v2', '1'); } catch(e){}
     rsgSave();
   }
+  if(!$('rsgUnits').value) $('rsgUnits').value = 'auto';
+  if($('rsgStd') && !$('rsgStd').value) $('rsgStd').value = 'auto';
   // v1: only the two BER 1E-6 thresholds are offered, so a session saved with an
   // E-3 value (or nothing) must not leave the selector showing a blank option.
   if(['typ_e6','gty_e6'].indexOf($('rsgRslE6').value) < 0) $('rsgRslE6').value = 'typ_e6';
@@ -38489,7 +39569,7 @@ function rsgInstallHelp(){
   const toc = document.querySelector('.help-toc');
   if(toc) toc.innerHTML = '<a href="#rh-what">What it does</a><a href="#rh-how">How a range is solved</a>'
     + '<a href="#rh-params">Assumptions</a><a href="#rh-k">Geoclimatic K</a>'
-    + '<a href="#rh-traces">Traces</a><a href="#rh-slide">The slide</a><a href="#rh-export">Exports</a>'
+    + '<a href="#rh-traces">Traces</a><a href="#rh-slide">The slide</a><a href="#rh-mb">Multi-band</a><a href="#rh-export">Exports</a>'
     + '<a href="#rh-limits">Limits</a>';
   const body = document.getElementById('helpBody');
   if(!body) return;
@@ -38538,12 +39618,24 @@ function rsgInstallHelp(){
     ' scales down on a crowded slide.</p>',
     '<p>The <strong>Assumptions</strong> box is rebuilt on every compute from the parameters above. Typing in',
     ' it switches the auto-fill off and keeps your wording.</p>',
+    '<p><strong>v8.7b:</strong> every trace of the same radio has one colour; arrows end on their range circles;',
+    ' the Assumptions box sits in the lower-right corner. <strong>Standard</strong> follows the Defaults tab',
+    ' (ETSI: metres and km; FCC: feet and miles) unless set here. Availability is stated as nines',
+    ' (99.95% = 3.5, 99.99% = 4).</p>',
+    '<h3 id="rh-mb">Multi-band aggregation</h3>',
+    '<p>Tick <strong>Multi-band aggregation</strong> to turn every mmW trace into IP-50CX + mmW. The target',
+    ' capacity is the aggregate; the mmW and MW availabilities are set separately, and the IP-50CX frequency,',
+    ' BW, configuration and antenna in the panel. The range is the longest distance where both carriers work',
+    ' and their capacities (each at its own availability) reach the target. Results and the report show the',
+    ' aggregate, each carrier\'s capacity and each carrier\'s fade margin.</p>',
 
     '<h3 id="rh-export">Exports</h3>',
     '<p><strong>PPTX</strong> is the deliverable. The master slide is embedded in this file and rewritten in',
     ' place: ray lengths, arrowheads, arcs, range figures, captions, title and assumptions. Every shape stays',
     ' native PowerPoint &mdash; no pictures, no flattening &mdash; and the master\'s fonts, colours, footer and',
     ' ray-by-ray animation are preserved.</p>',
+    '<p>With <strong>+ Detailed Report slide</strong> ticked, a second slide carries the results table in the trace',
+    ' colours. <strong>Save project / Load project</strong> keep every setting and trace in a file.</p>',
     '<p><strong>Excel</strong> exports the Computed Ranges table with the assumptions and engine settings behind',
     ' it, for the record or for further analysis. <strong>Master (unmodified)</strong> hands back the embedded',
     ' master untouched, which is useful for isolating a PowerPoint problem.</p>',
