@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Ceragon Network Planning Tool v8.9d</title>
+<title>Ceragon Network Planning Tool v8.9e</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -139,8 +139,6 @@ if(typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
 [data-theme="dark"] .hdr #hdrSub2{color:#7dd3fc;}
 [data-theme="dark"] .fetch-btn{background:#0a1628 !important;color:#e2e8f0 !important}
 [data-theme="dark"] #terrainBtn{background:#1e3a5f !important;color:#e2e8f0 !important}
-[data-theme="dark"] .chart-hdr,
-[data-theme="dark"] .sec-hdr,
 /* v8.9a: Defaults cards: collapse + drag-reorder */
 #defaultsView .def-host>.card .card-hdr{cursor:pointer;user-select:none}
 #defaultsView .def-host>.card .def-drag{cursor:grab;opacity:.45;font-size:14px;line-height:1;margin-right:2px}
@@ -150,12 +148,18 @@ if(typeof ChartZoom !== 'undefined') Chart.register(ChartZoom);
 #defaultsView .def-host>.card.def-dragging{opacity:.4}
 #defaultsView .def-host>.card.def-drop-before{box-shadow:0 -3px 0 0 var(--blue)}
 #defaultsView .def-host>.card.def-drop-after{box-shadow:0 3px 0 0 var(--blue)}
+/* v8.9e: dark-mode section/chart headers (Link Budget Detail, Modulation Performance,
+   Capacity / Distance vs Availability): the v8.9a block above had split this selector list */
+[data-theme="dark"] .chart-hdr,
+[data-theme="dark"] .sec-hdr,
 [data-theme="dark"] .card-hdr{
   background:linear-gradient(90deg,#0a1628,#0f2d4a) !important;
   color:#e2e8f0;
 }
 [data-theme="dark"] .chart-hdr-title,
 [data-theme="dark"] .sec-hdr-title{color:#e2e8f0;}
+/* v8.9e: Band B Modulation Performance keeps its teal header in dark mode */
+[data-theme="dark"] #mbModCard>.sec-hdr{background:linear-gradient(135deg,#0c4a6e 0%,#075985 100%) !important}
 /* Dark mode: cap-cell teal readable */
 [data-theme="dark"] .cap-cell{background:#0c4a6e;color:#7dd3fc;}
 /* Dark mode: Fetch Climate button */
@@ -498,6 +502,13 @@ input[type=number]:focus,select:focus{border-color:var(--blue)}
    layout. Chevron points up when expanded, down when collapsed. */
 .card-collapse-btn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#e2e8f0;border-radius:5px;padding:2px 9px;font-size:11px;line-height:1;cursor:pointer;flex-shrink:0;font-family:inherit}
 .card-collapse-btn:hover{background:rgba(255,255,255,.24)}
+/* v8.9e: Link tab: drag handle to reorder the result cards */
+.lbc-drag{cursor:grab;color:#e2e8f0;opacity:.5;font-size:14px;line-height:1;margin-right:8px;user-select:none;flex-shrink:0}
+.lbc-drag:hover{opacity:1}
+.lbc-drag + *{margin-right:auto}
+#singleLinkView .res-panel > .lbc-dragging{opacity:.4}
+#singleLinkView .res-panel > .lbc-drop-before{box-shadow:0 -3px 0 0 var(--blue)}
+#singleLinkView .res-panel > .lbc-drop-after{box-shadow:0 3px 0 0 var(--blue)}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 /* Modulation Performance tables — Band A & Band B share column widths so rows align identically */
@@ -707,6 +718,10 @@ input.user-set, select.user-set {
 .mode-tab.active .mt-badge{display:inline-block}
 .mode-tab[data-mode="network"] .mt-badge{background:var(--green)}
 [data-theme="dark"] .mode-tabs{background:var(--bg);border-color:var(--border)}
+/* v8.9e: drag the tabs to reorder them */
+.mode-tab.mt-dragging{opacity:.45}
+.mode-tab.mt-drop-before{box-shadow:inset 3px 0 0 0 var(--blue)}
+.mode-tab.mt-drop-after{box-shadow:inset -3px 0 0 0 var(--blue)}
 [data-theme="dark"] .mode-tab{background:var(--bg);border-color:var(--border)}
 [data-theme="dark"] .mode-tab.active{background:var(--card-bg);color:#dbeafe;border-bottom-color:var(--card-bg)}
 
@@ -758,6 +773,11 @@ input.user-set, select.user-set {
 /* Dropdown menus in this toolbar open DOWN from the button. Left-
    aligned (File / View) so they don't clip leftward off the page. */
 .lbc-toolbar .tb-dropdown-menu{left:0;right:auto;top:calc(100% + 6px)}
+/* v8.9e: the Link tab toolbar stays in view: when its own place scrolls out of
+   sight it is pinned just under the sticky header (JS sets top / left / width) */
+.lbc-toolbar.lbc-tb-pinned{position:fixed;z-index:95;margin:0;box-sizing:border-box;
+  background:linear-gradient(90deg,var(--sl),var(--sll)),var(--card-bg);box-shadow:0 6px 16px rgba(15,45,74,.18)}
+.lbc-tb-placeholder{display:none;margin-bottom:10px}
 .net-toolbar button:active{transform:translateY(1px)}
 .net-toolbar button.net-btn-secondary{background:#475569}
 .net-toolbar button.net-btn-secondary:hover{background:#64748b}
@@ -1142,7 +1162,7 @@ tr.net-row-found td{background:#fde68a !important}
         <img src="data:image/png;base64,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KpAtU3mRb1JEeQ9HN7j/AEWe4icOMXzin/5tR+VWsbqGupzyTR+2+zm/uuBH8+q5uzrg/mmJVb3W2Ke7UEwdEJ6IEOLD3bIwHYBHfuCnQ6qv4Qv+g7n/AGi7/Y1WpSLwsWq52jCbhBdKCoopX17ntZMwtJHI3r1VdSVh9ZpGQxPllcGsY0uc49gB3K4M4i36nvmc3m7iQCOrq3yRbP7G9N/ILoLjzntVdawcM8ID6271zvKrZID0iZ6x83oSPmP7I9yFvXC7hxZ8PxGC1T01NXVj3GerqJIg7nlcADy77NAAaB9BvuSVwXqZ1FXJTtHfxfb8G1FHALHxeopzXc6U05xPL+ad8RM7fVvKIi7nxIiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICL6T+aIyYQwvHYO7H2WvXK85RRtcY8OdcNdhSXGLZ/zeRSasNtuzVcnFMx5zEfvMNkRT6ry7iG74KHhVWhx7PqLvSBo+4a8lYyro+N2QDy31+OYpTPbpxp+eqnb7jYDfzWqb0domfL+3dRwure5copj9UT6U80+ig5JkFkxy3PuF8udLQUzB1fM8DfsB3J9h1UYvXEHNOJs8li4Y2qehtbiWVF6q/6rbeuy3vyD7befo1bNZ+CVgNwF1y25XHK7iOvPcJNxt+oawdAPZU6jpaaipmU1JTxU8LBpscbQ1rR7ALGablzfpHq6reo0Gg+a1Hvbn1qjFEfanerzxHg0zhTw0smA0DjTk112nH/ABVwlb8ch7kNHXlbv02Se5JPVbyiLdTRFEYpeTqdVe1V2bt6rmqnuIiLJoEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQf//Z" alt="Ceragon" style="height:26px;display:block">
       </div>
       <div style="width:1px;height:30px;background:rgba(255,255,255,.2)"></div>
-      <div class="hdr-title">&#128225; Ceragon Network Planning Tool <span style="font-size:11px;font-weight:400;color:#93c5fd;letter-spacing:.04em">v8.9d</span></div>
+      <div class="hdr-title">&#128225; Ceragon Network Planning Tool <span style="font-size:11px;font-weight:400;color:#93c5fd;letter-spacing:.04em">v8.9e</span></div>
     </div>
     <div class="hdr-sub" id="hdrMethodRef">ITU-R P.530-17 (multipath) &nbsp;&middot;&nbsp; P.530-14/18 (rain) &nbsp;&middot;&nbsp; P.838-3 &nbsp;&middot;&nbsp; P.676-12 &nbsp;|&nbsp; Ceragon Planning tool &copy;</div>
   </div>
@@ -1207,6 +1227,21 @@ tr.net-row-found td{background:#fde68a !important}
           <span class="tb-icon" id="ndTabToggleIcon" style="color:#38bdf8">&#128584;</span>
           <span class="tb-label" id="ndTabToggleLabel">Hide Network &amp; Defaults tabs</span>
           <span class="tb-hint" id="ndTabToggleHint">visible</span>
+        </div>
+        <div class="tb-dropdown-item" onclick="lbcTabOrderReset()" title="v8.9e: drag any tab in the tab strip to move it (or Alt+Shift+Left / Right moves the open tab). The order is remembered between sessions. The tool opens on the first visible tab. This restores the factory order: Link, Network, Defaults, Range Slide.">
+          <span class="tb-icon" style="color:#38bdf8">&#8644;</span>
+          <span class="tb-label">Reset tab order</span>
+          <span class="tb-hint" id="tabOrderHint">default</span>
+        </div>
+        <div class="tb-dropdown-item" onclick="lbcLinkOrderReset()" title="v8.9e: on the Link tab, drag a card by the &#10303; handle at the left of its header to move it. The order is remembered between sessions. This restores the factory card order.">
+          <span class="tb-icon" style="color:#38bdf8">&#8645;</span>
+          <span class="tb-label">Reset Link card order</span>
+          <span class="tb-hint" id="linkOrderHint">default</span>
+        </div>
+        <div class="tb-dropdown-item" onclick="lbcToolbarPinToggle()" title="v8.9e: keep the Link tab toolbar (File, View, Fetch Climate Data, Add link to Network, Undo / Redo, baseline, Clear) always in view under the page header while you scroll.">
+          <span class="tb-icon" style="color:#38bdf8">&#128204;</span>
+          <span class="tb-label">Pin Link toolbar</span>
+          <span class="tb-hint" id="tbPinHint">on</span>
         </div>
 
         <div class="tb-dropdown-divider"></div>
@@ -2026,7 +2061,7 @@ tr.net-row-found td{background:#fde68a !important}
   
 <div class="res-panel">
   <!-- LINK BUDGET DETAIL -->
-  <div class="card">
+  <div class="card" id="lbdCard">
     <div class="sec-hdr">
       <span class="sec-hdr-title">&#128202; Link Budget Detail</span>
       <div style="display:flex;align-items:center;gap:8px">
@@ -2099,7 +2134,7 @@ tr.net-row-found td{background:#fde68a !important}
   </div>
 
   <!-- MODULATION TABLE -->
-  <div class="card">
+  <div class="card" id="modPerfCard">
     <div class="sec-hdr" style="flex-wrap:wrap;gap:8px">
       <span class="sec-hdr-title">&#128203; Modulation Performance &amp; Capacity</span>
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
@@ -2209,11 +2244,14 @@ tr.net-row-found td{background:#fde68a !important}
        Stripped both — wrapper now only contributes a bottom margin so
        all cards in the .res-panel column share the same left/right
        edges. -->
-  <div style="padding-bottom:16px">
+  <div style="padding-bottom:16px" id="siteLocWrap">
     <div class="card" id="siteLocationCard">
       <div class="sec-hdr" style="border-radius:12px 12px 0 0">
         <span class="sec-hdr-title">&#127757; Site Location &amp; Climate - Atmosphere &bull; Water Vapour Density &bull; ITU-R P.837-8 Rain Rate</span>
-        <span id="atmModeNote" style="color:#93c5fd;font-size:10.5px;font-style:italic;white-space:nowrap">Standard atmosphere (ITU-R P.835)</span>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span id="atmModeNote" style="color:#93c5fd;font-size:10.5px;font-style:italic;white-space:nowrap">Standard atmosphere (ITU-R P.835)</span>
+          <button class="card-collapse-btn" onclick="toggleCard(this)" aria-expanded="true" title="Collapse / expand this section">&#9650;</button>
+        </div>
       </div>
 
       <!-- Full-width: search row + map + results below -->
@@ -2479,10 +2517,11 @@ tr.net-row-found td{background:#fde68a !important}
             <span id="sdAntLegend" style="display:none;color:#059669">&#9650; Ant A/B (div)</span>
             <span id="reflLegendMain" style="display:none;color:#2563eb">&#9670; Refl Main</span>
             <span id="reflLegendCross" style="display:none;color:#0891b2">&#9670; Refl Cross</span>
+            <span id="profClickHint" style="color:var(--text2)" title="Click anywhere on the profile to move Site A or Site B to that point of the path (Ctrl+Z undoes). While the Obstacles section is open, a click sets the obstacle position instead.">&#128433; Click profile: move Site A / B</span>
             <span id="terrainNote" style="margin-left:auto"></span>
           </div>
           <!-- v8.7: Obstacles panel -->
-          <details id="obstPanel" style="margin-top:8px;border-top:1px solid var(--border-l);padding-top:6px">
+          <details id="obstPanel" ontoggle="_profClickHintSync()" style="margin-top:8px;border-top:1px solid var(--border-l);padding-top:6px">
             <summary style="cursor:pointer;font-size:11.5px;font-weight:700;color:var(--text2)">&#127970; Obstacles <span id="obstCount" style="font-weight:600;color:var(--text3)"></span>
               <span id="obstSummary" style="margin-left:8px;font-weight:600"></span></summary>
             <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;margin-top:8px;font-size:11px">
@@ -2930,7 +2969,7 @@ tr.net-row-found td{background:#fde68a !important}
     </div>
   </div>
 
-<div class="chart-card">
+<div class="chart-card" id="capChartCard">
     <div class="chart-hdr">
       <span class="chart-hdr-title" id="capChartTitle">&#128308; Capacity vs Availability</span>
       <div class="chart-controls">
@@ -2959,12 +2998,12 @@ tr.net-row-found td{background:#fde68a !important}
     </div>
   </div>
 
-  <div class="chart-card">
+  <div class="chart-card" id="distChartCard">
     <div class="chart-hdr">
       <span class="chart-hdr-title" id="distChartTitle">&#128200; Distance vs Availability</span>
       <div class="chart-controls">
         <label id="xMaxLabel">X max (km):</label>
-        <select id="xMax" onchange="_xMaxUserSet=true;scheduleChart()">
+        <select id="xMax" onchange="_xMaxUserSet=true;_distZoom=null;scheduleChart()">
           <option value="5">5 km</option><option value="10" selected>10 km</option>
           <option value="15">15 km</option><option value="20">20 km</option>
           <option value="30">30 km</option><option value="50">50 km</option>
@@ -2976,15 +3015,14 @@ tr.net-row-found td{background:#fde68a !important}
           <option value="key">Key (5 mods)</option>
           <optgroup label="── Single ──" id="modOptGroup"></optgroup>
         </select>
+        <button onclick="distZoomReset()" title="Back to the full distance range (also: double-click the chart)"
+          style="padding:3px 10px;border-radius:5px;border:1px solid rgba(255,255,255,.25);
+          background:rgba(255,255,255,.12);color:#e2e8f0;cursor:pointer;font-size:10px;font-weight:600">
+          &#128269; Reset Zoom</button>
+        <span style="color:#93c5fd;font-size:10px" title="Mouse wheel or pinch zooms the distance axis; drag pans it; Shift+drag zooms to the dragged range; double-click resets">Scroll=zoom &nbsp; Drag=pan &nbsp; Shift+drag=box</span>
         <span id="chartSpin" style="display:none"><span class="spin-sm"></span></span>
         <button class="card-collapse-btn" onclick="toggleCard(this)" aria-expanded="true" title="Collapse / expand this chart">&#9650;</button>
       </div>
-    </div>
-    <!-- Custom modulation selector row -->
-    <div id="customModRow" style="display:none;background:rgba(15,45,74,.4);padding:8px 16px;
-      border-top:1px solid rgba(255,255,255,.1);display:flex;flex-wrap:wrap;gap:8px;align-items:center">
-      <span style="color:#93c5fd;font-size:10.5px;white-space:nowrap;font-weight:600">Select modulations:</span>
-      <div id="modCheckboxes" style="display:flex;flex-wrap:wrap;gap:6px"></div>
     </div>
     <div class="chart-body">
       <div class="chart-canvas-wrap" style="height:380px"><canvas id="myChart"></canvas></div>
@@ -2999,6 +3037,7 @@ tr.net-row-found td{background:#fde68a !important}
     <div class="rr-hdr">
       <span class="rr-hdr-title">&#128279; Multi-Band Aggregation - Capacity vs Availability</span>
       <span id="mbResHeadline" style="font-size:11px;color:#7dd3fc;margin-left:auto;font-family:'JetBrains Mono',monospace"></span>
+      <button class="card-collapse-btn" onclick="toggleCard(this)" aria-expanded="true" title="Collapse / expand this section">&#9650;</button>
     </div>
     <div style="padding:14px 18px">
       <!-- Headline aggregate-capacity tiles at three availability targets -->
@@ -3098,7 +3137,10 @@ tr.net-row-found td{background:#fde68a !important}
   <div class="rr-wrap" id="rrWrap">
     <div class="rr-hdr">
       <span class="rr-hdr-title">&#128202; Range Sweep Report - Capacity vs Distance &amp; Availability</span>
-      <button class="rr-xl-btn" id="rrXlBtn" style="display:none" onclick="exportRangeReportXlsx()">&#11015; Export</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="rr-xl-btn" id="rrXlBtn" style="display:none" onclick="exportRangeReportXlsx()">&#11015; Export</button>
+        <button class="card-collapse-btn" onclick="toggleCard(this)" aria-expanded="true" title="Collapse / expand this section">&#9650;</button>
+      </div>
     </div>
     <div class="rr-body">
       <div class="rr-inputs">
@@ -3137,7 +3179,7 @@ tr.net-row-found td{background:#fde68a !important}
           title="Hide the Network and Defaults tabs from the tab strip. Bring them back from File &gt; View &gt; Show Network &amp; Defaults tabs. Network actions still work and restore the tabs automatically.">
           &#128584; Hide Network &amp; Defaults tabs
         </button>
-        <span style="font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:none;font-weight:400">v8.9d</span>
+        <span style="font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:none;font-weight:400">v8.9e</span>
       </span>
     </div>
 
@@ -3699,8 +3741,8 @@ tr.net-row-found td{background:#fde68a !important}
         <button class="def-btn" onclick="defRuleSetNew(true)" title="Create a copy of the current rule set">&#10697; Duplicate</button>
         <button class="def-btn" onclick="defRuleSetRename()">&#9998; Rename</button>
         <button class="def-btn def-btn-danger" onclick="defRuleSetDelete()" title="Delete the current rule set (the Default set cannot be deleted)">&#128465; Delete</button>
-        <button class="def-btn" onclick="defRuleSetExport()" title="Download all rule sets as a .json file to share">&#11015; Export sets</button>
-        <button class="def-btn" onclick="defRuleSetImport()" title="Add rule sets from a .json file (existing sets are kept)">&#11014; Import sets</button>
+        <button class="def-btn" onclick="defRuleSetExport()" title="Download all rule sets as an Excel (.xlsx) file to share: one row per rule, with a Rule set column">&#11015; Export sets</button>
+        <button class="def-btn" onclick="defRuleSetImport()" title="Add rule sets from an Excel file exported here (.xlsx / .xls; older .json exports are still accepted). Existing sets are kept">&#11014; Import sets</button>
         <span style="color:var(--text3);font-size:11px">The table below edits the selected set. Assign sets to network groups in Network &#9656; Automation &#9656; Auto-Plan.</span>
       </div>
       <div class="def-table-wrap">
@@ -3748,6 +3790,9 @@ tr.net-row-found td{background:#fde68a !important}
         <label>Standard
           <select id="defGlbStandard"></select>
         </label>
+        <label title="v8.9e: distance units for the Planning Defaults tab (rule From / To, PtMP range, import preview, Auto-Plan report distances). Auto follows the Standard: FCC shows miles, ETSI shows km. Rules are always stored in km, so switching never changes a rule.">Units
+          <select id="defGlbUnits"></select>
+        </label>
         <label>RSL Performance Level
           <select id="defGlbRslPerf"></select>
         </label>
@@ -3763,11 +3808,14 @@ tr.net-row-found td{background:#fde68a !important}
         <label title="v8.8c: Default = the tool's own antenna gain table. A vendor from the Antenna RPE Library: the link uses the mid-band gain of that vendor's file whose size matches the antenna and whose frequency range covers the link frequency; where no file matches, the tool's gain is used.">Antenna vendor (gain)
           <select id="defGlbAntVendor" onfocus="lbcFillVendorSelect(this)"><option value="">Default (tool gain table)</option></select>
         </label>
-        <label title="Auto-Plan designs every link with each modulation's TX power limited to this value (blank = radio maximum). Applies to Band A (the radio band of the Radio card) only; in a Multi-Band link, Band B keeps its own Max TX Power set on the Band B card.">Max TX Power, Band A (dBm)
-          <input type="number" id="defGlbTxMax" min="-10" max="45" step="0.5" placeholder="radio max" title="Band A (Radio band) cap. Band B is set per link on the Band B card.">
+        <label title="Auto-Plan designs every link with each modulation's TX power limited to this value (blank = radio maximum). Applies to Band A (the radio band of the Radio card) only; Band B of a Multi-Band link uses Max TX Power, Band B.">Max TX Power, Band A (dBm)
+          <input type="number" id="defGlbTxMax" min="-10" max="45" step="0.5" placeholder="radio max" title="Band A (Radio band) cap. Band B has its own field.">
         </label>
         <label>Capacity Frame Size (bytes)
           <select id="defGlbFrameSize"></select>
+        </label>
+        <label title="v8.9e: Max TX Power cap for Band B of a Multi-Band link (blank = Band B radio maximum). Applied to the Band B card the same way Band A's cap is applied to the Radio card; the Band B card can still change it per link.">Max TX Power, Band B (dBm)
+          <input type="number" id="defGlbTxMaxB" min="-10" max="45" step="0.5" placeholder="radio max" title="Band B (Multi-Band) cap. Independent of Band A.">
         </label>
         <label title="Target availability for microwave carriers (4 to 42 GHz). Used by Auto-Plan for any distance rule whose Target Availability is left blank, by Band B of a Multi-Band link when Band B is microwave, and as the MW availability on the Range slide.">Target availability, MW (%)
           <select id="defGlbTargetAvailMw"><option value="99">99.000 %</option><option value="99.5">99.500 %</option><option value="99.9">99.900 %</option><option value="99.95">99.950 %</option><option value="99.99">99.990 %</option><option value="99.995">99.995 %</option><option value="99.998">99.998 %</option><option value="99.999">99.999 %</option></select>
@@ -4191,6 +4239,12 @@ function defaultsCapOptionsFor(product, bwMHz){
 // Single-Link Radio panel ETSI/FCC selector. Only affects Microwave
 // products; E/W/D BW sets are identical for both standards.
 const DEF_STD_OPTS = ['ETSI', 'FCC'];
+// v8.9e: Planning Defaults distance units, independent of the Standard
+const DEF_UNIT_OPTS = [
+  { value: 'auto',     label: 'Auto (FCC: mi, ETSI: km)' },
+  { value: 'metric',   label: 'Metric (km, m)' },
+  { value: 'imperial', label: 'Imperial (mi, ft)' }
+];
 
 // v8.0: BW lookup that respects the global Standard and per-(product,
 // frequency) restrictions. For MW products the per-standard sub-list is
@@ -4356,6 +4410,7 @@ function _defaultsFactory(){
     rules: [ _defaultsBlankRule() ],
     globals: {
       standard:         'ETSI',
+      units:            'auto',     // v8.9e: 'auto' (follow Standard) | 'metric' (km, m) | 'imperial' (mi, ft)
       rslPerfLevel:     'Typical',
       berThreshold:     '1e-6',
       // v8.6: Defaults now opens on the same pair the Single-Link panel uses
@@ -4364,6 +4419,7 @@ function _defaultsFactory(){
       reliabilityMethod:'ITU-R P.530-17',
       miscLossDb:       0,
       txMaxDbm:         null,       // v8.8c: Max TX Power cap (dBm), null = radio maximum
+      txMaxBDbm:        null,       // v8.9e: Band B (Multi-Band) Max TX Power cap (dBm), null = radio maximum
       targetAvailMw:    99.99,      // v8.9a: target availability, microwave carriers (rules left blank, Band B when MW, Range slide MW)
       targetAvailMmw:   99.9,       // v8.9a: target availability, mmW carriers (E / V / W / D; Band B when mmW, Range slide mmW)
       antVendor:        '',         // v8.8c: antenna vendor from the RPE library ('' = tool default gains)
@@ -4623,12 +4679,14 @@ function _renderDefaultsGlobals(){
   const g = DEFAULTS_STATE.globals;
   const $ = id => document.getElementById(id);
   if($('defGlbStandard')) $('defGlbStandard').innerHTML = _defOptHtml(DEF_STD_OPTS,       g.standard);
+  if($('defGlbUnits'))    $('defGlbUnits').innerHTML    = _defOptHtml(DEF_UNIT_OPTS,      g.units || 'auto');   // v8.9e
   if($('defGlbRslPerf'))   $('defGlbRslPerf').innerHTML   = _defOptHtml(DEF_RSL_PERF_OPTS, g.rslPerfLevel);
   if($('defGlbBer'))       $('defGlbBer').innerHTML       = _defOptHtml(DEF_BER_OPTS,      g.berThreshold);
   if($('defGlbRelMethod')) $('defGlbRelMethod').innerHTML = _defOptHtml(DEF_RELIAB_OPTS,   g.reliabilityMethod);
   if($('defGlbFrameSize')) $('defGlbFrameSize').innerHTML = _defOptHtml(DEF_FRAME_OPTS,    g.frameSize);
   if($('defGlbMiscLoss'))  $('defGlbMiscLoss').value      = g.miscLossDb;
   if($('defGlbTxMax'))     $('defGlbTxMax').value         = (g.txMaxDbm != null && isFinite(g.txMaxDbm)) ? g.txMaxDbm : '';   // v8.8c
+  if($('defGlbTxMaxB'))    $('defGlbTxMaxB').value        = (g.txMaxBDbm != null && isFinite(g.txMaxBDbm)) ? g.txMaxBDbm : '';   // v8.9e
   if($('defGlbTargetAvailMw'))  $('defGlbTargetAvailMw').value  = String(isFinite(+g.targetAvailMw)  ? +g.targetAvailMw  : 99.99);   // v8.9a
   if($('defGlbTargetAvailMmw')) $('defGlbTargetAvailMmw').value = String(isFinite(+g.targetAvailMmw) ? +g.targetAvailMmw : 99.9);
   if($('defGlbAntVendor')){ lbcFillVendorSelect($('defGlbAntVendor'), g.antVendor || ''); }   // v8.8c
@@ -4660,19 +4718,29 @@ window.defaultsRemoveRule = function(idx){
 function _defaultsIsFcc(){
   try { return (DEFAULTS_STATE.globals.standard === 'FCC'); } catch(_) { return false; }
 }
+// v8.9e: distance unit for display, set by Global Defaults > Units.
+// 'auto' keeps the v8.0 behaviour (FCC = miles); _defaultsIsFcc() stays
+// the Standard test for BW lists and the Range slide.
+function _defaultsUseMiles(){
+  let u = 'auto';
+  try { u = DEFAULTS_STATE.globals.units || 'auto'; } catch(_) {}
+  if(u === 'imperial') return true;
+  if(u === 'metric')   return false;
+  return _defaultsIsFcc();
+}
 function _defaultsDistDisplay(km){
   const n = Number(km);
   if(!isFinite(n)) return 0;
-  if(_defaultsIsFcc()) return +(n / 1.609344).toFixed(2);
+  if(_defaultsUseMiles()) return +(n / 1.609344).toFixed(2);
   return n;
 }
 function _defaultsDistInputToKm(displayValue){
   const n = parseFloat(displayValue);
   if(!isFinite(n)) return 0;
-  return _defaultsIsFcc() ? (n * 1.609344) : n;
+  return _defaultsUseMiles() ? (n * 1.609344) : n;
 }
 function _defaultsUpdateDistHeaders(){
-  const unit = _defaultsIsFcc() ? 'mi' : 'km';
+  const unit = _defaultsUseMiles() ? 'mi' : 'km';
   const a = document.getElementById('defFromHdr');
   const b = document.getElementById('defToHdr');
   if(a) a.textContent = 'From (' + unit + ')';
@@ -4775,7 +4843,7 @@ window.defaultsUpdateGlobal = function(key, val){
   if(key === 'miscLossDb'){
     const n = parseFloat(val);
     val = isFinite(n) ? n : 0;
-  } else if(key === 'txMaxDbm'){                // v8.8c: blank = no cap
+  } else if(key === 'txMaxDbm' || key === 'txMaxBDbm'){   // v8.8c / v8.9e (Band B): blank = no cap
     const n = parseFloat(val);
     val = (String(val).trim() === '' || !isFinite(n)) ? null : Math.max(-10, Math.min(45, n));
   } else if(key === 'targetAvailMw' || key === 'targetAvailMmw'){   // v8.9a
@@ -4787,7 +4855,13 @@ window.defaultsUpdateGlobal = function(key, val){
   } else if(key === 'useAcmAcamb'){
     val = !!val;
   }
+  if(key === 'units' && !DEF_UNIT_OPTS.some(o => o.value === val)) val = 'auto';   // v8.9e
   DEFAULTS_STATE.globals[key] = val;
+  // v8.9e: units only change how distances are shown; storage stays km
+  if(key === 'units'){
+    _defaultsUpdateDistHeaders();
+    _renderDefaultsRules();
+  }
   // v8.0: when Standard switches between ETSI and FCC the per-row Channel
   // BW dropdowns change their option lists. Re-validate every rule's
   // bwMHz against the new (product, standard) BW list, falling back to
@@ -4993,6 +5067,8 @@ function _defaultsLoad(){
       // v8.0: Standard (ETSI / FCC) defaults to ETSI for older saved files
       // that didn't have this field.
       if(!DEF_STD_OPTS.includes(DEFAULTS_STATE.globals.standard)) DEFAULTS_STATE.globals.standard = 'ETSI';
+      // v8.9e: units, older saves have none, so they keep following the Standard
+      if(!DEF_UNIT_OPTS.some(o => o.value === DEFAULTS_STATE.globals.units)) DEFAULTS_STATE.globals.units = 'auto';
       // v8.0: protectedMode default
       DEFAULTS_STATE.globals.protectedMode = !!DEFAULTS_STATE.globals.protectedMode;
     }
@@ -5118,7 +5194,7 @@ function _defAutoResolveCellHtml(rule){
     let pr = null; try{ pr = defPtmpRuleResolve(rule); }catch(_){}
     if(!pr) return '<span style="color:var(--text3);font-style:italic;font-size:11px">&mdash;</span>';
     if(!pr.ok) return '<span style="color:#b45309;font-size:11px;font-style:italic" title="' + _defEsc(pr.reason) + '">&#9888; max</span>';
-    const fcc = DEFAULTS_STATE.globals.standard === 'FCC';
+    const fcc = _defaultsUseMiles();   // v8.9e: follows Global Defaults > Units
     const rng = fcc ? Math.round(pr.km * 3280.84) + ' ft' : Math.round(pr.km * 1000) + ' m';
     const short = isFinite(+rule.toKm) && +rule.toKm > pr.km + 1e-6;
     return '<span style="color:' + (short ? '#b45309' : '#0369a1') + ';font-size:11.5px;font-family:\'JetBrains Mono\',ui-monospace,monospace" title="' +
@@ -5386,6 +5462,10 @@ function _defStageRulesImport(rows, fname){
     sd:   _defMatchCol(headers, _DEF_HDR_SD)
   };
 
+  const _impDistHdr = _defNormHdr(headers[C.from]) + ' ' + _defNormHdr(headers[C.to]);
+  const _impDistF = /\bmi\b/.test(_impDistHdr) ? 1.609344
+                  : /\bkm\b/.test(_impDistHdr) ? 1
+                  : (_defaultsUseMiles() ? 1.609344 : 1);
   const parsed = [];
   for(let i = hdrIdx + 1; i < rows.length; i++){
     const r = rows[i]; if(!r) continue;
@@ -5401,8 +5481,10 @@ function _defStageRulesImport(rows, fname){
     const rawTo   = String(r[C.to]   || '').trim();
     if(!rawBand && !rawProd && !rawBw && !rawCap && !rawFrom && !rawTo) continue;   // blank row
 
-    const fromKm = parseFloat(rawFrom);
-    const toKm   = parseFloat(rawTo);
+    // v8.9e: the file's unit comes from its header ("From (mi)" = miles,
+    // "From (km)" = km); a header with no unit uses the Defaults Units.
+    const fromKm = parseFloat(rawFrom) * _impDistF;
+    const toKm   = parseFloat(rawTo)   * _impDistF;
     const band   = _defNormBand(rawBand);
     const product= _defNormProduct(rawProd, band);
     const bwMHz  = parseFloat(rawBw);
@@ -5495,9 +5577,8 @@ function _defShowImportRulesModal(){
   const good = rules.filter(r => !r.bad).length;
   const bad  = rules.length - good;
 
-  // Distance unit label follows the global Standard.
-  const std = (DEFAULTS_STATE && DEFAULTS_STATE.globals && DEFAULTS_STATE.globals.standard) || 'ETSI';
-  const unit = (std === 'FCC') ? 'mi' : 'km';
+  // v8.9e: distance unit label follows Global Defaults > Units
+  const unit = _defaultsUseMiles() ? 'mi' : 'km';
 
   let html = '<div class="preview-summary" style="font-size:12px;padding:8px 12px;background:#fff7ed;border-left:3px solid #f59e0b;margin-bottom:10px">' +
              '<b>&#9888; Replaces all current rules.</b> Existing rules (' +
@@ -5650,11 +5731,13 @@ function _wireDefaultsGlobals(){
     el[evt] = e => defaultsUpdateGlobal(key, evt === 'onchange' && el.type === 'checkbox' ? el.checked : el.value);
   };
   bind('defGlbStandard',  'standard',          'onchange');
+  bind('defGlbUnits',     'units',             'onchange');   // v8.9e
   bind('defGlbRslPerf',   'rslPerfLevel',      'onchange');
   bind('defGlbBer',       'berThreshold',      'onchange');
   bind('defGlbRelMethod', 'reliabilityMethod', 'onchange');
   bind('defGlbMiscLoss',  'miscLossDb',        'oninput');
   bind('defGlbTxMax',     'txMaxDbm',          'oninput');   // v8.8c
+  bind('defGlbTxMaxB',    'txMaxBDbm',         'oninput');   // v8.9e
   bind('defGlbTargetAvailMw',  'targetAvailMw',  'onchange');  // v8.9a
   bind('defGlbTargetAvailMmw', 'targetAvailMmw', 'onchange');  // v8.9a
   bind('defGlbAntVendor', 'antVendor',         'onchange');  // v8.8c
@@ -5750,6 +5833,14 @@ function applyDefaultsToSingleLink(){
   // 5b) v8.8c: Max TX Power cap
   { const tm = $('txMaxDbm'), cap = (g.txMaxDbm != null && isFinite(+g.txMaxDbm)) ? +g.txMaxDbm : null;
     if(tm && state.txMaxDbm !== cap){ tm.value = cap == null ? '' : cap; if(typeof onTxMaxChange === 'function') onTxMaxChange(); } }
+  // 5b') v8.9e: Band B Max TX Power cap (Multi-Band), mirrors Band A above
+  { const capB = (g.txMaxBDbm != null && isFinite(+g.txMaxBDbm)) ? +g.txMaxBDbm : null;
+    if(state.mb && state.mb.txMaxDbm !== capB){
+      const tb = $('mbBandB_txMax');
+      if(tb) tb.value = capB == null ? '' : capB;
+      if(state.multiBand && tb && typeof onMbBandBChange === 'function') onMbBandBChange();
+      else state.mb.txMaxDbm = capB;
+    } }
 
   // 5) Miscellaneous Loss (dB)
   const misc = $('miscLoss');
@@ -5863,12 +5954,18 @@ window.defRuleSetDelete = function(){
 // v8.7: share rule sets. Network files carry a copy; merging never
 // overwrites a local set — differing sets are added as "(from …)" copies.
 window.defaultsRuleSetsExport = function(){ _rsSave(); return _rsClone(_rsEnsure().sets); };
+// v8.9e: compare rule lists by content: key order, empty and default-valued
+// fields are ignored, so a set read back from Excel matches its original
+function _rsCanon(rules){
+  const blank=_defaultsBlankRule();
+  return JSON.stringify((rules||[]).map(r=>Object.keys(r||{}).sort().filter(k=>{ const v=r[k]; return !(v===null||v===undefined||v===''||v===blank[k]); }).map(k=>[k,r[k]])));
+}
 window.defaultsRuleSetsMerge = function(sets, srcLabel){
   const rs = _rsEnsure(); _rsSave();
   const map = {}; let added = 0;
   (Array.isArray(sets) ? sets : []).forEach(x => {
     if(!x || !x.id || !Array.isArray(x.rules)) return;
-    const same = y => JSON.stringify(y.rules) === JSON.stringify(x.rules);
+    const same = y => _rsCanon(y.rules) === _rsCanon(x.rules);   // v8.9e: key order / default-valued fields do not count
     let hit = rs.sets.find(y => y.id === x.id && same(y)) || rs.sets.find(y => y.name === x.name && same(y)) || rs.sets.find(same);
     if(hit){ map[x.id] = hit.id; return; }
     let nm = String(x.name || 'Rule set'); if(rs.sets.some(y => y.name === nm)) nm += ' (from ' + (srcLabel || 'file') + ')';
@@ -5879,20 +5976,98 @@ window.defaultsRuleSetsMerge = function(sets, srcLabel){
   _rsRenderBar();
   return { map, added };
 };
+// v8.9e: rule sets travel as Excel (was JSON). One sheet, one row per rule,
+// Set ID + Rule set columns first; distances always in km. Import also takes
+// the older .json exports. Unknown rule fields keep their raw key as header.
+const RS_XL_COLS = [
+  ['fromKm','From (km)'], ['toKm','To (km)'], ['band','Band'], ['product','Product'],
+  ['frequency','Frequency (GHz)'], ['bwMHz','Channel BW (MHz)'], ['capacity','Target Capacity (Mbps)'],
+  ['availability','Target Availability (%)'], ['protectedOverride','Prot. override'],
+  ['sdEnable','SD'], ['sdMode','SD mode'], ['sdAsdSingle','ASD single site'],
+  ['maxCfg','Max config'], ['maxAnt','Max antenna']
+];
+function _rsXlCell(v){
+  if(v === null || v === undefined) return '';
+  if(typeof v === 'object') return JSON.stringify(v);
+  return v;
+}
 window.defRuleSetExport = function(){
-  const blob = new Blob([JSON.stringify({ _format:'ceragon-lbc-rulesets', sets:window.defaultsRuleSetsExport() }, null, 2)], {type:'application/json'});
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'LBC_rule_sets_' + new Date().toISOString().slice(0,10) + '.json';
-  document.body.appendChild(a); a.click(); a.remove();
+  if(typeof XLSX === 'undefined'){ alert('SheetJS not loaded, cannot write Excel.'); return; }
+  const sets = window.defaultsRuleSetsExport();
+  const known = RS_XL_COLS.map(c => c[0]);
+  const extra = [];
+  sets.forEach(x => (x.rules || []).forEach(r => Object.keys(r || {}).forEach(k => { if(!known.includes(k) && !extra.includes(k)) extra.push(k); })));
+  const cols = RS_XL_COLS.concat(extra.map(k => [k, k]));
+  const aoa = [['Set ID', 'Rule set', '#'].concat(cols.map(c => c[1]))];
+  sets.forEach(x => (x.rules || []).forEach((r, i) => aoa.push([x.id, x.name, i + 1].concat(cols.map(c => _rsXlCell(r[c[0]]))))));
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  ws['!cols'] = aoa[0].map(h => ({ wch: Math.max(6, String(h).length + 2) }));
+  ws['!freeze'] = { xSplit: 2, ySplit: 1 };
+  XLSX.utils.book_append_sheet(wb, ws, 'Rule sets');
+  const info = XLSX.utils.aoa_to_sheet([
+    ['Ceragon Network Planning Tool: Distance-Banded Planning Rule sets'],
+    ['Exported', new Date().toISOString().slice(0,16).replace('T',' ')],
+    ['Sets', sets.length],
+    [''],
+    ['One row per rule. Rows with the same Set ID belong to one rule set; # is the rule order.'],
+    ['Distances are always in km. Prot. override: blank = global setting, TRUE / FALSE = forced.'],
+    ['Re-import with Defaults > Rule set > Import sets. Existing sets are kept; a set that differs from a local one is added as a copy.']
+  ]);
+  info['!cols'] = [{wch:18},{wch:60}];
+  XLSX.utils.book_append_sheet(wb, info, 'Read me');
+  XLSX.writeFile(wb, 'LBC_rule_sets_' + new Date().toISOString().slice(0,10) + '.xlsx');
 };
+function _rsFromSheetRows(rows){
+  // rows: array of arrays, first row = header
+  const hdr = (rows[0] || []).map(h => String(h == null ? '' : h).trim());
+  const iId = hdr.findIndex(h => /^set\s*id$/i.test(h)), iNm = hdr.findIndex(h => /^rule\s*set$/i.test(h));
+  if(iNm < 0) throw new Error('no "Rule set" column. This looks like a single rule table: use Import Rules instead.');
+  const byLabel = {}; RS_XL_COLS.forEach(c => { byLabel[c[1].toLowerCase()] = c[0]; });
+  const keyAt = hdr.map((h, i) => (i === iId || i === iNm || h === '#') ? null : (byLabel[h.toLowerCase()] || h || null));
+  const blank = _defaultsBlankRule();
+  const order = [], map = {};
+  rows.slice(1).forEach(row => {
+    if(!row || row.every(v => v === '' || v == null)) return;
+    const nm = String(row[iNm] == null ? '' : row[iNm]).trim() || 'Rule set';
+    const id = (iId >= 0 && row[iId] != null && String(row[iId]).trim()) ? String(row[iId]).trim() : ('xl:' + nm);
+    if(!map[id]){ map[id] = { id, name: nm, rules: [] }; order.push(id); }
+    const r = Object.assign({}, blank);
+    keyAt.forEach((k, i) => {
+      if(!k) return;
+      let v = row[i];
+      if(v === '' || v == null){ v = (k === 'protectedOverride' || k === 'maxCfg' || k === 'maxAnt') ? null : blank[k]; }
+      else if(typeof v === 'string'){
+        const t = v.trim();
+        if(/^(true|false)$/i.test(t)) v = /^true$/i.test(t);
+        else if(/^[\[{]/.test(t)){ try{ v = JSON.parse(t); }catch(_){} }
+        else if(typeof blank[k] === 'number' && t !== '' && isFinite(+t)) v = +t;
+      }
+      if(typeof blank[k] === 'boolean' && typeof v !== 'boolean') v = /^(yes|y|1|true)$/i.test(String(v));
+      r[k] = (v === undefined) ? blank[k] : v;
+    });
+    map[id].rules.push(r);
+  });
+  return order.map(id => map[id]);
+}
 window.defRuleSetImport = function(){
-  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.json,application/json';
+  const inp = document.createElement('input'); inp.type = 'file'; inp.accept = '.xlsx,.xls,.json';
   inp.onchange = e => { const f = e.target.files && e.target.files[0]; if(!f) return; const r = new FileReader();
-    r.onload = ev => { try{ const o = JSON.parse(ev.target.result); const sets = Array.isArray(o) ? o : (o.sets || o.ruleSets || []);
+    const isJson = /\.json$/i.test(f.name);
+    const label = f.name.replace(/\.(xlsx|xls|json)$/i,'');
+    const done = sets => {
       if(!sets.length) throw new Error('no rule sets in the file');
-      const res = window.defaultsRuleSetsMerge(sets, f.name.replace(/\.json$/i,''));
+      const res = window.defaultsRuleSetsMerge(sets, label);
       alert(res.added + ' rule set' + (res.added!==1?'s':'') + ' added' + (sets.length - res.added ? ', ' + (sets.length - res.added) + ' already present' : '') + '.');
-    }catch(err){ alert('Could not import rule sets: ' + err.message); } };
-    r.readAsText(f); };
+    };
+    r.onload = ev => { try{
+        if(isJson){ const o = JSON.parse(ev.target.result); done(Array.isArray(o) ? o : (o.sets || o.ruleSets || [])); return; }
+        if(typeof XLSX === 'undefined') throw new Error('SheetJS not loaded, cannot read Excel');
+        const wb = XLSX.read(new Uint8Array(ev.target.result), {type:'array'});
+        const sh = wb.Sheets['Rule sets'] || wb.Sheets[wb.SheetNames[0]];
+        done(_rsFromSheetRows(XLSX.utils.sheet_to_json(sh, {header:1, defval:'', raw:true})));
+      }catch(err){ alert('Could not import rule sets: ' + err.message); } };
+    if(isJson) r.readAsText(f); else r.readAsArrayBuffer(f); };
   inp.click();
 };
 // every autosave of the rules table also updates the active set
@@ -9676,6 +9851,26 @@ function syncXMax(){
   }catch(e){/* silent — non-critical */}
 }
 
+// v8.9e: Distance vs Availability zoom (distance axis only; the y axis keeps
+// its fixed "nines" ticks). The zoomed range survives recalculation while the
+// X max and unit stay the same; Reset Zoom, double-click or a new X max clear it.
+let _distZoom = null;   // {min, max, xMax, unit}
+function _distNiceStep(range){
+  const raw = range / 8, p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p;
+  return (m < 1.5 ? 1 : m < 3.5 ? 2 : m < 7.5 ? 5 : 10) * p;
+}
+function _distZoomSync(chart){
+  const x = chart.scales.x; if(!x) return;
+  const full = chart.options.scales.x._fullMax, unit = chart.options.scales.x._unit;
+  const zoomed = (x.min > 1e-9) || (x.max < full - 1e-9);
+  _distZoom = zoomed ? { min:x.min, max:x.max, xMax:chart.options.scales.x._xMax, unit } : null;
+  const st = (x.max - x.min) < full * 0.98 ? _distNiceStep(x.max - x.min) : chart.options.scales.x._fullStep;
+  if(chart.options.scales.x.ticks.stepSize !== st){ chart.options.scales.x.ticks.stepSize = st; chart.update('none'); }
+}
+function distZoomReset(){
+  _distZoom = null;   // re-render at the full range (resetZoom would return to the zoomed range the chart was built with)
+  scheduleChart();
+}
 function renderChart(){
   syncXMax();
   let xMax=+document.getElementById('xMax').value;
@@ -9746,6 +9941,9 @@ function renderChart(){
   };
 
   if(myChart){myChart.destroy();myChart=null;}
+  // v8.9e: keep the user's zoom while the X max and unit are unchanged
+  const _dzKeep = !!(_distZoom && _distZoom.xMax===xMax && _distZoom.unit===DU && _distZoom.max<=xMax*uf+1e-9);
+  if(_distZoom && !_dzKeep) _distZoom=null;
   const myCanvas=document.getElementById('myChart');
   if(myCanvas){const p=myCanvas.parentElement;myCanvas.width=p?p.clientWidth||800:800;myCanvas.height=380;_distChartW=myCanvas.width;}
   myChart=new Chart(document.getElementById('myChart').getContext('2d'),{
@@ -9755,6 +9953,13 @@ function renderChart(){
       interaction:{mode:'index',intersect:false,axis:'x'},
       plugins:{
         legend:{position:'bottom',labels:{boxWidth:14,boxHeight:3,padding:12,font:{size:11,family:"'Inter',sans-serif"}}},
+        zoom:{   // v8.9e
+          limits:{x:{min:0,max:xMax*uf,minRange:Math.max(xMax*uf/200, distShort()?1:0.01)}},
+          zoom:{wheel:{enabled:true,speed:0.1},pinch:{enabled:true},
+                drag:{enabled:true,modifierKey:'shift',backgroundColor:'rgba(56,189,248,.15)',borderColor:'#38bdf8',borderWidth:1},
+                mode:'x',onZoomComplete:({chart})=>_distZoomSync(chart)},
+          pan:{enabled:true,mode:'x',onPanComplete:({chart})=>_distZoomSync(chart)}
+        },
         tooltip:{
           callbacks:{
             title:items=>`Distance: ${items[0]?.label} ${DU}`,
@@ -9771,10 +9976,20 @@ function renderChart(){
         }
       },
       scales:{
-        x:{type:'linear',min:0,max:xMax*uf,
+        x:{type:'linear',min:_dzKeep?_distZoom.min:0,max:_dzKeep?_distZoom.max:xMax*uf,
+          _fullMax:xMax*uf, _xMax:xMax, _unit:DU, _fullStep:state.isPtmp?undefined:.5,
           title:{display:true,text:'Distance ('+DU+')',font:{size:11},color:cssVar('--chart-txt')||'#475569'},
           grid:{color:cssVar('--chart-grid')||'rgba(0,0,0,.07)'},
-          ticks:{color:cssVar('--chart-txt')||'#475569',font:{size:10},callback:v=>state.isPtmp?(Math.round(v)+' '+DU):(v%1===0?v+' '+DU:''),stepSize:state.isPtmp?undefined:.5}
+          ticks:{color:cssVar('--chart-txt')||'#475569',font:{size:10},
+            // v8.9e: when zoomed, label every tick with the decimals the step needs
+            callback:function(v){
+              if(state.isPtmp) return Math.round(v)+' '+DU;
+              const st=this.options.stepSize;
+              if(!st || st>=0.5) return v%1===0?v+' '+DU:'';
+              const dec=Math.min(3,Math.max(0,Math.ceil(-Math.log10(st))));
+              return (+v).toFixed(dec)+' '+DU;
+            },
+            stepSize:_dzKeep?_distNiceStep(_distZoom.max-_distZoom.min):(state.isPtmp?undefined:.5)}
         },
         y:{type:'linear',min:1.3,max:7.1,
           title:{display:true,text:'Availability  (log-outage scale)',font:{size:11},color:cssVar('--chart-txt')||'#475569'},
@@ -9787,6 +10002,7 @@ function renderChart(){
     },
     plugins:[refPlugin]
   });
+  if(myCanvas && !myCanvas._dzDbl){ myCanvas._dzDbl=true; myCanvas.addEventListener('dblclick', ()=>distZoomReset()); }   // v8.9e
   // First-open fit: the container width can be unsettled on initial paint (clientWidth 0 -> 800
   // fallback), crowding the X axis. A ResizeObserver re-renders once the true width settles and
   // on any later container resize (same effect as the user touching a field). Attached once.
@@ -12983,23 +13199,34 @@ function toggleCard(btn){
     el = el.nextElementSibling;
   }
   card.setAttribute('data-collapsed', collapsed ? '0' : '1');
+  if(collapsed) _cardExpandedHook(card);   // v8.9e
   btn.innerHTML = collapsed ? '&#9650;' : '&#9660;';
   btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+}
+// v8.9e: a collapsed Site Location card hides the Leaflet map, which then has a
+// 0-size viewport; re-measure it when the card opens again.
+function _cardExpandedHook(card){
+  if(!card || card.id !== 'siteLocationCard') return;
+  setTimeout(() => { try{ if(typeof siteMap !== 'undefined' && siteMap && siteMap.invalidateSize) siteMap.invalidateSize(); }catch(_){} }, 60);
 }
 function _collapseCard(card,hdr,collapse){
   let el=hdr.nextElementSibling;
   while(el){ if(collapse){ el.dataset.prevDisplay=el.style.display||''; el.style.display='none'; }
              else { el.style.display=(el.dataset.prevDisplay!==undefined)?el.dataset.prevDisplay:''; delete el.dataset.prevDisplay; } el=el.nextElementSibling; }
   card.setAttribute('data-collapsed',collapse?'1':'0');
+  if(!collapse) _cardExpandedHook(card);   // v8.9e
   const b=hdr.querySelector('.card-collapse-btn'); if(b){ b.innerHTML=collapse?'&#9660;':'&#9650;'; b.setAttribute('aria-expanded',collapse?'false':'true'); }
 }
 function toggleAllCards(){
   // v8.9a: on the Defaults tab the button collapses / expands the three Defaults cards
   { const a=document.querySelector('.mode-tab.active'); if(a&&a.dataset.mode==='defaults'&&typeof defCardsToggleAll==='function'){ defCardsToggleAll(); return; } }
-  const cards=[...document.querySelectorAll('#singleLinkView .res-panel > .card, #singleLinkView .res-panel > .chart-card, #singleLinkView .res-panel > .rr-wrap')];
+  const cards=[...document.querySelectorAll('#singleLinkView .res-panel > .card, #singleLinkView .res-panel > .chart-card, #singleLinkView .res-panel > .rr-wrap, #siteLocationCard')];
   const anyExpanded=cards.some(c=>c.getAttribute('data-collapsed')!=='1' && c.offsetParent!==null);
   cards.forEach(card=>{
-    if(card.offsetParent===null) return;                 // skip hidden cards
+    // v8.9e: Collapse all skips hidden cards; Expand all also opens hidden ones,
+    // so a card hidden at that moment (Range Sweep while Multi-Band is on, Band B
+    // card) does not come back collapsed later
+    if(anyExpanded && card.offsetParent===null) return;
     const hdr=card.querySelector('.sec-hdr,.chart-hdr,.rr-hdr,.card-hdr'); if(!hdr) return;
     const isCol=card.getAttribute('data-collapsed')==='1';
     if(anyExpanded && !isCol) _collapseCard(card,hdr,true);
@@ -15165,7 +15392,7 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
       onClick:(ev,els,chart)=>{ try{
           const op=document.getElementById('obstPanel');
           if(op && op.open) obstPickFromChart(ev,chart); else profileSiteMenu(ev,chart);   // v8.7b
-        }catch(_){} },
+        }catch(e){ console.warn('profile click failed', e); } },
       plugins:{
         legend:{display:false},
         tooltip:{
@@ -15204,6 +15431,7 @@ function renderTerrainChart(distances, elevations, losLine, obstructed, distUnit
   if(rLegCross)rLegCross.style.display=showRefl?'':'none';
 
   try{ obstRender(); }catch(e){ console.warn('obstacles render failed',e); }
+  try{ _profClickHintSync(); }catch(_){}   // v8.9e
   try{ const dp=document.getElementById('ductPanel'); if(dp && dp.open && typeof ductRun==='function') setTimeout(ductRun,0); }catch(_){}   // v8.9d
   // Reflection panel
   { const rw=document.getElementById('reflWrap'); if(rw) rw.open=!state.reflCollapsed; }   // v8.9d
@@ -15255,7 +15483,7 @@ function reflAdvisorRefresh(){ try{ if(window._terrainData) redrawTerrainOverlay
 // ║  ray bends by dθ/dx = 1e-6 · dM/dh (θ rad, x and h in metres).           ║
 // ║  Profiles: constant-k presets, exponential reference atmosphere          ║
 // ║  (ITU-R P.453 eq. 8-9, N0 = 315, h0 = 7.35 km) and a user table.         ║
-// ║  Phase 2 adds the ITU-R P.453-8 surface / elevated duct profiles.        ║
+// ║  Phase 2 adds the ITU-R P.453-14 surface / elevated duct profiles.       ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
 const DUCT_PRESETS = [
   {id:'k133', label:'Constant K = 1.333 (dN/dh = -39)',     dNdh:-39},
@@ -15264,8 +15492,8 @@ const DUCT_PRESETS = [
   {id:'kinf', label:'Constant K = infinity (dN/dh = -157)', dNdh:-157},
   {id:'km05', label:'Constant K = -0.5 (dN/dh = -471)',     dNdh:-471},
   {id:'exp',  label:'Exponential reference atmosphere (P.453)'},
-  {id:'p453s', label:'ITU-R P.453-8 surface ducts (site coordinates)'},
-  {id:'p453e', label:'ITU-R P.453-8 elevated ducts (site coordinates)'},
+  {id:'p453s', label:'ITU-R P.453-14 surface ducts (site coordinates)'},
+  {id:'p453e', label:'ITU-R P.453-14 elevated ducts (site coordinates)'},
   {id:'user', label:'User defined M profile'}
 ];
 // ── v8.9d Phase 2: ITU-R P.453 duct statistics (SG 3 supplemental data, elevated_and_surface_duct.zip)
@@ -15509,7 +15737,7 @@ window.ductRun = function(){
   if(isP453 && ductP453Ctx && ductP453Ctx.d){
     const d = ductP453Ctx.d, sf = S.profile === 'p453s';
     h += '<div style="margin-top:6px;padding:6px 8px;background:var(--sl);border:1px solid var(--border-l);border-radius:6px">'
-      + '<b>ITU-R P.453 '+(sf ? 'surface duct' : 'elevated duct')+' statistics</b> at mid-path '+ductP453Ctx.lat.toFixed(2)+', '+ductP453Ctx.lon.toFixed(2)+' (average year): '
+      + '<b>ITU-R P.453-14 '+(sf ? 'surface duct' : 'elevated duct')+' statistics</b> at mid-path '+ductP453Ctx.lat.toFixed(2)+', '+ductP453Ctx.lon.toFixed(2)+' (average year): '
       + (sf ? 'occurrence '+d.Sp.toFixed(1)+'% of the time, mean strength Ss = '+d.Ss.toFixed(1)+' M, mean thickness St = '+(d.St*lf).toFixed(0)+' '+lu
             : 'occurrence '+d.Ep.toFixed(1)+'% of the time, mean strength Es = '+d.Es.toFixed(1)+' M, thickness Et = '+(d.Et*lf).toFixed(0)+' '+lu+', base Eb = '+(d.Eb*lf).toFixed(0)+' '+lu+', max-M height Em = '+(d.Em*lf).toFixed(0)+' '+lu)
       + '. Heights are above ground; the profile is anchored at the lower site ground level ('+(ductP453Ctx.g*lf).toFixed(0)+' '+lu+' ASL) with k = 4/3 outside the duct. '
@@ -15672,6 +15900,15 @@ function obstChanged(){
   if(typeof redrawTerrainOverlays==='function' && window._terrainData) redrawTerrainOverlays(); else obstRender();
   try{ update(true); }catch(_){}
 }
+// v8.9e: the legend says what a click on the profile does (it switches to
+// obstacle picking while the Obstacles section is open)
+function _profClickHintSync(){
+  const h=document.getElementById('profClickHint'), op=document.getElementById('obstPanel'); if(!h) return;
+  const obst=!!(op && op.open);
+  h.innerHTML = obst ? '&#128433; Click profile: set obstacle position (close Obstacles to move sites)' : '&#128433; Click profile: move Site A / B';
+  h.style.color = obst ? '#b45309' : 'var(--text2)';
+  const cv=document.getElementById('terrainChart'); if(cv) cv.style.cursor='crosshair';
+}
 // ── v8.7b: click the profile to move Site A or B to that point of the path ──
 function profileSiteMenu(ev, chart){
   const td=window._terrainData; if(!td) return;
@@ -15700,7 +15937,10 @@ function profileMoveSite(site, km){
   const td=window._terrainData; if(!td) return;
   const la=parseDMS(document.getElementById('siteLatA').value), lo=parseDMS(document.getElementById('siteLonA').value);
   const lb=parseDMS(document.getElementById('siteLatB').value), lob=parseDMS(document.getElementById('siteLonB').value);
-  if(![la,lo,lb,lob].every(isFinite)) return;
+  if(![la,lo,lb,lob].every(isFinite)){   // v8.9e: say why instead of doing nothing
+    try{ (window._histToast||alert)('Moving a site from the profile needs Site A and Site B coordinates.'); }catch(_){}
+    return;
+  }
   // point at fraction f along the great circle A → B
   const f=km/td.totalKm, R=Math.PI/180;
   const p1=la*R, l1=lo*R, p2=lb*R, l2=lob*R;
@@ -16275,6 +16515,7 @@ loadR001Grid();
       <a href="#h-mb">Multi-Band Aggregation</a>
       <a href="#h-results">Reading results</a>
       <a href="#h-charts">Tables &amp; charts</a>
+      <a href="#h-layout">Tabs &amp; card layout</a>
       <a href="#h-export">Export &amp; theme</a>
       <a href="#h-method">Methodology</a>
       <a href="#h-glossary">Glossary</a>
@@ -16397,6 +16638,14 @@ loadR001Grid();
                   <p><strong>Reference modulation (v8.7b):</strong> opening a designed link (double-click, or from the Links list) sets the Link Budget Detail reference modulation to the one the link was designed on. A change made on one link does not carry over to the next.</p>
       <h4 id="h-topo-ptmp">Plan Topology: PtMP stage (v8.7c)</h4>
       <p>With <strong>PtMP (V-Band MultiHaul)</strong> ticked in Plan Topology, every CN site is connected to a DN site after the PtP topology is built. Candidates are DNs within the MultiHaul range (lowest MCS at the Link planning target availability, rain and channel) and, when LOS checking is on, with line of sight at the CN antenna height. CNs are assigned nearest-first within <em>Max CN per sector</em> and <em>Max CN per DN</em>. <strong>DN radio Auto</strong> uses MH-N265 (one 90&deg; sector) when all of a DN's CNs fit in one sector, otherwise MH-N367 (4 &times; 90&deg;, sector 1 centred on the set azimuth). Each DN&rarr;CN link is created designed, with the highest MCS meeting the target and the per-CN capacity shared by airtime within the sector. <strong>DN&ndash;DN mesh</strong>: DN pairs within MultiHaul range are linked node-to-node instead of by a PtP radio, and the topology prefers them.</p>
+<h4 id="h-net-more">Display styles, Hi/Lo, channels and PtMP rules (v8.7&ndash;v8.8a)</h4>
+      <ul>
+        <li><strong>Display styles.</strong> View &rsaquo; Display styles&hellip; (also &#127912; in the Group Manager, selection bar, Edit site panel and Links list) sets the site shape, size, colour and name label, and the link line style, width, colour and label (distance, Tx frequency, Hi-Low, link name or a free format with fields such as {name} {dist} {freq} {mod} {avail} {hilo}) for the whole network, a group, the selection or one item. Styles are saved with the network.</li>
+        <li><strong>Hi/Lo.</strong> Set per site in Edit site, or assign automatically so every link joins an H and an L site (odd loops are reported). <em>Hi/Lo check &amp; fix</em> lists per-site violations with the cause per link and one-click fixes; PtMP / TDD links are ignored.</li>
+        <li><strong>Channel plans and allocation.</strong> Channel plans live on the Defaults tab (up to 12 rasters with licence ticks, the Ceragon diplexer catalogue); Allocate Channels proposes channels per link (N+0, XPIC / ACAP / ACCP, Hi/Lo per site, licensed channels only) for you to adopt, re-run or discard. See <a href="#h-interference">Interference Analysis</a>.</li>
+        <li><strong>Manual channels.</strong> The channel button in the Links table and the link popup sets a channel by hand (&#128204;); manual channels are kept when allocation runs again, and saving offers the TD update.</li>
+        <li><strong>PtMP planning rules.</strong> The Defaults tab has a PtMP band with remote radios (the DN radio is chosen by coverage); Auto-Plan uses it for CN and mesh links, with the sector range per MCS by channel and availability.</li>
+      </ul>
 <h3 id="h-los">&#128225; LOS Check (Network Designer)</h3>
       <p>Four modes for vetting line-of-sight between sites. All use the same engine: ITU-R standard <strong>K = 4/3</strong> atmospheric refraction, <strong>60% Fresnel-1</strong> clearance, Open-Meteo Copernicus 90&nbsp;m DEM with per-coordinate caching. Each site contributes the antenna height stored on the site (<code>antAlt</code>); when a site has no antenna height set the tool falls back to a configurable default (30&nbsp;m AGL).</p>
       <table class="help-deftable">
@@ -16677,6 +16926,7 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
       <p><strong>Antenna heights (m AGL)</strong> default to <strong>50&nbsp;m</strong> above ground level for
       both sites. The Optimise Heights function computes the minimum heights for 60&nbsp;% Fresnel clearance
       when terrain data is available.</p>
+      <p><strong>Antenna vendor (v8.9).</strong> On the antenna card, and in Defaults &rsaquo; Global Defaults for Auto-Plan, pick a vendor to take the antenna gain (at the TX frequency) and XPD from that vendor&rsquo;s RPE files in the <a href="#h-rpe-lib">Antenna RPE Library</a>, dual-polarised files preferred for XPIC, also for the diversity antennas. <em>Default</em> uses the tool&rsquo;s gain table.</p>
 
       <h3 id="h-path">&#127783;&#65039; Path &amp; Rain</h3>
       <p><strong>Band switches keep a real link (v8.5c).</strong> Switching between Microwave and E&nbsp;/&nbsp;W&nbsp;/&nbsp;D-Band
@@ -16775,12 +17025,20 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
       </ul>
 
       <h4 id="h-terrain-tools">Terrain profile tools (v8.7b)</h4>
-      <p><strong>Move a site from the profile:</strong> click the terrain profile (with the Obstacles section closed) and choose <em>Move Site A here</em> or <em>Move Site B here</em>; the site moves to that point of the path and the profile reloads. Ctrl+Z undoes it.</p>
+      <p><strong>Move a site from the profile:</strong> click the terrain profile (with the Obstacles section closed) and choose <em>Move Site A here</em> or <em>Move Site B here</em>; the site moves to that point of the path and the profile reloads. Ctrl+Z undoes it. The legend line under the profile shows what a click does; it changes to <em>set obstacle position</em> while Obstacles is open. Both site coordinates are needed (v8.9e).</p>
       <p><strong>Antenna heights (AGL):</strong> type them in the profile header (AGL A / B) or use the &#9650;&#9660; arrows (5&nbsp;m / 15&nbsp;ft steps; the other site follows to keep clearance).</p>
       <p><strong>Earth curvature and k factor:</strong> the profile is bulged by the earth curvature for the k selected next to the LOS status (4/3, 1, 2/3, 0.5 or flat).</p>
       <p><strong>Clearance criteria:</strong> C1 100% F1 at k&nbsp;=&nbsp;4/3; C2 30% (Temperate) or 60% (Tropical) F1 at k<sub>min</sub>; diversity antennas 60% F1 at k&nbsp;=&nbsp;4/3. The status next to the LOS badge shows how much of each is achieved.</p>
       <p><strong>Reflection / SD advisor:</strong> recalculates when the target availability changes; its <em>Refresh</em> button recalculates it on demand.</p>
       <p><strong>Distance without coordinates:</strong> Distance follows the maximum range of the reference modulation at the target availability; <em>Max</em> applies it; a typed distance stays until one of those changes.</p>
+      <h4 id="h-ducting">Ducting &amp; Ray Trace (v8.9d)</h4>
+      <p>A collapsible section under the terrain profile. Open it to trace radio rays over the terrain through a chosen refractivity (M) profile.</p>
+      <ul>
+        <li><strong>M profiles.</strong> Constant k (1.333, 1, 0.5, &infin;, &minus;0.5), the exponential reference atmosphere, ITU-R P.453-14 surface and elevated ducts at the path mid-point (the ITU-R SG&nbsp;3 supplemental duct maps, 1.5&deg; grid, embedded in the tool), or your own table entered with <em>Set M profile</em>.</li>
+        <li><strong>Ray trace.</strong> Rays are launched from Site A or Site B and traced over the terrain in the flat-earth M frame, with optional specular ground reflections.</li>
+        <li><strong>Results.</strong> The section reports single arrival, multipath, radio hole or terrain shadow; each arrival&rsquo;s launch and arrival angle, excess delay and number of reflections; and the ducts in the profile, flagging antennas that sit inside one.</li>
+        <li><strong>Informational.</strong> The ray trace does not change the link budget or the outage results.</li>
+      </ul>
       <h3 id="h-climate-explorer">&#127777;&#65039; Climate Explorer</h3>
       <p>The Climate Explorer is an optional override panel that sits directly below the existing Site Climate
       badge. Where the basic <em>&#127760; Fetch Climate</em> button gives you a single annual mean of T / P / WVD
@@ -16916,6 +17174,15 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
         <li><strong>Normalisation.</strong> Band values like <em>Microwave</em>, <em>MW</em> and <em>Microwave Band</em> all map to the canonical <em>Microwave Band</em>. <em>E-band</em>, <em>e</em>, <em>E&nbsp;Band</em> all map to <em>E-Band</em>. Product names match case-insensitively and tolerate missing dashes (<code>IP50EX</code> &rarr; <em>IP-50EX(A)</em>). The Prot. column accepts <em>Default</em>, <em>Defult</em> (template typo), blank &rarr; null (use global); <em>Yes</em>, <em>On</em>, <em>Protected</em>, <em>1+1</em>, <em>2+2</em> &rarr; forced protected; <em>No</em>, <em>Off</em>, <em>Unprotected</em>, <em>1+0</em>, <em>2+0</em>, <em>4+0</em> &rarr; forced unprotected. SD accepts <em>Yes</em>/<em>No</em>.</li>
         <li><strong>Preview before commit.</strong> Each parsed row is shown with the auto-resolved (config, modulation) so you can verify achievability before applying. Invalid rows (unknown band/product, BW not in catalogue, distance band reversed) are flagged and skipped. The amber warning banner reminds you that commit <strong>replaces all current rules</strong>.</li>
         <li><strong>Rules Template.</strong> Click <em>&#128206; Rules Template</em> to download a ready-to-fill <code>.xlsx</code> with the eleven expected columns and 6 example rows (1 E-Band + 5 Microwave).</li>
+        <li><strong>Distance unit (v8.9e).</strong> The From / To header sets the unit: <em>From&nbsp;(mi)</em> is read as miles, <em>From&nbsp;(km)</em> as km, and a header with no unit uses the Defaults <a href="#h-defaults-globals">Units</a>. Rules are always stored in km. The template is in km.</li>
+        <li><strong>Share rule sets (v8.9e).</strong> <em>Export sets</em> in the Rule set bar writes all rule sets to one Excel file (sheet <em>Rule sets</em>: Set ID, Rule set, # and one column per rule field, distances in km). <em>Import sets</em> reads that file back (.xlsx / .xls; older .json exports still open); existing sets are kept and a differing set with the same name is added as a copy. For a single rule table use <em>Import Rules</em>.</li>
+      </ul>
+
+      <h4 id="h-defaults-globals">Global Defaults (v8.9e)</h4>
+      <ul>
+        <li><strong>Units.</strong> <em>Auto (FCC: mi, ETSI: km)</em>, <em>Metric (km, m)</em> or <em>Imperial (mi, ft)</em>, independent of the Standard. It sets the unit of the rule From / To columns, the PtMP range in the &rarr; Auto column, the import preview and Auto-Plan report distances. Rules are stored in km, so switching never changes a rule. Saved defaults without the setting open on Auto. Antenna sizes still follow the Standard (the FCC microwave catalogue is in feet).</li>
+        <li><strong>Max TX Power, Band A / Band B (dBm).</strong> Caps the TX power of every modulation (blank = radio maximum). Band A applies to the Radio card; Band B applies to the Band B card of a Multi-Band link. The two are independent, and each is copied to its card when the defaults change, replacing a value typed on that card.</li>
+        <li><strong>Target availability, MW / mmW (%).</strong> Used by Auto-Plan for rules whose Target Availability is blank, by Band B of a Multi-Band link, and by the Range Slide (v8.9a).</li>
       </ul>
 
             <h4 id="h-defaults-limits">Max config and Max antenna (v8.7b)</h4>
@@ -16987,7 +17254,9 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
         <tr><td>Diversity LOS status</td><td>A status badge next to the main LOS status. Shows <strong>✓&nbsp;Div&nbsp;LOS&nbsp;clear</strong> (with minimum clearance) or <strong>⚠&nbsp;Div&nbsp;LOS&nbsp;obstructed</strong> when the diversity line of sight enters the terrain. In that case, increase antenna heights or reduce separation.</td></tr>
         <tr><td>Diversity antenna display</td><td>When SD is enabled the terrain profile shows the main antenna (blue/amber triangles) and the diversity antenna (green triangles) with per-site dashed vertical bars labelled with each site's separation.</td></tr>
         <tr><td>Reflection analysis (◆)</td><td>Shows the specular reflection point on the terrain for all four diversity path combinations, with the phase difference ΔΦ between the direct and reflected rays. The <strong>separation sweep table (6–15&nbsp;m, 1&nbsp;m steps)</strong> evaluates each separation independently for Site&nbsp;A and Site&nbsp;B, with colour-coded ΔΦ columns (≥150°&nbsp;good, 90–150°&nbsp;fair, &lt;90°&nbsp;poor), ★&nbsp;best per side, and independent <em>Set&nbsp;A</em>&nbsp;/ <em>Set&nbsp;B</em> buttons. A recommendation banner shows the optimal per-site pair (which may be asymmetric) with an <em>Apply Both</em> button.</td></tr>
-        <tr><td>k-factor chart</td><td>Plots the smooth-earth two-ray signal level vs the k-factor (0.3–15) for all four path combinations (using the per-site separations), showing how the earth&apos;s effective radius modifies the reflection geometry.</td></tr>
+        <tr><td>k-factor chart</td><td>Plots the smooth-earth two-ray signal level vs the k-factor (0.3–15) for all four path combinations (using the per-site separations), showing how the earth&apos;s effective radius modifies the reflection geometry. <em>Zoom (v8.9d):</em> from / to fields, 0&ndash;2 / 0&ndash;3 / 0&ndash;5 / Full presets, drag, mouse wheel, double-click to reset; k&nbsp;=&nbsp;1 and 4/3 markers are full height.</td></tr>
+        <tr><td>ASD / SYM ASD (v8.9)</td><td>For RFU-D-HP 2+0 / 4+0 (ASD also on IP-20C-HP): <strong>ASD</strong> uses 3 antennas (asymmetric, +6 / +3&nbsp;dB), <strong>SYM ASD</strong> uses 4 antennas (up to +9&nbsp;dB). The diversity antenna is the size of the main one and needs 100% F1 clearance. Available in Auto-Plan rules (SD column). BBS is blocked on IP-20C-HP; 2+2 with SD BBS uses the 2+0 branching loss.</td></tr>
+        <tr><td>Collapsing (v8.9d)</td><td>Reflection Analysis &amp; SD Advisor folds under one title line (frequency and path length), so the terrain profile can stay open on its own. The state is kept across recalculations and saved with the design.</td></tr>
       </table>
 
       <h3 id="h-xpd">&#128225; Co-channel XPD / XPIC</h3>
@@ -17234,6 +17503,8 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
             at the current link distance.</li>
         <li><strong>Distance vs Availability</strong> &mdash; availability vs distance for every modulation.
             The red dashed line is your target; the navy dashed line is the current distance.
+            <em>Zoom (v8.9e):</em> mouse wheel or pinch zooms the distance axis, drag pans it, Shift+drag zooms to the dragged range;
+            <em>Reset Zoom</em> or a double-click returns to the full range. The zoom is kept while you change other settings and is cleared by a new X max.
             X-axis options: 5, 10, 15, 20, 30, 50, <strong>80, 100, 150&nbsp;km</strong>.
             Y-axis: 95&nbsp;% &ndash; <strong>100&nbsp;%</strong> on a log-outage scale; curves flatten and
             pin to the 100&nbsp;% gridline when outage approaches zero.
@@ -17242,7 +17513,19 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
         <li><strong>ETSI / FCC units</strong> &mdash; toggling the standard switches all distance, height and
             separation values across the entire tool: distance (km&nbsp;&#8596;&nbsp;mi),
             antenna heights (m&nbsp;&#8596;&nbsp;ft), SD separation (m&nbsp;&#8596;&nbsp;ft),
-            terrain profile, reflection table, and all chart labels. Internal calculations always use SI units.</li>
+            terrain profile, reflection table, and all chart labels. Internal calculations always use SI units.
+            The Defaults tab has its own <a href="#h-defaults-globals">Units</a> setting (v8.9e).</li>
+      </ul>
+
+      <h3 id="h-layout">&#8644; Tabs &amp; card layout (v8.9e)</h3>
+      <ul>
+        <li><strong>Tab order.</strong> Drag any tab in the tab strip (Link, Network, Defaults, Range Slide) to move it; a blue edge shows where it lands. <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>&larr;</kbd>/<kbd>&rarr;</kbd> moves the open tab one place. The order is remembered in this browser.</li>
+        <li><strong>Start tab.</strong> The tool opens on the first visible tab of the strip. Hidden tabs are skipped, and the factory order opens on Link.</li>
+        <li><strong>Hide tabs.</strong> <em>File &#9662; &rsaquo; View</em> hides or shows the Range Slide tab and the Network &amp; Defaults pair; a tab keeps its place when it comes back.</li>
+        <li><strong>Collapse cards.</strong> Every Link tab result card has a &#9650;/&#9660; button in its header: Link Budget Detail, Modulation Performance (Band A and B), Site Location &amp; Climate, Capacity vs Availability, Distance vs Availability, Multi-Band Aggregation and Range Sweep Report (BTA opens and closes by clicking its header). <em>Collapse all</em> in the top bar collapses the visible cards; <em>Expand all</em> opens every card, including one hidden at that moment (Range Sweep while Multi-Band is on), so no card comes back collapsed.</li>
+        <li><strong>Reorder cards.</strong> Drag a Link tab card by the &#10303; handle at the left of its header; a blue line shows where it drops. The footer stays last. The order is remembered in this browser. The Defaults tab cards collapse and reorder the same way (v8.9a).</li>
+        <li><strong>Pinned Link toolbar.</strong> The Link tab toolbar (File, View, Fetch Climate Data, Add link to Network, Undo / Redo, baseline, Clear Link, Clear highlights) stays in view under the page header: when its own place scrolls out of sight it is pinned at the top. <em>File &#9662; &rsaquo; View &rsaquo; Pin Link toolbar</em> turns this off or on. While the Site Location card is collapsed the toolbar moves above the card, so it is never hidden.</li>
+        <li><strong>Reset.</strong> <em>File &#9662; &rsaquo; View &rsaquo; Reset tab order</em> and <em>Reset Link card order</em> restore the factory layout; each shows <em>default</em> or <em>custom</em>.</li>
       </ul>
 
       <h3 id="h-export">&#128190; Export &amp; reporting</h3>
@@ -17270,6 +17553,8 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
         redrawn and the full link budget is recomputed automatically. Files saved by older LBC versions remain
         loadable &mdash; a console note flags the version mismatch but values are restored on a best-effort basis
         (missing fields fall back to current defaults).</li>
+        <li><strong>Pathloss CSV (v7.8, v8.9b)</strong> &mdash; File &rsaquo; Export Pathloss on the Link tab, and the Network report, write the same 41-column CSV (sites, heights, antennas, per-end TX frequency and power, radio ID; UTF-8, no comment lines). Import it in Pathloss V5 / V6 with File &rarr; Network &rarr; Import Network Data.</li>
+        <li><strong>Configuration templates (v8.7)</strong> &mdash; File &rsaquo; Save as Template&hellip; saves the radio, frequency, BW, configuration, antennas, SD, losses, reliability method and target as a named template (antenna heights optional) and Apply Template&hellip; applies it to another link; sites, distance, terrain, climate and obstacles are kept. Templates export / import as .json, and <em>Apply configuration template&hellip;</em> in the Network view applies one to many links at once.</li>
         <li><strong>Range Sweep &mdash; Export</strong> &mdash; exports the generated capacity&nbsp;vs&nbsp;distance
         sweep table to a colour-coded <code>.xlsx</code> workbook.</li>
         <li><strong>&#9790; / &#9728; toggle</strong> in the header switches between light and dark themes.</li>
@@ -17387,6 +17672,14 @@ It picks the cheapest edge, attaches the new site to that POP&apos;s tree, and r
       <p>Reverse chronological, one row per feature. v7.5, v7.9, v8.0, v8.1 and v8.2 are exact release dates; v7.6, v7.7 and v7.8 dates are approximate (they sit between v7.5 and v7.9, all in mid-June 2026).</p>
       <table class="help-deftable">
         <tr><th style="white-space:nowrap">Version</th><th style="white-space:nowrap">Date</th><th>Feature</th><th>Description</th></tr>
+<tr><td rowspan="8" style="vertical-align:top;white-space:nowrap"><strong>v8.9e</strong></td><td rowspan="8" style="vertical-align:top;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2)">2026-11-13</td><td><strong>Defaults: Units</strong></td><td>Global Defaults &rsaquo; Units: Auto (follows the Standard), Metric (km, m) or Imperial (mi, ft). Sets the unit of the rule From / To, PtMP range, import preview and Auto-Plan report distances; rules stay stored in km.</td></tr>
+<tr><td><strong>Defaults: Max TX Power, Band B</strong></td><td>New Band B (Multi-Band) Max TX Power cap, independent of Band A and applied to the Band B card. Global Defaults layout: Band B cap under Band A, Target availability MW and mmW on one line.</td></tr>
+<tr><td><strong>Tab order</strong></td><td>Drag tabs to reorder them, or Alt+Shift+&larr;/&rarr;; the order is remembered and the tool opens on the first visible tab. File &rsaquo; View &rsaquo; Reset tab order.</td></tr>
+<tr><td><strong>Link tab cards</strong></td><td>The Link toolbar (File, View, Fetch Climate, Undo / Redo, baseline, Clear) stays pinned under the header while scrolling (File &rsaquo; View &rsaquo; Pin Link toolbar). Site Location &amp; Climate, Multi-Band Aggregation and Range Sweep Report collapse like the other cards. All Link tab cards reorder by drag (&#10303; handle); the order is remembered. File &rsaquo; View &rsaquo; Reset Link card order.</td></tr>
+<tr><td><strong>Rules import</strong></td><td>A From / To header in miles is now read as miles (it was read as km); a header with no unit follows the Defaults Units.</td></tr>
+<tr><td><strong>Rule sets in Excel</strong></td><td>Defaults &rsaquo; Rule set &rsaquo; Export sets / Import sets use one Excel file (one row per rule, Set ID and Rule set columns) instead of JSON; older .json exports still import.</td></tr>
+<tr><td><strong>Distance vs Availability zoom</strong></td><td>Wheel / pinch zoom and drag pan on the distance axis, Shift+drag box zoom, Reset Zoom button and double-click reset; the zoom is kept across recalculations.</td></tr>
+<tr><td><strong>Fixes</strong></td><td>Dark mode: Link Budget Detail, Modulation Performance, Capacity vs Availability and Distance vs Availability headers were light with unreadable titles. Range Sweep Report no longer stays collapsed after Collapse all and a Multi-Band on / off round trip (Expand all now opens hidden cards too). Ducting presets and results now name ITU-R P.453-14 (the revision the duct maps come from). The empty <em>Select modulations</em> bar under the Distance vs Availability header is removed. Help: new sections for Ducting &amp; Ray Trace, ASD / SYM ASD, antenna vendor, Pathloss CSV, configuration templates, network display styles / Hi/Lo / channels / PtMP rules, and Range Slide 3rd-party radios and scale bar. Terrain profile: the legend shows what a click does (move Site A / B, or set obstacle position while Obstacles is open), and a click without site coordinates now says so instead of doing nothing.</td></tr>
 <tr><td rowspan="7" style="vertical-align:top;white-space:nowrap"><strong>v8.9d</strong></td><td rowspan="7" style="vertical-align:top;white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text2)">2026-11-12</td><td><strong>Network files from the Link tab</strong></td><td>Opening a network file with the Link tab&apos;s Open design no longer stops at &ldquo;not a Ceragon LBC design file&rdquo;: the tool recognises it and offers to load it in the Network tab, through the same loader as Load network.</td></tr>
 <tr><td><strong>Range Slide: Link Assumptions</strong></td><td>Target availability MW (%) and mmW (%), Standard and Reliability Method (Vigants-Barnett, P.530-7/8, P.530-17) are now set on the panel. Each offers <em>Default</em>, labelled with what it resolves to and following the Defaults tab. A Defaults-tab P.530-19 runs here as P.530-17. Sessions saved before this version reset the availabilities to Default, so their results are unchanged.</td></tr>
 <tr><td><strong>Range Slide: Rain &amp; Geoclimatic Factor</strong></td><td>Rain zone and rate moved under K. <em>Rain source</em>: Manual, From country, or From site coordinates (ITU-R P.837-8 R<sub>0.01</sub>, the planner&rsquo;s From Map grid). A typed zone or rate switches to Manual; a hint shows where the value came from. K is on one line with <em>Auto calculate K</em>, follows the coordinates as they change and is recalculated on load (no more 1e-4 placeholder).</td></tr>
@@ -20160,7 +20453,7 @@ const P19_DN75_B64="H4sIAK1uKGoC/+y9h5NkSXLe2ale5kutdVaW1q2me/T0iBWzi8UuABLAHo8E
 // ════════════════════════════════════════════════════════════════════════════
 const LBC_DESIGN_FORMAT  = 'ceragon-lbc-design';
 const LBC_DESIGN_VERSION = '1.0';
-const LBC_TOOL_VERSION   = 'v8.9d';
+const LBC_TOOL_VERSION   = 'v8.9e';
 
 // ---- helpers --------------------------------------------------------------
 function _lbcReadSite(site){
@@ -26824,9 +27117,10 @@ window.AUTOPLAN = (function(){
                    DEFAULTS_STATE.globals && DEFAULTS_STATE.globals.standard === 'FCC'); }
       catch(_) { return false; }
     })();
-    const distUnit = isFccDef ? 'mi' : 'km';
+    const _useMi   = (typeof _defaultsUseMiles === 'function') ? _defaultsUseMiles() : isFccDef;   // v8.9e: Units
+    const distUnit = _useMi ? 'mi' : 'km';
     const antUnit  = isFccDef ? 'ft' : 'm';
-    const fmtDist  = (km) => isFccDef ? (km / 1.609344).toFixed(2) : (+km).toFixed(2);
+    const fmtDist  = (km) => _useMi ? (km / 1.609344).toFixed(2) : (+km).toFixed(2);
     // Antenna formatter: under FCC, MW catalogue stores feet directly so use
     // as-is; mmW catalogue stores meters so convert m→ft. Under ETSI, all
     // catalogues store meters → show as-is.
@@ -44871,11 +45165,18 @@ function rsgInstallHelp(){
     ' loss 4&nbsp;dB as for an external 2+0. Per-carrier RSL and capacity follow the IP-50EX tables;',
     ' <strong>TX power matches IP-50EX-P at 24&nbsp;dBm</strong> (+3&nbsp;dB over the IP-50EX(A) baseline).</p>',
 
+    '<p><strong>3rd-party radios (v8.9).</strong> <em>&#127991; 3rd-party radios</em> enters a competitor radio from its',
+    ' datasheet (TX power, RSL threshold, capacity per modulation and so on). It then appears in the product list',
+    ' of its band as <em>3P &middot; name</em>, is computed with the same engine and travels with the project file;',
+    ' the Excel export marks it as third-party equipment.</p>',
+
     '<h3 id="rh-slide">The slide</h3>',
     '<p>The on-screen preview reuses the master\'s own fan &mdash; tower artwork, ray bearings, range arcs and',
     ' the colour each ray carries &mdash; so it shows the slide you will get. Ray lengths are proportional to',
     ' the computed ranges and the layout auto-fits: labels are separated where they would collide and the type',
     ' scales down on a crowded slide.</p>',
+    '<p><strong>Scale bar (v8.9).</strong> An optional distance scale bar in the upper-right corner of the slide,',
+    ' at the same scale as the rays.</p>',
     '<p>The <strong>Assumptions</strong> box is rebuilt on every compute from the parameters above. Typing in',
     ' it switches the auto-fill off and keeps your wording.</p>',
     '<p><strong>v8.7b:</strong> every trace of the same radio has one colour; arrows end on their range circles;',
@@ -46457,7 +46758,7 @@ window.CRG_DPX = {"src":"DEV-03305 rev c.82 (30 Sep 2025)","low":[{"b":"4GHz","s
     const a=document.querySelector('.mode-tab.active'), net=!!(a&&a.dataset.mode==='network'), def=!!(a&&a.dataset.mode==='defaults');
     const c=document.getElementById('collapseAllBtn'); if(c){ c.style.display=net?'none':''; c.title=def?'Collapse or expand all Defaults cards':'Collapse or expand all result sections'; }
     if(def&&typeof defCardsSyncLabel==='function') defCardsSyncLabel();
-    else if(c&&!net){ const cards=[...document.querySelectorAll('#singleLinkView .res-panel > .card, #singleLinkView .res-panel > .chart-card, #singleLinkView .res-panel > .rr-wrap')]; const anyExp=cards.some(x=>x.getAttribute('data-collapsed')!=='1'&&x.offsetParent!==null); c.innerHTML=anyExp?'&#8854; Collapse all':'&#8853; Expand all'; }
+    else if(c&&!net){ const cards=[...document.querySelectorAll('#singleLinkView .res-panel > .card, #singleLinkView .res-panel > .chart-card, #singleLinkView .res-panel > .rr-wrap, #siteLocationCard')]; const anyExp=cards.some(x=>x.getAttribute('data-collapsed')!=='1'&&x.offsetParent!==null); c.innerHTML=anyExp?'&#8854; Collapse all':'&#8853; Expand all'; }
     const b=document.getElementById('bandBadge'); if(b&&b.parentElement) b.parentElement.style.display=net?'none':'';
   }
   function init(){
@@ -46593,6 +46894,261 @@ window.CRG_DPX = {"src":"DEV-03305 rev c.82 (30 Sep 2025)","low":[{"b":"4GHz","s
       (window.rsgToast || (m => {}))(p3NameOf(P) + ' saved' + (rowIdx != null ? ' and set on trace ' + (rowIdx + 1) : '') + '. Click Compute & Render to update the slide.');
     }catch(_){}
   };
+})();
+</script>
+<script>
+/* v8.9e: user-defined tab order.
+   Drag a tab in the strip to move it; Alt+Shift+Left / Right moves the open
+   tab one place. The order is saved by data-mode (all tab logic keys off
+   data-mode, never DOM index), so hidden tabs and the Range Slide tab, which
+   is added later by rsgWire(), keep their place. File > View > Reset tab order
+   restores the factory order. */
+(function(){
+  const LS = 'lbc_tab_order_v1';
+  const FACTORY = ['single','network','defaults','slide'];
+  const bar = () => document.querySelector('.mode-tabs');
+  const tabs = () => [...document.querySelectorAll('.mode-tabs > .mode-tab')];
+  function saved(){
+    try{ const a = JSON.parse(localStorage.getItem(LS) || 'null'); return Array.isArray(a) ? a.filter(x => typeof x === 'string') : null; }catch(_){ return null; }
+  }
+  function rank(order){
+    const r = {};
+    order.forEach((m, i) => { r[m] = i; });
+    FACTORY.forEach((m, i) => { if(!(m in r)) r[m] = order.length + i; });   // unknown to the saved list: factory place, after it
+    return m => (m in r) ? r[m] : 1e6;
+  }
+  let applying = false;
+  function apply(){
+    const b = bar(); if(!b) return;
+    const order = saved() || FACTORY, rk = rank(order);
+    const cur = tabs(), want = cur.slice().sort((x, y) => rk(x.dataset.mode) - rk(y.dataset.mode));
+    if(want.every((t, i) => t === cur[i])) { hint(); return; }
+    applying = true;
+    want.forEach(t => b.appendChild(t));
+    applying = false;
+    hint();
+  }
+  function store(){
+    const now = tabs().map(t => t.dataset.mode);
+    try{
+      if(now.join() === FACTORY.filter(m => now.includes(m)).join()) localStorage.removeItem(LS);
+      else localStorage.setItem(LS, JSON.stringify(now));
+    }catch(_){}
+    hint();
+  }
+  function hint(){
+    const h = document.getElementById('tabOrderHint');
+    if(h) h.textContent = saved() ? 'custom' : 'default';
+  }
+  window.lbcTabOrderReset = function(){
+    try{ localStorage.removeItem(LS); }catch(_){}
+    apply();
+  };
+  // ── drag and drop ──
+  let drag = null;
+  function clearMarks(){ tabs().forEach(t => t.classList.remove('mt-drop-before','mt-drop-after','mt-dragging')); }
+  function wireTab(t){
+    if(t._mtWired) return; t._mtWired = true;
+    t.draggable = true;
+    if(!/Drag to reorder/.test(t.title || '')) t.title = (t.title ? t.title + ' ' : '') + '(Drag to reorder the tabs.)';
+    t.addEventListener('dragstart', e => {
+      drag = t; t.classList.add('mt-dragging');
+      try{ e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', t.dataset.mode || ''); }catch(_){}
+    });
+    t.addEventListener('dragover', e => {
+      if(!drag || drag === t) return;
+      e.preventDefault();
+      const r = t.getBoundingClientRect(), after = (e.clientX - r.left) > r.width / 2;
+      tabs().forEach(x => { if(x !== t) x.classList.remove('mt-drop-before','mt-drop-after'); });
+      t.classList.toggle('mt-drop-after', after); t.classList.toggle('mt-drop-before', !after);
+    });
+    t.addEventListener('dragleave', () => t.classList.remove('mt-drop-before','mt-drop-after'));
+    t.addEventListener('drop', e => {
+      if(!drag || drag === t) return;
+      e.preventDefault();
+      const r = t.getBoundingClientRect(), after = (e.clientX - r.left) > r.width / 2;
+      t.parentNode.insertBefore(drag, after ? t.nextSibling : t);
+      clearMarks(); drag = null; store();
+    });
+    t.addEventListener('dragend', () => { clearMarks(); drag = null; });
+  }
+  // ── keyboard: Alt+Shift+Left / Right moves the open tab ──
+  document.addEventListener('keydown', e => {
+    if(!e.altKey || !e.shiftKey || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+    const a = document.querySelector('.mode-tabs > .mode-tab.active'); if(!a) return;
+    const vis = tabs().filter(t => t.style.display !== 'none'), i = vis.indexOf(a);
+    const j = i + (e.key === 'ArrowLeft' ? -1 : 1);
+    if(i < 0 || j < 0 || j >= vis.length) return;
+    e.preventDefault();
+    if(e.key === 'ArrowLeft') a.parentNode.insertBefore(a, vis[j]);
+    else a.parentNode.insertBefore(a, vis[j].nextSibling);
+    store();
+  });
+  // Startup: open on the first visible tab of the strip (the Link tab stays
+  // the start view under the factory order). Runs once, after the app has
+  // finished its own start-up, and only if the user has not switched yet.
+  function openFirstTab(){
+    const vis = tabs().filter(t => t.style.display !== 'none');
+    const first = vis[0], act = document.querySelector('.mode-tabs > .mode-tab.active');
+    if(!first || !act || first === act) return;
+    if(act.dataset.mode !== 'single') return;          // already moved by the user or a deep link
+    try{ window.switchMode(first.dataset.mode); }catch(e){ console.warn('open first tab failed', e); }
+  }
+  function startView(){
+    const go = () => setTimeout(openFirstTab, 700);
+    if(document.readyState === 'complete') go(); else window.addEventListener('load', go, {once:true});
+  }
+  function init(){
+    const b = bar(); if(!b){ setTimeout(init, 300); return; }
+    tabs().forEach(wireTab); apply(); startView();
+    // Range Slide (and any later tab) is appended after load: wire it and put it in its saved place
+    new MutationObserver(() => { if(applying) return; tabs().forEach(wireTab); apply(); })
+      .observe(b, {childList:true});
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script>
+/* v8.9e: Link tab: drag-to-reorder the result cards (Link Budget Detail,
+   Modulation Performance, Site Location & Climate, charts, reports), the same
+   way the Planning Defaults cards reorder. Each card gets a ⠿ handle at the
+   left of its header; the order is saved per browser (lbc_link_layout) by card
+   id. File > View > Reset card order restores the factory order. */
+(function(){
+  const KEY = 'lbc_link_layout';
+  const panel = () => document.querySelector('#singleLinkView .res-panel');
+  const items = () => { const p = panel(); return p ? [...p.children].filter(c => c.id) : []; };
+  let FACTORY = null;
+  const hdrOf = it => it.querySelector(':scope > .sec-hdr, :scope > .chart-hdr, :scope > .rr-hdr, :scope > .card > .sec-hdr');
+  function load(){ try{ return JSON.parse(localStorage.getItem(KEY) || '{}') || {}; }catch(_){ return {}; } }
+  function save(){
+    const order = items().map(c => c.id);
+    try{
+      if(order.join() === FACTORY.join()) localStorage.removeItem(KEY);
+      else localStorage.setItem(KEY, JSON.stringify({order}));
+    }catch(_){}
+    hint();
+  }
+  function hint(){ const h = document.getElementById('linkOrderHint'); if(h) h.textContent = load().order ? 'custom' : 'default'; }
+  function place(order){
+    const p = panel(); if(!p) return;
+    const foot = [...p.children].find(c => !c.id);   // the footer stays last
+    order.forEach(id => { const c = document.getElementById(id); if(c && c.parentElement === p) p.insertBefore(c, foot || null); });
+  }
+  window.lbcLinkOrderReset = function(){
+    try{ localStorage.removeItem(KEY); }catch(_){}
+    if(FACTORY) place(FACTORY); hint();
+  };
+  function decorate(it){
+    const h = hdrOf(it); if(!h || h.querySelector(':scope > .lbc-drag')) return;
+    const g = document.createElement('span');
+    g.className = 'lbc-drag'; g.innerHTML = '&#10303;'; g.title = 'Drag to reorder the cards'; g.setAttribute('draggable', 'true');
+    g.addEventListener('click', e => e.stopPropagation());   // BTA header toggles on click
+    h.insertBefore(g, h.firstChild);
+  }
+  let drag = null;
+  const clear = () => items().forEach(c => c.classList.remove('lbc-drop-before', 'lbc-drop-after'));
+  function target(e){ const p = panel(); let c = e.target; while(c && c.parentElement !== p) c = c.parentElement; return (c && c.id && drag && c !== drag) ? c : null; }
+  function init(){
+    const p = panel(); if(!p){ setTimeout(init, 300); return; }
+    FACTORY = items().map(c => c.id);
+    const L = load(); if(Array.isArray(L.order)) place(L.order);
+    items().forEach(decorate);
+    p.addEventListener('dragstart', e => {
+      const g = e.target.closest && e.target.closest('.lbc-drag'); if(!g) return;
+      let it = g; while(it && it.parentElement !== p) it = it.parentElement;
+      if(!it) return;
+      drag = it; it.classList.add('lbc-dragging');
+      try{ e.dataTransfer.setData('text/plain', it.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setDragImage(it, 20, 20); }catch(_){}
+    });
+    p.addEventListener('dragend', () => { if(drag) drag.classList.remove('lbc-dragging'); drag = null; clear(); });
+    p.addEventListener('dragover', e => {
+      const c = target(e); if(!c) return; e.preventDefault();
+      const r = c.getBoundingClientRect(), before = e.clientY < r.top + r.height / 2;
+      clear(); c.classList.toggle('lbc-drop-before', before); c.classList.toggle('lbc-drop-after', !before);
+    });
+    p.addEventListener('drop', e => {
+      const c = target(e); if(!c) return; e.preventDefault();
+      const r = c.getBoundingClientRect(), before = e.clientY < r.top + r.height / 2;
+      p.insertBefore(drag, before ? c : c.nextSibling); clear(); save();
+      if(drag.id === 'siteLocWrap') try{ if(typeof siteMap !== 'undefined' && siteMap) setTimeout(() => siteMap.invalidateSize(), 60); }catch(_){}
+    });
+    hint();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+<script>
+/* v8.9e: keep the Link tab toolbar in view. It lives in the Site Location
+   card; whenever its own place is not fully visible (scrolled above the
+   sticky header, or below the window because the card was moved down) it is
+   pinned under the header at the width of its card. A placeholder keeps the
+   page from jumping. File > View > Pin Link toolbar turns it off (saved). */
+(function(){
+  const KEY = 'lbc_tb_pin';
+  let on = true; try{ on = localStorage.getItem(KEY) !== '0'; }catch(_){}
+  let tb = null, ph = null, pinned = false, raf = 0;
+  function hint(){ const h = document.getElementById('tbPinHint'); if(h) h.textContent = on ? 'on' : 'off'; }
+  const panel = () => tb && tb.closest('.res-panel');
+  function pad(px){ const p = panel(); if(p && p.style.paddingTop !== px) p.style.paddingTop = px; }
+  function unpin(){
+    pad('');
+    if(!pinned) return;
+    tb.classList.remove('lbc-tb-pinned'); tb.style.top = tb.style.left = tb.style.width = '';
+    ph.style.display = 'none'; pinned = false;
+  }
+  function check(){
+    raf = 0;
+    if(!tb) return;
+    const view = document.getElementById('singleLinkView');
+    const hostVisible = view && view.style.display !== 'none' && tb.parentElement && tb.parentElement.offsetParent !== null;
+    if(!on || !hostVisible){ unpin(); return; }
+    const bar = document.querySelector('.lbc-sticky-top');
+    const topOff = bar ? Math.ceil(bar.getBoundingClientRect().bottom) + 4 : 4;
+    const ref = pinned ? ph : tb;
+    const r = ref.getBoundingClientRect();
+    const inView = r.top >= topOff && r.bottom <= window.innerHeight;
+    if(inView){ unpin(); return; }
+    if(!pinned){
+      ph.style.height = tb.offsetHeight + 'px'; ph.style.display = 'block';
+      tb.classList.add('lbc-tb-pinned'); pinned = true;
+    }
+    // its own place is further down the page (card moved down, or page at the top):
+    // push the results down so the pinned bar does not cover their first lines
+    if(r.top >= topOff) pad((tb.offsetHeight + 10) + 'px'); else pad('');
+    const pr = (panel() || ph).getBoundingClientRect();
+    tb.style.top = topOff + 'px'; tb.style.left = pr.left + 'px'; tb.style.width = pr.width + 'px';
+  }
+  function schedule(){ if(!raf) raf = requestAnimationFrame(check); }
+  window.lbcToolbarPinToggle = function(){
+    on = !on; try{ localStorage.setItem(KEY, on ? '1' : '0'); }catch(_){}
+    hint(); check();
+  };
+  function init(){
+    tb = document.querySelector('#singleLinkView .lbc-toolbar');
+    if(!tb){ setTimeout(init, 400); return; }
+    ph = document.createElement('div'); ph.className = 'lbc-tb-placeholder';
+    tb.parentNode.insertBefore(ph, tb);
+    // v8.9e: when the Site Location card is collapsed, the toolbar moves just
+    // above the card so it stays usable; it goes back when the card opens
+    const card = document.getElementById('siteLocationCard');
+    const home = { parent: tb.parentNode, next: tb.nextSibling };
+    const place = () => {
+      const col = card && card.getAttribute('data-collapsed') === '1';
+      const inCard = card && card.contains(tb);
+      if(col && inCard){ unpin(); card.parentNode.insertBefore(ph, card); card.parentNode.insertBefore(tb, card); }
+      else if(!col && !inCard){ unpin(); home.parent.insertBefore(ph, home.next); home.parent.insertBefore(tb, home.next); }
+      schedule();
+    };
+    if(card) new MutationObserver(place).observe(card, {attributes:true, attributeFilter:['data-collapsed']});
+    place();
+    window.addEventListener('scroll', schedule, {passive:true});
+    window.addEventListener('resize', schedule);
+    document.addEventListener('click', () => setTimeout(schedule, 50), true);   // tab switch, collapse, reorder
+    if(typeof ResizeObserver !== 'undefined') new ResizeObserver(schedule).observe(document.body);
+    hint(); schedule();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 </script>
 </body>
